@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Welcome to AndroVote - Mobile Voting for Android</string>
+    <string name="app_name">Mobile Voting for Android</string>
+<string name="passwordChallenge">Please, enter the master password and press ok</string>
+<string name="Confirm">OK</string>
+
+<string name="loginConfirmBTN">loginConfirmBTN</string>
+<string name="passwordField">passwordField</string>
+<string name="wrongPass">Wrong Password entered, please try again</string>
+<string name="HeaderServerList">Please Choose a server to connect to</string>
+<string name="ErrorMsg400">Client sent a request the Server didnt understand</string>
+<string name="ErrorMsg401">Bad username or password</string>
+<string name="ErrorMsg403">This server requires authentication</string>
+<string name="ErrorMsg404">The server has no questions</string>
+<string name="connectedTo">Connected to</string>
+<string name="answerPick">Pick an Answer</string>
+<string name="confirmSendDialog">Proceeding will send the answer.Continue?</string>
+<string name="YES">Yes</string>
+<string name="NO">No</string>
+<string name="FriendlyNameTag">Friendly name</string>
+<string name="IPAddressTag">IP address</string>
+<string name="portNumberTag">Port number</string>
+<string name="usernameTag">User name</string>
+<string name="passwordTag">Password:</string>
+<string name="serverMenuChangeSave">Save</string>
+<string name="serverMenuBack">Back</string>
+<string name="serverMenuJustConnect">Connect only</string>
+<string name="temporaryserverTag">a Temporary Server</string>
+<string name="badPortFormatError">Bad port number, please use a number. &lt;1, 65535&gt;</string>
+<string name="databaseSuccess">Item added/altered/deleted</string>
+<string name="pickChallenge">Choose an action</string>
+<string name="EditServerTag">Edit server details</string>
+<string name="deleteServerTag">Delete this server</string>
+<string name="newServerTag">New Server</string>
+<string name="exitTag">Exit</string>
+</resources>

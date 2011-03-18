@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<LinearLayout android:orientation="vertical"
+		android:layout_height="fill_parent" android:layout_width="fill_parent"
+		android:id="@+id/linearLayout1">
+		
+		
+		
+		<TextView android:text="@string/FriendlyNameTag"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"></TextView>
+		<EditText android:text="EditText" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:id="@+id/idFname"></EditText>
+		
+		
+		
+		<TextView android:text="@string/IPAddressTag"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"></TextView>
+		<EditText android:text="EditText" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:id="@+id/idIPadd"></EditText>
+		
+		
+		
+		
+		<TextView android:text="@string/portNumberTag"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"></TextView>
+		<EditText android:text="EditText" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:id="@+id/idPortNumber"></EditText>
+		
+		
+		
+		
+		<TextView android:text="@string/usernameTag"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"></TextView>
+		<EditText android:text="EditText" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:id="@+id/idUserName"></EditText>
+		
+		
+		
+		<TextView android:text="@string/passwordTag"
+			android:layout_height="wrap_content" android:layout_width="fill_parent"></TextView>
+		<EditText android:text="EditText" android:layout_height="wrap_content"
+			android:layout_width="fill_parent" android:id="@+id/idPass" android:password="true"></EditText>
+	</LinearLayout>
+</ScrollView>
