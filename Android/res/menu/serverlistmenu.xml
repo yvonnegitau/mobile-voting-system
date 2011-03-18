@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/newServerTag" android:id="@+id/slmnew" android:icon="@drawable/add"></item>
+    <item android:title="@string/exitTag" android:id="@+id/slmexit" android:icon="@drawable/exit"></item>
+</menu>
