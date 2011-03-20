@@ -1,5 +1,7 @@
 package cvut.fel.mobilevoting.murinrad;
 
+
+
 import java.util.ArrayList;
 
 

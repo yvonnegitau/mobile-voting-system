@@ -1,5 +1,14 @@
 package cvut.fel.mobilevoting.murinrad;
 
+
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 import cvut.fel.mobilevoting.murinrad.storage.DatabaseStorage;
 import android.app.Activity;
 import android.content.Intent;
@@ -37,7 +46,27 @@ public class ChangeServerView extends Activity {
 		id = (Integer) getIntent().getSerializableExtra("id");
 		// server = (ServerData) getIntent().getSerializableExtra("ServerData");
 		if (id != -1) {
-			server = storage.getServer(id);
+			try {
+				server = storage.getServer(id);
+			} catch (InvalidKeyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalBlockSizeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BadPaddingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		if (server != null) {
@@ -94,7 +123,27 @@ public class ChangeServerView extends Activity {
 			ServerData s = new ServerData(userName.getText().toString(), pass
 					.getText().toString(), id, ipAdd.getText().toString(),
 					port, friendlyName.getText().toString());
-			storage.addServer(s);
+			try {
+				storage.addServer(s);
+			} catch (InvalidKeyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalBlockSizeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BadPaddingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			finish();
 		}
 

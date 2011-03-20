@@ -1,5 +1,7 @@
 package cvut.fel.mobilevoting.murinrad;
 
+
+
 import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
 

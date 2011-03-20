@@ -3,6 +3,10 @@ package cvut.fel.mobilevoting.murinrad;
 import java.io.Serializable;
 import java.net.Inet4Address;
 
+import android.util.Log;
+
+import cvut.fel.mobilevoting.murinrad.crypto.Cryptography;
+
 /**
  * This class contains the Server Connection Information for one particular
  * server
@@ -21,12 +25,12 @@ public class ServerData implements Serializable {
 
 	public ServerData(String login, String password, int id,
 			String address, int port, String FN) {
-		this.login = login;
-		this.friendlyName = FN;
-		this.password = password;
-		this.id = id;
-		this.address = address;
-		this.port = port;
+		setLogin(login);
+		setFriendlyName(FN);
+		setPassword(password);
+		setId(id);
+		setAddress(address);
+		setPort(port);
 	}
 
 	public String getLogin() {
@@ -41,10 +45,11 @@ public class ServerData implements Serializable {
 	public String getPassword() {
 		return password;
 	}
-
+	public String getEncryptedPassword() {
+		return password;
+	}
 	public void setPassword(String password) {
 		this.password = password;
-		changed = true;
 	}
 
 	public int getId() {

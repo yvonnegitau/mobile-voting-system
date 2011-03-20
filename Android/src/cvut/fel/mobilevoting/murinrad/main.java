@@ -1,5 +1,6 @@
 package cvut.fel.mobilevoting.murinrad;
 
+
 import cvut.fel.mobilevoting.murinrad.crypto.Cryptography;
 import android.app.Activity;
 import android.content.Intent;
@@ -67,11 +68,14 @@ public class main extends Activity {
 	 * @return
 	 */
 	private boolean passCheck(String pass) {
-		if(pHash==null) return true;
+		//if(pHash==null) return true;
 		String p = Cryptography.md5(pass);
 		Log.i("Android mobile voting", pHash);
 		Log.i("Android Mobile Voting", p);
-		if(p.equals(pHash))	return true;
+		if(p.equals(pHash)){
+			Cryptography.crypto.init(pass);
+			return true;
+		}
 		return false;
 	}
 }

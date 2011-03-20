@@ -1,5 +1,7 @@
 package cvut.fel.mobilevoting.murinrad;
 
+
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,8 +25,6 @@ import org.apache.http.message.BasicHttpRequest;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.params.BasicHttpParams;
 
-import cvut.fel.mobilevoting.murinrad.R;
-import cvut.fel.mobilevoting.murinrad.R.string;
 
 import android.content.Context;
 import android.os.Looper;

@@ -1,6 +1,7 @@
 package cvut.fel.mobilevoting.murinrad;
 
 import java.io.ByteArrayInputStream;
+import cvut.fel.mobilevoting.murinrad.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
