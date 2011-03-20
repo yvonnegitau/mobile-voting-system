@@ -1,5 +1,7 @@
 package cvut.fel.mobilevoting.murinrad;
 
+
+
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -41,6 +43,7 @@ public class ServerList extends Activity {
 	public void onResume() {
 		super.onResume();
 		storage = new DatabaseStorage(this);
+		//storage.dropDatabase();
 		servers = storage.getServers();
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
