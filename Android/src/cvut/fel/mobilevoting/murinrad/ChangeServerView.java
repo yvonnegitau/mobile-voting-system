@@ -36,7 +36,7 @@ public class ChangeServerView extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.asd);
+		setContentView(R.layout.serverinfo);
 		storage = new DatabaseStorage(this);
 		friendlyName = (TextView) findViewById(R.id.idFname);
 		ipAdd = (TextView) findViewById(R.id.idIPadd);

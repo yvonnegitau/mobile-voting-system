@@ -20,6 +20,7 @@ import android.widget.TextView;
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 
+import cvut.fel.mobilevoting.murinrad.gui.PasswordSetterDialogue;
 import cvut.fel.mobilevoting.murinrad.storage.DatabaseStorage;
 
 public class ServerList extends Activity {
@@ -93,6 +94,9 @@ public class ServerList extends Activity {
 				e.printStackTrace();
 			}
 			return true;
+		case R.id.slmChangePWD:
+			PasswordSetterDialogue d = new PasswordSetterDialogue(this);
+			d.show();
 		default:
 			return super.onOptionsItemSelected(item);
 		}
