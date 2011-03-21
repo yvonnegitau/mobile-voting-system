@@ -1,8 +1,11 @@
 package cvut.fel.mobilevoting.murinrad;
 
-
 import cvut.fel.mobilevoting.murinrad.crypto.Cryptography;
+import cvut.fel.mobilevoting.murinrad.gui.PasswordSetterDialogue;
+import cvut.fel.mobilevoting.murinrad.storage.PreferencesStorage;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,26 +15,27 @@ import android.view.View.*;
 import android.widget.*;
 
 public class main extends Activity {
-	Activity c;
+	public static Activity c;
 	private static final String shadowFile = "shadow";
 	private String pHash;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		SharedPreferences settings = getSharedPreferences(shadowFile, 0);
-		String temp = Cryptography.md5("Ahoj");
-		//Toast.makeText(c, temp, Toast.LENGTH_LONG).show();
-		 SharedPreferences.Editor editor = settings.edit();
-		editor.putString("pHash",temp);
-		editor.commit();
-		pHash = settings.getString("pHash", "");
+		// SharedPreferences settings = getSharedPreferences(shadowFile, 0);
+		// String temp = Cryptography.md5("Ahoj");
+		// Toast.makeText(c, temp, Toast.LENGTH_LONG).show();
+		// SharedPreferences.Editor editor = settings.edit();
+		// editor.putString("pHash", temp);
+		// editor.commit();
+		// pHash = settings.getString("pHash", "");
 		c = this;
-		//pHash = Cryptography.md5("Ahoj");
+		// pHash = Cryptography.md5("Ahoj");
 		setContentView(R.layout.main);
 		Button okButton = null;
-		final EditText passwordField = (EditText) findViewById(R.string.passwordField);
 
+		final EditText passwordField = (EditText) findViewById(R.string.passwordField);
+		
 		okButton = (Button) findViewById(R.string.loginConfirmBTN);
 		okButton.setOnClickListener(new OnClickListener() {
 
@@ -52,6 +56,13 @@ public class main extends Activity {
 
 			}
 		});
+		//PreferencesStorage.store.addEntry(PreferencesStorage.PASSWORD_HASH, "");
+		passCheck("");
+	}
+
+	void showNewPassword() {
+		PasswordSetterDialogue d = new PasswordSetterDialogue(this);
+		d.show();
 	}
 
 	@Override
@@ -68,14 +79,17 @@ public class main extends Activity {
 	 * @return
 	 */
 	private boolean passCheck(String pass) {
-		//if(pHash==null) return true;
-		String p = Cryptography.md5(pass);
-		Log.i("Android mobile voting", pHash);
-		Log.i("Android Mobile Voting", p);
-		if(p.equals(pHash)){
+		int outcome = Cryptography.crypto.verifyPass(pass);
+		switch (outcome) {
+		case -1:
+			showNewPassword();
+		case 0:
+			return false;
+		case 1:
 			Cryptography.crypto.init(pass);
 			return true;
+		default:
+			return false;
 		}
-		return false;
 	}
 }

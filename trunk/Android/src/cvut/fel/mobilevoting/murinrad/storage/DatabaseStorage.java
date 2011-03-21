@@ -88,11 +88,18 @@ public class DatabaseStorage {
 		String cmd;
 		if (s.getId() != -1) {
 
-			cmd = "UPDATE " + dbTableName + " SET IPAddress=\'"
-					+ s.getAddress() + "\', portN='" + s.getPort()
-					+ "\',uName=\'" + s.getLogin() + "\',pass=\'"
-					+ s.getPassword() + "\',Fname=\'" + s.getFriendlyName()
-					+ "\' WHERE id='" + s.getId() + "'";
+			cmd = "UPDATE "
+					+ dbTableName
+					+ " SET IPAddress=\'"
+					+ s.getAddress()
+					+ "\', portN='"
+					+ s.getPort()
+					+ "\',uName=\'"
+					+ s.getLogin()
+					+ "\',pass=\'"
+					+ Cryptography.crypto.encrypt(s.getPassword(),
+							Cryptography.masterKey) + "\',Fname=\'"
+					+ s.getFriendlyName() + "\' WHERE id='" + s.getId() + "'";
 			Log.i("Android mobile voting", "Updating idem no" + s.getId());
 			outcome = false;
 
@@ -128,6 +135,7 @@ public class DatabaseStorage {
 	public void dropDatabase() {
 		String cmd = "drop table " + dbTableName;
 		executeSQL(cmd);
+		executeSQL(dbCreationSQL);
 
 	}
 
@@ -178,5 +186,6 @@ public class DatabaseStorage {
 	public void closeDB() {
 		DB.close();
 	}
+	
 
 }
