@@ -55,12 +55,21 @@ public class XMLParser {
 		for (int i = 0; i < questionList.getLength(); i++) {
 			Element node = (Element) questionList.item(i);
 			int id = Integer.parseInt(node.getAttribute("id"));
+			int min = Integer.parseInt(node.getAttribute("min"));
+			int max = Integer.parseInt(node.getAttribute("max"));
 			Log.i("Android Mobile Voting", "Question " + i + " id= " + id);
+			Node details = null;
+			if(node.getElementsByTagName("details")!=null) {
+				details = (Node) node.getElementsByTagName("details").item(0);
+			}
 			Node txt = (Node) node.getElementsByTagName("text").item(0);
+			
+			
 			Log.i("Android Mobile Voting", "Number of elements named text = "
 					+ node.getElementsByTagName("text").getLength());
-
-			String qText = getNodeValue(txt);
+			String dText ="";
+			String qText =getNodeValue(txt);
+			if(details!=null) dText = getNodeValue(details);
 			//Log.i("Android Mobile Voting", "Question " + i + " text= " + qText);
 			NodeList aListXML = node.getElementsByTagName("alternative");
 			ArrayList<String> aList = new ArrayList<String>();
@@ -68,7 +77,7 @@ public class XMLParser {
 				Node alternative = (Node) aListXML.item(a);
 				aList.add(getNodeValue(alternative));
 			}
-			QuestionData q = new QuestionData(id, qText, aList);
+			QuestionData q = new QuestionData(id, qText,dText, aList,min,max);
 			questions.add(q);
 		}
 		// surface.drawQuestions(questions);

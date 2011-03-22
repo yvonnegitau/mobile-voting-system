@@ -6,7 +6,7 @@ import cvut.fel.mobilevoting.murinrad.QuestionsView;
 import cvut.fel.mobilevoting.murinrad.R;
 import cvut.fel.mobilevoting.murinrad.ServerList;
 import cvut.fel.mobilevoting.murinrad.R.string;
-import cvut.fel.mobilevoting.murinrad.communications.Connection;
+import cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,7 +18,7 @@ public class ServerButton extends DefaultButton {
 	final ServerButton me = this;
 	final ServerList parent;
 	boolean tst = false;
-	Connection con = null;
+	ConnectionInterface con = null;
 
 	public ServerButton(final Context context, final ServerData server,
 			ServerList parent) {

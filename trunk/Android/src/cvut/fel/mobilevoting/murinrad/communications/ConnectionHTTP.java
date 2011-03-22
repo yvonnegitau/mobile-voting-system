@@ -25,6 +25,7 @@ import org.apache.http.message.BasicHttpRequest;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.params.BasicHttpParams;
 
+import cvut.fel.mobilevoting.murinad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.QuestionsView;
 import cvut.fel.mobilevoting.murinrad.R;
@@ -36,7 +37,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-public class Connection extends Thread implements Runnable {
+public class ConnectionHTTP extends Thread implements Runnable, ConnectionInterface {
 	DefaultHttpClientConnection connection;
 	BufferedReader in = null;
 	Socket MyClient;
@@ -46,6 +47,10 @@ public class Connection extends Thread implements Runnable {
 	int bodySize = 0;
 	QuestionsView parent;
 	ServerData server;
+
+	/* (non-Javadoc)
+	 * @see cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#run()
+	 */
 
 	@Override
 	public void run() {
@@ -133,7 +138,7 @@ public class Connection extends Thread implements Runnable {
 
 	}
 
-	public Connection(ServerData server, QuestionsView parent) {
+	public ConnectionHTTP(ServerData server, QuestionsView parent) {
 		try {
 			this.connection = new DefaultHttpClientConnection();
 			this.parent = parent;
@@ -158,14 +163,20 @@ public class Connection extends Thread implements Runnable {
 
 			connection.sendRequestHeader(request);
 			connection.flush();
+			this.connected = true;
 		} catch (Exception ex) {
 			Log.e("Android Mobile Voting", ex.toString());
 			parent.showToast(ex.toString());
 			parent.finish();
+			
 		}
-		this.connected = true;
+		
 	}
 
+	/* (non-Javadoc)
+	 * @see cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#sendReq()
+	 */
+	@Override
 	public void sendReq() throws Exception {
 		HttpRequest request = new BasicHttpRequest("GET", "localhost");
 		connection.sendRequestHeader(request);
@@ -253,6 +264,10 @@ public class Connection extends Thread implements Runnable {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#closeConnection()
+	 */
+	@Override
 	public void closeConnection() {
 		if (connected) {
 			try {
@@ -267,9 +282,13 @@ public class Connection extends Thread implements Runnable {
 		}
 	}
 
-	public void post(int answer, int qNo) {
+	/* (non-Javadoc)
+	 * @see cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#post(int, int)
+	 */
+	@Override
+	public void postAnswers(ArrayList<QuestionData> answers) {
 		Log.i("Android Mobile Voting", "in posting method");
-		String xml = XMLMaker.XMLMaker.buildAnswer(answer, qNo);
+		String xml = XMLMaker.XMLMaker.buildAnswer(answers);
 		BasicHttpEntityEnclosingRequest request = new BasicHttpEntityEnclosingRequest("POST", "/");
 		BasicHeader head = new BasicHeader("ID", server.getLogin());
 		BasicHeader h2 = new BasicHeader("Password", server.getPassword());

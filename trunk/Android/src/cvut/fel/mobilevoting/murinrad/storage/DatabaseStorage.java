@@ -116,7 +116,7 @@ public class DatabaseStorage {
 					+ "\", \""
 					+ Cryptography.crypto.encrypt(s.getPassword(),
 							Cryptography.masterKey) + "\", \""
-					+ s.getPassword() + "\");";
+					+ s.getFriendlyName() + "\");";
 			Log.i("Android mobile voting", "Creating new database entry...");
 			outcome = true;
 		}

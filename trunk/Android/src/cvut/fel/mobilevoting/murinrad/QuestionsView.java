@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import cvut.fel.mobilevoting.murinad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinad.datacontainers.ServerData;
-import cvut.fel.mobilevoting.murinrad.communications.Connection;
+import cvut.fel.mobilevoting.murinrad.communications.ConnectionHTTP;
 import cvut.fel.mobilevoting.murinrad.gui.QuestionButton;
 
 
@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 public class QuestionsView extends Activity {
 	ServerData server;
-	Connection con;
+	ConnectionHTTP con;
 	LinearLayout layout;
 	public Handler mHandler;
 
@@ -38,7 +38,7 @@ public class QuestionsView extends Activity {
 	@Override
 	protected void onResume(){
 		super.onResume();
-		con = new Connection(server, this);
+		con = new ConnectionHTTP(server, this);
 		con.start();
 	}
 	@Override
@@ -64,8 +64,8 @@ public class QuestionsView extends Activity {
 		Log.i("Android mobile voting", "Im here");
 		
 	}
-	public void sendToServer(int answer,int qNo) {
-		con.post(answer,qNo);
+	public void sendToServer(ArrayList<QuestionData> answers) {
+		con.postAnswers(answers);
 		
 		
 	}
