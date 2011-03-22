@@ -1,4 +1,4 @@
-package cvut.fel.mobilevoting.murinrad;
+package cvut.fel.mobilevoting.murinad.datacontainers;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package cvut.fel.mobilevoting.murinrad;
+package cvut.fel.mobilevoting.murinad.datacontainers;
 
 import java.io.Serializable;
 import java.net.Inet4Address;

@@ -1,9 +1,14 @@
-package cvut.fel.mobilevoting.murinrad;
+package cvut.fel.mobilevoting.murinrad.gui;
 
 
 
 import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
+
+import cvut.fel.mobilevoting.murinad.datacontainers.QuestionData;
+import cvut.fel.mobilevoting.murinrad.QuestionsView;
+import cvut.fel.mobilevoting.murinrad.R;
+import cvut.fel.mobilevoting.murinrad.R.string;
 
 import android.app.AlertDialog;
 import android.content.Context;

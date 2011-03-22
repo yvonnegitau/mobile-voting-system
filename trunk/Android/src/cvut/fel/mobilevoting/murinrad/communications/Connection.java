@@ -1,4 +1,4 @@
-package cvut.fel.mobilevoting.murinrad;
+package cvut.fel.mobilevoting.murinrad.communications;
 
 
 
@@ -24,6 +24,11 @@ import org.apache.http.message.BasicHttpEntityEnclosingRequest;
 import org.apache.http.message.BasicHttpRequest;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.params.BasicHttpParams;
+
+import cvut.fel.mobilevoting.murinad.datacontainers.ServerData;
+import cvut.fel.mobilevoting.murinrad.QuestionsView;
+import cvut.fel.mobilevoting.murinrad.R;
+import cvut.fel.mobilevoting.murinrad.R.string;
 
 
 import android.content.Context;
@@ -248,7 +253,7 @@ public class Connection extends Thread implements Runnable {
 
 	}
 
-	protected void closeConnection() {
+	public void closeConnection() {
 		if (connected) {
 			try {
 				connection.shutdown();
@@ -262,7 +267,7 @@ public class Connection extends Thread implements Runnable {
 		}
 	}
 
-	protected void post(int answer, int qNo) {
+	public void post(int answer, int qNo) {
 		Log.i("Android Mobile Voting", "in posting method");
 		String xml = XMLMaker.XMLMaker.buildAnswer(answer, qNo);
 		BasicHttpEntityEnclosingRequest request = new BasicHttpEntityEnclosingRequest("POST", "/");

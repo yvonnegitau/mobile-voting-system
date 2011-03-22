@@ -1,5 +1,12 @@
-package cvut.fel.mobilevoting.murinrad;
+package cvut.fel.mobilevoting.murinrad.gui;
 
+import cvut.fel.mobilevoting.murinad.datacontainers.ServerData;
+import cvut.fel.mobilevoting.murinrad.ChangeServerView;
+import cvut.fel.mobilevoting.murinrad.QuestionsView;
+import cvut.fel.mobilevoting.murinrad.R;
+import cvut.fel.mobilevoting.murinrad.ServerList;
+import cvut.fel.mobilevoting.murinrad.R.string;
+import cvut.fel.mobilevoting.murinrad.communications.Connection;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;

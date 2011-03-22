@@ -1,4 +1,4 @@
-package cvut.fel.mobilevoting.murinrad;
+package cvut.fel.mobilevoting.murinrad.gui;
 
 import android.content.Context;
 import android.util.AttributeSet;

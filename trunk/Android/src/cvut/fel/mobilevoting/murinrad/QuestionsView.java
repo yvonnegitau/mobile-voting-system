@@ -4,6 +4,11 @@ package cvut.fel.mobilevoting.murinrad;
 
 import java.util.ArrayList;
 
+import cvut.fel.mobilevoting.murinad.datacontainers.QuestionData;
+import cvut.fel.mobilevoting.murinad.datacontainers.ServerData;
+import cvut.fel.mobilevoting.murinrad.communications.Connection;
+import cvut.fel.mobilevoting.murinrad.gui.QuestionButton;
+
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -20,7 +25,7 @@ public class QuestionsView extends Activity {
 	ServerData server;
 	Connection con;
 	LinearLayout layout;
-	Handler mHandler;
+	public Handler mHandler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,7 @@ public class QuestionsView extends Activity {
 	}
 	
 	
-	protected void showToast(String message) {
+	public void showToast(String message) {
 		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 	}
 	public void drawQuestions(ArrayList<QuestionData> questions) {
@@ -59,7 +64,7 @@ public class QuestionsView extends Activity {
 		Log.i("Android mobile voting", "Im here");
 		
 	}
-	protected void sendToServer(int answer,int qNo) {
+	public void sendToServer(int answer,int qNo) {
 		con.post(answer,qNo);
 		
 		

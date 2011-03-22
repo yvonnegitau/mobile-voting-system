@@ -20,7 +20,9 @@ import android.widget.TextView;
 import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 
+import cvut.fel.mobilevoting.murinad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.gui.PasswordSetterDialogue;
+import cvut.fel.mobilevoting.murinrad.gui.ServerButton;
 import cvut.fel.mobilevoting.murinrad.storage.DatabaseStorage;
 
 public class ServerList extends Activity {
@@ -28,10 +30,6 @@ public class ServerList extends Activity {
 	private DatabaseStorage storage;
 	// private ArrayList<ServerData> servers = new ArrayList<ServerData>();
 	private ArrayList<ServerData> servers;
-	ServerData dummyServer = new ServerData("murinrad", "12345", 1,
-			"147.32.89.127", 10666, "3G");
-	ServerData dummyServer2 = new ServerData("murinrad", "12345", 2,
-			"192.168.2.1", 10666, "WiFi");
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +65,7 @@ public class ServerList extends Activity {
 		storage.closeDB();
 	}
 
-	protected void deleteServer(int id) {
+	public void deleteServer(int id) {
 		storage.delete(id);
 
 	}
