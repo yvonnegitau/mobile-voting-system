@@ -2,6 +2,8 @@ package cvut.fel.mobilevoting.murinrad.gui;
 
 
 
+import java.util.ArrayList;
+
 import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -76,7 +78,9 @@ public class QuestionButton extends DefaultButton {
 
 	void passToSend() throws ParserConfigurationException,
 			FactoryConfigurationError {
-		parent.sendToServer(qData.getAnswer(), qData.getId());
+		ArrayList<QuestionData> list = new ArrayList<QuestionData>();
+		list.add(qData);
+		parent.sendToServer(list);
 
 	}
 
