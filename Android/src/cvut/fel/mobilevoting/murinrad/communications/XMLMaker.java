@@ -1,4 +1,4 @@
-package cvut.fel.mobilevoting.murinrad;
+package cvut.fel.mobilevoting.murinrad.communications;
 
 import java.io.StringWriter;
 
