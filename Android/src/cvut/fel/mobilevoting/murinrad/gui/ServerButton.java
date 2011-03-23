@@ -1,12 +1,12 @@
 package cvut.fel.mobilevoting.murinrad.gui;
 
-import cvut.fel.mobilevoting.murinad.datacontainers.ServerData;
-import cvut.fel.mobilevoting.murinrad.ChangeServerView;
-import cvut.fel.mobilevoting.murinrad.QuestionsView;
 import cvut.fel.mobilevoting.murinrad.R;
-import cvut.fel.mobilevoting.murinrad.ServerList;
 import cvut.fel.mobilevoting.murinrad.R.string;
 import cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface;
+import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
+import cvut.fel.mobilevoting.murinrad.views.ChangeServerView;
+import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
+import cvut.fel.mobilevoting.murinrad.views.ServerListView;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,12 +16,12 @@ import android.content.Intent;
 public class ServerButton extends DefaultButton {
 	final ServerData server;
 	final ServerButton me = this;
-	final ServerList parent;
+	final ServerListView parent;
 	boolean tst = false;
 	ConnectionInterface con = null;
 
 	public ServerButton(final Context context, final ServerData server,
-			ServerList parent) {
+			ServerListView parent) {
 		super(context, server.getFriendlyName());
 		this.server = server;
 		this.parent = parent;
@@ -70,7 +70,7 @@ public class ServerButton extends DefaultButton {
 
 	void connectMe() {
 		Intent i = new Intent(me.context,
-				cvut.fel.mobilevoting.murinrad.QuestionsView.class);
+				cvut.fel.mobilevoting.murinrad.views.QuestionsView.class);
 		i.putExtra("ServerData", me.server);
 		me.context.startActivity(i);
 
@@ -78,7 +78,7 @@ public class ServerButton extends DefaultButton {
 
 	void editMe() {
 		Intent i = new Intent(me.context,
-				cvut.fel.mobilevoting.murinrad.ChangeServerView.class);
+				cvut.fel.mobilevoting.murinrad.views.ChangeServerView.class);
 		i.putExtra("id", me.server.getId()); 
 		me.context.startActivity(i);
 	}

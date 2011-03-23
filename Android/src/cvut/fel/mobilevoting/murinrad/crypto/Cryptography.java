@@ -14,8 +14,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-import cvut.fel.mobilevoting.murinad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.main;
+import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.storage.DatabaseStorage;
 import cvut.fel.mobilevoting.murinrad.storage.PreferencesStorage;
 import android.util.Log;

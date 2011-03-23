@@ -25,11 +25,11 @@ import org.apache.http.message.BasicHttpRequest;
 import org.apache.http.message.BasicHttpResponse;
 import org.apache.http.params.BasicHttpParams;
 
-import cvut.fel.mobilevoting.murinad.datacontainers.QuestionData;
-import cvut.fel.mobilevoting.murinad.datacontainers.ServerData;
-import cvut.fel.mobilevoting.murinrad.QuestionsView;
 import cvut.fel.mobilevoting.murinrad.R;
 import cvut.fel.mobilevoting.murinrad.R.string;
+import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
+import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
+import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
 
 
 import android.content.Context;

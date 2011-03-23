@@ -1,20 +1,19 @@
 package cvut.fel.mobilevoting.murinrad.gui;
 
-
-
 import java.util.ArrayList;
 
 import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
 
-import cvut.fel.mobilevoting.murinad.datacontainers.QuestionData;
-import cvut.fel.mobilevoting.murinrad.QuestionsView;
 import cvut.fel.mobilevoting.murinrad.R;
 import cvut.fel.mobilevoting.murinrad.R.string;
+import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
+import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -23,13 +22,16 @@ import android.widget.Toast;
 
 public class QuestionButton extends DefaultButton {
 	private QuestionData qData;
-	QuestionsView parent;
+	final QuestionsView parent;
+	private boolean checked = false;
+	int picked = 0;
 
 	public QuestionButton(final Context context, final QuestionData qData,
 			final QuestionsView parent) {
 		super(context, qData.getText());
 		this.qData = qData;
 		this.parent = parent;
+		// setBackgroundColor(Color.RED);
 	}
 
 	void showChoices() {
@@ -37,14 +39,45 @@ public class QuestionButton extends DefaultButton {
 				new CharSequence[qData.getAnswers().size()]);
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(context.getString(R.string.answerPick));
-		builder.setItems(cs, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int item) {
-				Toast.makeText(context.getApplicationContext(),
-						qData.getAnswers().get(item), Toast.LENGTH_SHORT)
-						.show();
-				qData.setAnswer(item);
-			}
-		});
+		builder.setMultiChoiceItems(cs, null,
+				new DialogInterface.OnMultiChoiceClickListener() {
+					public void onClick(DialogInterface dialog,
+							int whichButton, boolean isChecked) {
+						Log.e("Android Mobile Voting", whichButton + "");
+						if (isChecked) {
+							if(picked+1<=qData.getMax()){
+							qData.setAnswer(whichButton, 1);
+							picked++;
+						} else {
+							Toast.makeText(getContext(), parent.getString(R.string.TooMuchAnswers), Toast.LENGTH_LONG).show(); 
+						}
+						}
+						if (!isChecked) {
+							if(picked-1>=qData.getMin()){
+							qData.setAnswer(whichButton, -1);
+							picked--;
+							} else {
+								Toast.makeText(getContext(), parent.getString(R.string.notEnoughAnswers), Toast.LENGTH_LONG).show();
+									
+							}
+						}
+						
+					}
+					
+				}).setPositiveButton(R.string.Confirm,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+
+					}
+				
+				});
+		/*
+		 * builder.setItems(cs, new DialogInterface.OnClickListener() { public
+		 * void onClick(DialogInterface dialog, int item) {
+		 * Toast.makeText(context.getApplicationContext(),
+		 * qData.getAnswers().get(item), Toast.LENGTH_SHORT) .show();
+		 * qData.setAnswer(item); } });
+		 */
 		AlertDialog alert = builder.create();
 		alert.show();
 
@@ -93,7 +126,18 @@ public class QuestionButton extends DefaultButton {
 	@Override
 	public void onLongClickAction() {
 		prepForSending();
+	}
 
+	public boolean getChecked() {
+		return checked;
+	}
+
+	public void flipChecked() {
+		checked = !checked;
+	}
+
+	public QuestionData extractQData() {
+		return qData;
 	}
 
 }
