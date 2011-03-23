@@ -9,9 +9,9 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import cvut.fel.mobilevoting.murinad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.R;
 import cvut.fel.mobilevoting.murinrad.crypto.Cryptography;
+import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;

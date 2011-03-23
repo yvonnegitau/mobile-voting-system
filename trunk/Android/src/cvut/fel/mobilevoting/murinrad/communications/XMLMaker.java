@@ -9,7 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xmlpull.v1.XmlSerializer;
 
-import cvut.fel.mobilevoting.murinad.datacontainers.QuestionData;
+import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
 
 import android.util.Log;
 import android.util.Xml;
@@ -34,9 +34,10 @@ public class XMLMaker {
 				serializer.startTag("", "question");
 				serializer.attribute("", "id", questions.get(i).getId() + "");
 				for (int o = 0; o < answers.length; o++) {
-					if (answers[o] != -1) {
+					Log.e("Android Mobile Voting","answer["+o+"] is "+ answers[o]);
+					if (answers[o] != -1 && answers[o]!=0) {
 						serializer.startTag("", "alternative");
-						serializer.text(answers[o] + "");
+						serializer.text(o + "");
 						serializer.endTag("", "alternative");
 					}
 				}

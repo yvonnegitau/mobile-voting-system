@@ -2,8 +2,9 @@ package cvut.fel.mobilevoting.murinrad.communications;
 
 import java.io.ByteArrayInputStream;
 
-import cvut.fel.mobilevoting.murinad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinrad.*;
+import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
+import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
 
 import java.io.IOException;
 import java.io.InputStream;

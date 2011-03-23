@@ -3,6 +3,8 @@ package cvut.fel.mobilevoting.murinrad.datacontainers;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import android.util.Log;
+
 public class QuestionData {
 	int id, max, min;
 	private int answer = -1;
@@ -27,7 +29,7 @@ public class QuestionData {
 		this.max = max;
 		this.details = details;
 		max = 1;
-		answerField = new int[max];
+		answerField = new int[answers.size()];
 		for(int i=0;i<max;i++) {
 			answerField[i] = -1;
 		}
@@ -69,6 +71,11 @@ public class QuestionData {
 	
 	public int[] getAnswerField() {
 		return answerField;
+	}
+	
+public void setAnswer(int pos,int val) {
+	Log.e("Android mobile voting","setting answer in pos" + pos+"" );
+		answerField[pos] = val;
 	}
 
 }

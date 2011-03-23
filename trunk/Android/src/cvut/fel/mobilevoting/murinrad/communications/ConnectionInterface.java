@@ -2,7 +2,7 @@ package cvut.fel.mobilevoting.murinrad.communications;
 
 import java.util.ArrayList;
 
-import cvut.fel.mobilevoting.murinad.datacontainers.QuestionData;
+import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
 
 public interface ConnectionInterface {
 

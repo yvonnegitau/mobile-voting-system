@@ -46,4 +46,7 @@
 	<string name="cancel">Cancel</string>
 	<string name="passwordChangeSuccess">The password has been Changed</string>
 	<string name="more">More</string>
+	<string name="sendAnswers">Send answers</string>
+	<string name="notEnoughAnswers">Pick more answers</string>
+	<string name="TooMuchAnswers">Maximum Answers Reached</string>
 </resources>

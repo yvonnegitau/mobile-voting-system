@@ -46,7 +46,7 @@ public class main extends Activity {
 				if (passCheck(test)) {
 					Intent intent = new Intent();
 					intent.setClassName("cvut.fel.mobilevoting.murinrad",
-							"cvut.fel.mobilevoting.murinrad.ServerList");
+							"cvut.fel.mobilevoting.murinrad.views.ServerListView");
 					startActivity(intent);
 
 				} else {
