@@ -1,0 +1,96 @@
+\begin{thebibliography}{14}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Valenta(2010)]{bakalarkaJV}
+VALENTA, J.
+\newblock Mobilní hlasovací zarízení [in Czech], 2010.
+
+\bibitem[web:developer.android.com({\natexlab{a}})]{goodevpi}
+web:developer.android.com.
+\newblock Android API Levels, {\natexlab{a}}.
+\newblock \\
+  \verb|http://developer.android.com/guide/appendix/api-levels.html|, Retrieved
+  on 8.\,1.\,2011.
+
+\bibitem[web:developer.android.com({\natexlab{b}})]{goodevver}
+web:developer.android.com.
+\newblock Android Version Distribution, {\natexlab{b}}.
+\newblock \\
+  \verb|http://developer.android.com/resources/dashboard/platform-versions.html|,
+  Retrieved on 22.\,1.\,2011.
+
+\bibitem[web:developer.android.com({\natexlab{c}})]{storageAnd}
+web:developer.android.com.
+\newblock What is Android?, {\natexlab{c}}.
+\newblock \\
+  \verb|http://developer.android.com/guide/topics/data/data-storage.html#pref|,
+  Retrieved on 26.\,2.\,2011.
+
+\bibitem[web:developer.android.com({\natexlab{d}})]{whatisAnd}
+web:developer.android.com.
+\newblock What is Android?, {\natexlab{d}}.
+\newblock \\
+  \verb|http://developer.android.com/guide/basics/what-is-android.html|,
+  Retrieved on 26.\,2.\,2011.
+
+\bibitem[web:en.wikipedia.org()]{whatIsRoot}
+web:en.wikipedia.org.
+\newblock Rooting (Android OS).
+\newblock \\ \verb|http://en.wikipedia.org/wiki/Rooting_(Android_OS)|,
+  Retrieved on 17.\,3.\,2011.
+
+\bibitem[web:market.android.com({\natexlab{a}})]{DalvikVM}
+web:market.android.com.
+\newblock dalvik - Code and documentation from Android's VM team - Google
+  Project Hosting, {\natexlab{a}}.
+\newblock \\ \verb|http://code.google.com/p/dalvik/|, Retrieved on
+  17.\,3.\,2011.
+
+\bibitem[web:market.android.com({\natexlab{b}})]{DareLabs}
+web:market.android.com.
+\newblock android mobile voting, {\natexlab{b}}.
+\newblock \\
+  \verb|https://market.android.com/details?id=com.ts.sepolling&feature=search_result|,
+  Retrieved on 17.\,3.\,2011.
+
+\bibitem[web:market.android.com({\natexlab{c}})]{DareLabsWeb}
+web:market.android.com.
+\newblock dare ~ work ~ labs, {\natexlab{c}}.
+\newblock \\ \verb|http://www.thisisdare.com/work/labs/mobile_polling.html|,
+  Retrieved on 17.\,3.\,2011.
+
+\bibitem[web:market.android.com({\natexlab{d}})]{HandyPoll}
+web:market.android.com.
+\newblock HandyPoll, {\natexlab{d}}.
+\newblock \\
+  \verb|https://market.android.com/details?id=com.mlst.handypoll&feature=search_result|,
+  Retrieved on 17.\,3.\,2011.
+
+\bibitem[web:market.android.com({\natexlab{e}})]{MarketAnd}
+web:market.android.com.
+\newblock The android market, {\natexlab{e}}.
+\newblock \\ \verb|https://market.android.com/|, Retrieved on 17.\,3.\,2011.
+
+\bibitem[web:msdn.microsoft.com()]{whatIsMVC}
+web:msdn.microsoft.com.
+\newblock Model-View-Controller.
+\newblock \\ \verb|http://msdn.microsoft.com/en-us/library/ff649643.aspx|,
+  Retrieved on 17.\,3.\,2011.
+
+\bibitem[web:wikipedia.org()]{whatISBTS}
+web:wikipedia.org.
+\newblock Base transceiver station - Wikipedia, the free encyclopedia.
+\newblock \\ \verb|http://en.wikipedia.org/wiki/Base_transceiver_station|,
+  Retrieved on 17.\,3.\,2011.
+
+\bibitem[web:wireless.arcada.fi()]{GSMCypherWeakness}
+web:wireless.arcada.fi.
+\newblock Mobile and Wireless Communication Systems - GSM - Security.
+\newblock \\ \verb|http://wireless.arcada.fi/MOBWI/material/CN_1_6.htm|,
+  Retrieved on 17.\,3.\,2011.
+
+\end{thebibliography}

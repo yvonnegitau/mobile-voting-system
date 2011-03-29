@@ -1,0 +1,666 @@
+%% History:
+% Pavel Tvrdik (26.12.2004)
+%  + initial version for PhD Report
+% Daniel Sykora (27.01.2005)
+%
+% Michal Valenta (3.12.2008)
+% rada zmen ve formatovani (diky M. Duškovi, J. Holubovi a J. Žďárkovi)
+% sjednoceni zdrojoveho kodu pro anglickou, ceskou, bakalarskou a diplomovou praci
+
+% One-page layout: (proof-)reading on display
+%%%% \documentclass[11pt,oneside,a4paper]{book}
+% Two-page layout: final printing
+\documentclass[11pt,twoside,a4paper]{book}   
+%=-=-=-=-=-=-=-=-=-=-=-=--=%
+% The user of this template may find useful to have an alternative to these 
+% officially suggested packages:
+\usepackage[czech, english]{babel}
+\usepackage[T1]{fontenc} % pouzije EC fonty 
+% pripadne pisete-li cesky, pak lze zkusit take:
+% \usepackage[OT1]{fontenc} 
+\usepackage[utf8]{inputenc}
+%=-=-=-=-=-=-=-=-=-=-=-=--=%
+% In case of problems with PDF fonts, one may try to uncomment this line:
+%\usepackage{lmodern}
+%=-=-=-=-=-=-=-=-=-=-=-=--=%
+%=-=-=-=-=-=-=-=-=-=-=-=--=%
+% Depending on your particular TeX distribution and version of conversion tools 
+% (dvips/dvipdf/ps2pdf), some (advanced | desperate) users may prefer to use 
+% different settings.
+% Please uncomment the following style and use your CSLaTeX (cslatex/pdfcslatex) 
+% to process your work. Note however, this file is in UTF-8 and a conversion to 
+% your native encoding may be required. Some settings below depend on babel 
+% macros and should also be modified. See \selectlanguage \iflanguage.
+%\usepackage{czech}  %%%%%\usepackage[T1]{czech} %%%%[IL2] [T1] [OT1]
+%=-=-=-=-=-=-=-=-=-=-=-=--=%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Styles required in your work follow %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+%\usepackage{indentfirst} %1. odstavec jako v cestine.
+
+\usepackage{k336_thesis_macros} % specialni makra pro formatovani DP a BP
+ % muzete si vytvorit i sva vlastni v souboru k336_thesis_macros.sty
+ % najdete  radu jednoduchych definic, ktere zde ani nejsou pouzity
+ % napriklad: 
+ % \newcommand{\bfig}{\begin{figure}\begin{center}}
+ % \newcommand{\efig}{\end{center}\end{figure}}
+ % umoznuje pouzit prikaz \bfig namisto \begin{figure}\begin{center} atd.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Zvolte jednu z moznosti 
+% Choose one of the following options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand\TypeOfWork{Diplomová práce} \typeout{Diplomova prace}
+% \newcommand\TypeOfWork{Master's Thesis}   \typeout{Master's Thesis} 
+% \newcommand\TypeOfWork{Bakalářská práce}  \typeout{Bakalarska prace}
+ \newcommand\TypeOfWork{Bachelor's Project}  \typeout{Bachelor's Project}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Zvolte jednu z moznosti 
+
+
+
+% Choose one of the following options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% nabidky jsou z: http://www.fel.cvut.cz/cz/education/bk/prehled.html
+
+%\newcommand\StudProgram{Elektrotechnika a informatika, dobíhající, Bakalářský}
+%\newcommand\StudProgram{Elektrotechnika a informatika, dobíhající, Magisterský}
+% \newcommand\StudProgram{Elektrotechnika a informatika, strukturovaný, Bakalářský}
+% \newcommand\StudProgram{Elektrotechnika a informatika, strukturovaný, Navazující magisterský}
+ \newcommand\StudProgram{Software technologies and Management, Bachelor programme}
+% English study:
+% \newcommand\StudProgram{Electrical Engineering and Information Technology}  % bachelor programe
+% \newcommand\StudProgram{Electrical Engineering and Information Technology}  %master program
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Zvolte jednu z moznosti 
+% Choose one of the following options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% nabidky jsou z: http://www.fel.cvut.cz/cz/education/bk/prehled.html
+
+%\newcommand\StudBranch{Výpočetní technika}   % pro program EaI bak. (dobihajici i strukt.)
+%\newcommand\StudBranch{Výpočetní technika}   % pro prgoram EaI mag. (dobihajici i strukt.)
+\newcommand\StudBranch{Software engineering}            %pro STM
+%\newcommand\StudBranch{Web a multimedia}                  % pro STM
+%\newcommand\StudBranch{Computer Engineering}              % bachelor programe
+%\newcommand\StudBranch{Computer Science and Engineering}  % master programe
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Vyplnte nazev prace, autora a vedouciho
+% Set up Work Title, Author and Supervisor
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\WorkTitle{Mobile voting application for Android}
+\newcommand\FirstandFamilyName{Radovan Murin}
+\newcommand\Supervisor{Ing. Martin Komárek}
+
+
+% Pouzijete-li pdflatex, tak je prijemne, kdyz bude mit vase prace
+% funkcni odkazy i v pdf formatu
+\usepackage[
+pdftitle={\WorkTitle},
+pdfauthor={\FirstandFamilyName},
+bookmarks=true,
+colorlinks=true,
+breaklinks=true,
+urlcolor=red,
+citecolor=blue,
+linkcolor=blue,
+unicode=true,
+]
+{hyperref}
+
+
+
+% Extension posted by Petr Dlouhy in order for better sources reference (\cite{} command) especially in Czech.
+% April 2010
+% See comment over \thebibliography command for details.
+
+\usepackage[square, numbers]{natbib}             % sazba pouzite literatury
+%\usepackage{url}
+%\DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>}\urlstyle{tt}}  %rm/sf/tt
+%\renewcommand{\emph}[1]{\textsl{#1}}    % melo by byt kurziva nebo sklonene,
+\let\oldUrl\url
+\renewcommand\url[1]{<\texttt{\oldUrl{#1}}>}
+
+
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Zvolte jednu z moznosti 
+% Choose one of the following options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\selectlanguage{czech}
+\selectlanguage{english} 
+
+% prikaz \typeout vypise vyse uvedena nastaveni v prikazovem okne
+% pro pohodlne ladeni prace
+
+
+\iflanguage{czech}{
+	 \typeout{************************************************}
+	 \typeout{Zvoleny jazyk: cestina}
+	 \typeout{Typ prace: \TypeOfWork}
+	 \typeout{Studijni program: \StudProgram}
+	 \typeout{Obor: \StudBranch}
+	 \typeout{Jmeno: \FirstandFamilyName}
+	 \typeout{Nazev prace: \WorkTitle}
+	 \typeout{Vedouci prace: \Supervisor}
+	 \typeout{***************************************************}
+	 \newcommand\Department{Department of Computer Science and Engineering}
+	 \newcommand\Faculty{Faculty of Electrical Engineering}
+	 \newcommand\University{Czech Technical University in Prague}
+	 \newcommand\labelSupervisor{Supervisor}
+	 \newcommand\labelStudProgram{Study Programme}
+	 \newcommand\labelStudBranch{Field of Study}
+}{
+	 \typeout{************************************************}
+	 \typeout{Language: english}
+	 \typeout{Type of Work: \TypeOfWork}
+	 \typeout{Study Program: \StudProgram}
+	 \typeout{Study Branch: \StudBranch}
+	 \typeout{Author: \FirstandFamilyName}
+	 \typeout{Title: \WorkTitle}
+	 \typeout{Supervisor: \Supervisor}
+	 \typeout{***************************************************}
+	 \newcommand\Department{Department of Computer Science and Engineering}
+	 \newcommand\Faculty{Faculty of Electrical Engineering}
+	 \newcommand\University{Czech Technical University in Prague}
+	 \newcommand\labelSupervisor{Supervisor}
+	 \newcommand\labelStudProgram{Study Programme} 
+	 \newcommand\labelStudBranch{Field of Study}
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%    Poznamky ke kompletaci prace
+% Nasledujici pasaz uzavrenou v {} ve sve praci samozrejme 
+% zakomentujte nebo odstrante. 
+% Ve vysledne svazane praci bude nahrazena skutecnym 
+% oficialnim zadanim vasi prace.
+%%%%%%%%%%%%%%%%%%%%%%%%%%    Titulni stranka / Title page 
+
+\coverpagestarts
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%    Podekovani / Acknowledgements 
+
+\acknowledgements
+\noindent
+Placeholder
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%   Prohlaseni / Declaration 
+
+%\declaration{V~Kořenovicích nad Bečvárkou dne 15.\,5.\,2008}
+\declaration{In Košice on Jan 2, 2011}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Abstract 
+ 
+\abstractpage
+
+The aim of this work is to design and implement an electronic voting application for the Android platform that will enable people to vote securely from anywhere. The application as a whole is aimed at being compatible with devices from many manufacturers and running different versions of the operating system. The application is also aimed at being localised.
+
+
+
+% Prace v cestine musi krome abstraktu v anglictine obsahovat i
+% abstrakt v cestine.
+\vglue60mm
+
+\noindent{\Huge \textbf{Abstrakt}}
+\vskip 2.75\baselineskip
+
+\noindent
+%Ľudia začínajú čím ďalej tým viac integrovat mobilné zariadenia do ich každodenného života. Uľahčuje to život, odbremeňuje nás to od stáleho cestovania a zvyšuje produktivitu.
+ Cieľom tejto práce je navrhnúť a naimplementovat aplikáciu pre elektronické hlasovanie pre platformu Android, ktorá umožní ľudom hlasovať bezpečne z akéhokoľvek miesta. Celá aplikácia je zameraná na čo najvačšiu kompatibilitu medzi rôznymi výrobcami a verziami Androidu a jazykovú prenositeľnost.
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Obsah / Table of Contents 
+
+\tableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Seznam obrazku / List of Figures 
+
+\listoffigures
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Seznam tabulek / List of Tables
+
+\listoftables
+
+
+%**************************************************************
+
+\mainbodystarts
+% horizontalní mezera mezi dvema odstavci
+%\parskip=5pt
+%11.12.2008 parskip + tolerance
+\normalfont
+\parskip=0.2\baselineskip plus 0.2\baselineskip minus 0.1\baselineskip
+
+% Odsazeni prvniho radku odstavce resi class book (neaplikuje se na prvni 
+% odstavce kapitol, sekci, podsekci atd.) Viz usepackage{indentfirst}.
+% Chcete-li selektivne zamezit odsazeni 1. radku nektereho odstavce,
+% pouzijte prikaz \noindent.
+
+%**************************************************************
+
+% Pro snadnejsi praci s vetsimi texty je rozumne tyto rozdelit
+% do samostatnych souboru nejlepe dle kapitol a tyto potom vkladat
+% pomoci prikazu \include{jmeno_souboru.tex} nebo \include{jmeno_souboru}.
+% Napr.:
+% \include{1_uvod}
+% \include{2_teorie}
+% atd...
+
+%*****************************************************************************
+\chapter{Introduction}
+
+\paragraph*{}
+Voting is a delicate matter. Whoever the voter is, he or she usually wants to vote as transparently and freely as possible. In most cases this is achieved by strict rules which often make it necessary for the voter to be physically present. But what about the one member of the board who is always travelling? What about a member of a council that is stuck in a traffic jam on the way to the council hall? \\
+In today's world we are witnesses of a process that is merging two devices into one. The PDA - Personal Digital Assistant and the cell phone. This means that more and more people carry in fact powerful computers in their pockets that enable them to perform a lot of tasks without the need of being at their desks. It also enables a person to vote safely and easily while he is unable to attend a meeting in person. 
+
+%*****************************************************************************
+\chapter{Description of the problem and goals}
+
+\section{Description}
+In the conclusion of his bachelor's thesis , Jakub Valenta \cite{bakalarkaJV} states, that the ever changing and manufacturer specific implementation of Java ME, cofiguration CLDC and MIDP specification is the biggest obstacle in implementing his software on a larger scale.  The aim of this work is to overcome this shortcoming and create an Android application that will communicate with a server based on his work. 
+
+
+\subsection{Android} 
+The benefit of Android\cite{whatisAnd} is that while Java ME implementations may vary, Android is mostly consistent and a piece of software written and tested on one device should work on another. Forward compatibility is not guaranteed but as the changes are mostly additive, it is highly probable. \cite{goodevpi}
+
+\subsection{Voting}
+%Je to vobec nutne? vsetko je rozobrane
+The voting process is described in Jakub Valenta's work \cite{bakalarkaJV} . The process is based on real life voting where people first see the question and answers. Then they choose their answer of choice and send their vote. The system acts just like a human vote counter and counts up the votes and publishes them on the web or wherever it is suitable. 
+
+
+%Toto skor do analyzy
+ The voting process itself does not have to be changed, however it is not necessary nor desirable to have such little features on an Android device. If the voter is a not present at the a meeting or congress , it would be difficult for him to know the details of the event and the people involved in it. 
+
+
+%Therefore the voting ticket has to be altered.\\
+%Since the aim of this work is to create a voting application, testing part that is meant for school use will not be altered. 
+
+
+
+\subsection{Security}
+When voting on a delicate matter, privacy and voter intent cannot be tampered with by for example a man-in-the-middle type attack. The voter has to be sure that his vote has been received without change and in the case if a secret ballot, unseen by a third party. \\
+Next, the nature of how the Android platform enables parts of an application to launch within another application. The resulting "app" will have to deal with this.\\
+Another thing is physical security. The cell phone will never be safe from this perspective. People often leave them at hotels, public restrooms, they are often the target of small theft. Because of this fact, the phone application will have to be protected from unauthorized use. A more detailed analysis of this issues is in the chapter Analysis, section Security.\\
+
+\subsection{Already existing systems}
+Applications for the Android platform are distributed with the Android Market tool \cite{MarketAnd} .Presently, there are only a few "apps"  that offer voting. All of which use an unsecured connection and use a server that has unknown security settings. Also none of these "apps" offer a J2ME application for a feature phone. \\
+Apps for mobile voting (Android Market, state from 21.1.2011): 
+\begin{itemize}
+\item "Handy Poll" by Marc Tan \cite{HandyPoll} \\
+The application Handy Poll is, as the name suggests, used mainly for polling. As an example I would state a situation where a student of psychology needs input data from a lot of people. He/She creates the questions and responses. Then, people see the questions and can respond to them without authentication.
+\item "android mobile voting" by Dare Labs for Sony Ericsson \cite{DareLabs}
+Presently not functional. Advertised to be safe. I could not get it to work. Although the company website \cite{DareLabsWeb} is claiming that the application is fully functional.
+\end{itemize}
+
+
+
+\section{Goals}
+
+The goal of my thesis is to enhance the voting system from Jakub Valenta's\cite{bakalarkaJV} thesis in such a way, that it will enable voting from a mobile device running Android\cite{whatisAnd} and thus broaden the spectrum of devices supporting this software. My aim is to make use of the larger capabilities that an Android device provides in comparison with a simple phone and enhance the user experience and create a baseline which future developers for different platforms can use. 
+
+\subsection{Android side}
+The Android application is to be written from scratch in Java for Android (Dalvik VM\cite{DalvikVM}). It will enable the user to vote securely, provide the user with basic information about the candidates or choices - e.g. age, occupation, few words about ballot choices. The Android application will also be able to view the results of a closed question. In order to maximize the number of people able to use this software it will also be localized into several languages.
+
+\subsection{Server side}
+The main goal here, is to increase the amount of information the server provides about the question without compromising the compatibility with the J2ME application. Next, is to implement a secure way of communicating with the clients so that the security will no longer be reliant on Wi-Fi encryption. Another goal is to be able to differentiate between clients connecting from the local network and users connecting from the Internet.
+
+
+
+% For practical application this will have to be changed. The server will also have to be changed to be more election orientated. That means that support for election details and result sending will have to be added. 
+
+\subsection{Feature phone side}
+The feature phone application will remain compatible with the edited server. \\
+
+\subsection{Summary}
+In summary the aim of this work is:
+
+\begin{itemize}
+\item To extend the capabilities of the server so that it will be able to communicate with the new device.
+\item To design and create a functioning Android voting application.
+\item Maintain compatibility with the existing J2ME client with minimal editing.
+\item Ensure that the voting is safe.
+\item Ensure that stored voting credentials are safe after device theft.
+\item Provide the user of the Android application a choice of language: English, French, Slovak and Czech. And create the application in such a way, that facilitates implementing new languages.
+\item Minimize the risk that the Android application will not work in future releases of android by using best practices for Android applications.
+\end{itemize}
+
+%*****************************************************************************
+\chapter{Analysis}
+\section{Vision}
+This electronic voting system will be based on the existing work of Jakub Valenta/cite{bakalarkaJV} and will enable people to vote electronically without the need of a person. This will eliminate the problems of counting errors and provide a new degree of security. The system will be primarily designed for group decision making where the majority decides but it will be also usable for candidate voting. The whole voting process will take place from a mobile device. The system will be highly portable and usable in an international environment.
+\section{Current state}
+\subsection{Overview}
+\paragraph{}
+The system in it's current state is fully functioning and able to run the ballot with a J2ME device.(This was tested only in an emulator).The system enables the user to vote in a very simple way. The user chooses to create a ballot, inputs the questions and possible answers, chooses the threshold percentages for a successful voting event, creates voters with a simple form and starts the voting process. The voters then can vote via their cell phones. After some time the voting is stopped and the server displays the results in the results tab. \paragraph{}
+The communication is handled by HTTP. Jakub Valenta\cite{bakalarkaJV} states that he chose this protocol because of the guaranteed delivery it provides. But while HTTP is a reliable protocol, it is the TCP layer that provides this functionality. The benefits as I see them are mainly that it is a standard and HTTP parsers are easy to use and already implemented in Java. On the other hand, the question whether it is not too much of a load for a Java ME enabled device to parse such requests arises. But that is out of the scope of this work.
+
+
+\subsection{Negatives}
+Suppose there is a ballot question such as this: "Do you agree with proposal no. 22?" The purpose of mobile voting is to be able to vote from wherever the voter is right in the moment and it is possible that he will simply not know the details behind such proposals because he is not physically present at the meeting. This is a problem when using the current system as there is no simple way of providing the details about the question at hand.\\
+Another negative is that SSL is not implemented in communication with the server. This means that anybody who has access to the Wi-Fi through which the voters vote can see all data en route between the devices. And although the connection between a cell phone and the BTS\cite{whatISBTS}  is encrypted, this encryption has been prooven to be weak\cite{GSMCypherWeakness} and breakable in real time. This fact  prevents the use of a cell phone network as a data carrier without encryption on a higher network layer. What is worse than seeing the data is changing them. When using an open network (no access control) virtually anyone with the right software can alter the data.\\
+As stated previously, in spite the fact that the majority of the currently sold cell phones support J2ME the application is unlikely to run on most of them because of compatibility issues.\cite{bakalarkaJV}
+
+\subsection{Positives}
+On the other hand the work has it's positive features. The fact that the voting was made so simple made running it on a limited device smooth and without problems. The installation was without problems and was quick. The user interface was very comfortable and straightforward. This enabled very easy initial setup without a tutorial.\\
+The communication protocol is very efficient and therefore enables the use in areas without 3G signal. (it will even work swiftly with a basic GPRS connection. Documentation was excellent. All in all, the application does what it needs and does it well.
+%Todo Po vacsej analize bakalarky viac pozitiv
+
+\section{Android analysis}
+The main problem concerning the Android system is its speed of development and different versions that are currently released. It was stated previously that Android is mostly forward compatible, but the as the version is higher the framework has more and more functionalities that make some of the programming unnecessary. The question here is the choice of the version on for which the application will be written. The distribution of versions are in the figure below.
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=1]{figures/VersionDistribution.PNG} 
+\caption{Version Distribution of Android \cite{goodevver} from http://developer.android.com/resources/dashboard/platform-versions.html retrieved on 22.1.2011  }
+\label{fig:versions}
+\end{center}
+\end{figure}
+
+
+As it is clearly depicted in the table the prevalence of Android 2.1 and higher is overwhelming. Therefore Android 2.1 was chosen to be the minimum version supported by the application.
+
+\section{Server}
+Because it will be possible to vote from the internet, a new system of verifiing the connecting user origin will be needed. The system is neccesary when the juristiction or some other agreement stipulates that the voter is to be present at a specific place. The Wi-Fi's limited range ensures this. Because the two possible mobile devices will be conencted, the server will have to support multiple types of connections.
+\section{Security analysis}
+As it was stated earlier, mobile devices are susceptible to a number of threads. 
+\begin{enumerate}
+\item Physical theft
+\item Man in the middle attack
+\item Malicious applications posing as legitimate software in order to trick the user into giving away his login credentials.
+\item Rooted device
+\end{enumerate}
+\subsection{Physical theft}
+Physical theft poses a risk that the stored login information in the device. While the most obvious solution would be not to store login credentials on the device. This would be inconvenient for the end user. Therefore a better solution would be, to request a master code upon every application launch. Another possibility for the software would be making an IMSI number check and in an event of a different SIM, or no SIM being inserted into the device, the app would wipe all user data on launch. 
+\subsection{Man in the middle attack}
+A man in the middle attack is a common attack where the attacker has access to the transfer medium (in our case air). The attacker can then see the data being exchanged or, what is worse, alter it. In order to protect against such an attack the whole communication has to be encrypted, preferably by SSL. This, along with a Certificate signed by a trusted authority should ensure that the application will always know if the communication is being tampered with. Proper training manuals will have to warn the users about the dangers of unsecured connections.
+\subsection{Malicious software}
+The graphics interface of the application can be replicated and the user made to believe that he/she is entering his login credentials to the real application. This problem can be avoided by signing the application, and proper user manuals.\\
+Next, a malicious program can try to copy stored data of the voting app. This problem is addressed by using a private storage mechanism provided by Android. \cite{storageAnd}
+
+\subsection{"Rooted" device}
+Normally, an application run on an Android device cannot obtain root access to the device. This ensures that application security is kept intact. Hidden application per application data is protected from beiing read and altered by the wron application. This, however, is not true when running a "rooted" device. The applications on that device can obtain root access and read sensitive data. To combat this risk, the stored password will have to be encrypted, and the user warned about the risks of having root access.
+
+
+\section{Business process model}
+The business process model was created by Jakub Valenta and it depicts the process how voting is held without the use of an electronic voting system. \cite{bakalarkaJV} \ref{fig:businessMOD}
+
+\section{Requirements analysis}
+The requirements analysis is comprised of the requirements the system must achieve to be complete. The system must support all requirements concerning voting from Jakub Valenta's thesis and in addition, those stated further in this section.
+\subsection{Functional requirements}
+\paragraph*{Server}
+
+\begin{enumerate}
+
+%\item  The system must support two-factor authentication.
+\item  The system will provide the user with a wifi-only mode and a fully mobile mode.
+\item  The system must provide detailed information about the questions.
+\item  The system will present connection information on a simple web site.
+\item  The system will enable the users to vote publicly. \cite{bakalarkaJV}
+\item  The system will enable the users to vote secretly. \cite{bakalarkaJV}
+\item  The system will enable new user registration. \cite{bakalarkaJV}
+\item The system will evaluate the results of the vote.\cite{bakalarkaJV}
+\item The system will be able to present the results.\cite{bakalarkaJV}
+\item The system will guarantee the explicitness and the indubitability of the vote. \cite{bakalarkaJV}
+\item The system will ensure persistent storage of data. \cite{bakalarkaJV}
+\end{enumerate}
+\paragraph*{Android}
+\begin{enumerate}
+\item The application must enable the voter to login. 
+\item The application must enable the voter to view question information.
+\item The application must enable the voter to view the results of a closed vote. 
+\item The application must enable the voter to vote.
+\item The application must provide basic safety guidelines when first run.
+\item The application must remember the connection information and login data to multiple servers.
+\item The application must warn the user when using a non-secure connection when security is medium.
+\item The application must enable multiple connections to various servers.
+\item The application must notify the user when a question has been finished.
+\end{enumerate}
+\subsection{Non-Functional requirements}
+\paragraph*{Server}
+\begin{enumerate}
+\item  The system must support both HTTPS and HTTP connections.
+\item The system must be compatible with the current J2ME client.
+\item The system must be able to communicate swiftly with any mobile connection.
+\item The system must be secured from being tampered with by unauthorised personnel.
+\end{enumerate}
+\paragraph*{Android}
+\begin{enumerate}
+\item The application must use as little power as possible.
+\item The application must be usable on a variety of screen densities and sizes.
+\item The application must be usable on a device with or without a touch screen.
+\item The application must be easy to use and fast to learn.
+\item The application must adhere to the Android best design practices.
+\item The application must provide an easy way to add a new language.
+\item The application must store the user's login information in such a way that other applications will not be able to access it.
+\end{enumerate}
+\section{Use Cases}
+The use cases describe the probable interactions with the system and how the system will react to them. They are fully described in the UseCases file enclosed with the thesis. The user can choose the server he wishes to log into, then can display the details of the questions and vote on them. Time and the Android system itself play a minor role in the use cases because of how Android manages memory. For the sake of simplicity application components are represented as one activity. Further information concerning the use cases are in the 
+
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=1]{figures/AndroidUCs.PNG} 
+\caption{Use cases for the Android Application}
+\label{fig:Use Cases}
+\end{center}
+\end{figure}
+%\section{Domain Terminology}
+%This aim of this section is to provide a clear understanding of the terminology used in this work. Most of the terms are intuitive and easy to understand however there are some that need clarification.
+%\paragraph*{Activity and Application}
+%In this work the work application is referring to an Android "App" written in Java for the Dalvik VM. It is often hard to distinguish between what is an application and what is an activity. In simple terms an application consists of a number of activities each aimed to fulfil one task.
+%\paragraph*{User}
+%The user is, of course, the person who makes use of the system. In this work, two types of users are distinguished. The voter and the administrator. The voters role is simple, login to a server and vote. The administrator's role is a little more complex, input the questions, add voter accounts and open/close voting. As the administrators part has been analysed in the previous work, it is not given much notice here.
+%\paragraph*{Question and Response}
+%A question is a request for information concerning a subject and aimed at the user. A response is the answer to such a request. In the effort of simple processing the voter is given a set of responses from which he can choose. The questions have no right or wrong answers, they are polling questions. Every question has a details field which enables the voter to see the full wording of the %\paragraph*{Server}
+%A server is an application that listens for a connection. For the application a server is a collection of data that is needed for a successful 
+%\paragraph*{View}
+
+%\paragraph*{Service}
+\section{Domain Model}
+This model describes the various relationships between objects in the problem domain. It is based on the Jakub Valenta's domain.
+This model describes how the client side on android sees the problem. The model is similar to that of the original, but takes to account that the use of this system will be purely for voting. 
+\subsection{Server}
+The server domain model represents how the server sees the objects involved in voting. A full description is here \cite{bakalarkaJV} but as a quick reference the main purpose of the entities are briefly described.
+\paragraph{Voting Entity} 
+The voting entity represents a vote event. It's attributes are isSecret used so signal if users vote secretly and minVotes - the minimum turnout of the event to be valid.
+\paragraph{User} 
+The user entity represents a user within the system. It's attributes are self explanatory.
+\paragraph{Vote}
+This entity is the ballot. It is the form that voters fill out and send to the voting commission.
+\paragraph{Question}
+The question entity represents one question on the voting ticket. Its attributes are maxWinners - the number of winners, minPercent - the minimum percentage to be successful and text - an XML representation of the question and answers. 
+%Dopis detaily o otazke
+\subsection{Android}
+From a clients perspective the domain model is a little different. It does not concern itself with the details about the voting event and does not participate in results calculation. On the other hand, the client has to deal with being connected to multiple servers and save users.
+\paragraph{ServerData entity}
+The server entity represents the a real server application running on a computer somewhere on the Internet.Its attributes are the settings that the client needs to create a connection to a server. It consists of an IP address or host name of the target server, the port through on which the server is listening. It also has a friendly name.\\
+Next the server contains, the login data for one specific user. The password is encrypted. The user is  an authorised user in the system that is created on the server. \\
+The whole entity has a unique id that identifies it in the SQLite database.
+\paragraph{QuestionData entity}
+The questionData class serves as a container for the question text and the corresponding details and as a container for the possible answers. The states of the question here is quite similar to those on the server but the NOT\_SET attribute is meaningless and therefore left out. The chosenAnswer attribute is the presently chosen answer that will be sent The other attributes are ANSWERABLE, meaning the question can be answered, and FINISHED. A finished question is open for result viewing. 
+\paragraph{Answer entity} 
+This represent the possible answer for the question that is stored on a server. Its attributes are percent and text. The former represents the percentage of people that voted for this question, this is only found when a question is in the "FINISHED" state, and and the latter represents the question text.
+
+
+
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=1]{figures/DomainObjects.png} 
+\caption{Domain Model of the System}
+\label{fig:Domain Model}
+\end{center}
+\end{figure}
+
+
+
+
+
+\chapter{Design}
+The design of the "Mobile Voting System" is the original design of Jan Valenta which was extended in order to add functionality.
+\section{Communication}
+
+Presently, the communication is handled by the HTTP protocol. This protocol has, in my opinion, and advantage in being standardised and so it facilitates implementing the communicating part of the application. The protocol, however, is not safe. It sends data as open text and that is not acceptable for this kind of an application.\\
+ Therefore, Android applications will send a special "Hello from Android" message in the message body. The server then will either send a "426 Upgrade Required" code, which will indicate that the client has to try again using HTTPS, or will accept the connection without encryption. The message will have and optional port number, if the server is using a non standard port for secure connections. This behaviour will depend on the security settings on the server side. \\
+  The feature phone will continue to use HTTP as altering it's programming in such a degree is beyond the scope of this thesis. If the security will demand it, the server will reject any non-encrypted communication attempted through a mobile network. The connection termination will be preceded by a "419 LAN REQUIRED" code. Feature phones will still be able to connect through a Wi-Fi connection. Provided that the Wi-Fi is protected.\\
+ 
+This differentiation will be possible because of the new IP checking mechanism that will be added. When a client connects, the server will perform an IP check to determine whether the client is connecting from the local network or not. The easiest way to perform this check is to see if the IP address is from the private subnets. As a packet with a private IP cannot survive on the Internet(it is discarded by the first properly configured router), it is safe to assume, that such a packet came from the local network. The reason why I perform this check is to ensure that the voter is physically present at the voting site when the legislature of some other rules require it. VPN technology is to be dealt with on the operating system level.\\
+
+It is crucial that the client will not send the password when the communication is to be encrypted. Therefore, the first "hello" message has to be without a password. If a faulty client implementation sends the password unencrypted in this first hello message the server will invalidate the credentials of that user and add a log about it.\\
+
+Data in HTTP answers will be sent in the XML format created by Jan Valenta. A new tag will house question details. Furthermore a new DTD will be created to form the XML data that will be sent when election results will be requested.
+
+\subsection{Summary of codes used in communication}
+Original\cite{bakalarkaJV}
+\begin{itemize}
+\item 200 Request success
+\item 400 The request was not understood by the server. The server understands only GET and POST request.
+\item 401 Authentication credentials bad.
+\item 403 Authentication credentials required and not present.
+\item 404 Nothing to send.\\
+\end{itemize}
+
+Extentions
+\begin{itemize}
+\item 426 Use HTTPS protocol
+\item 419 Local area connection required
+\item 466 Security was compromised by sending an unencrypted password.
+\end{itemize}
+\section{Server side}
+\subsection{Minor Changes}
+The server GUI will have some minor changes from it's original version. The questions table will be enhanced with a new column called "Question Description". Next, a new security setting dialogue will be added when creating a new election event and it will now be possible to use custom TCP ports in case the server will  have those ports blocked by a web server, or some other application. The persistence layer will mostly remain unaltered apart from the new "details" attribute.
+
+
+\section{Android side}
+The android application will be designed with best practices for the platform in mind. It will be build using the MVC model\cite{whatIsMVC}.
+
+\subsection{Graphical User Interface (GUI) - View}
+The application will have a minimalist user interface that will enable to use touch screens with ease.The main screen will consist of a list of servers that were added in advance. After choosing the desired server and a successful connection the application will view possible questions. Again in the of a list. The user will then choose a question he wants to view. Here, the application will behave in three different ways. First, it will normally display question details, and possible answers, second behaviour is to display the question results - as an ordered table when the question is closed and results published, third is to inform the user that he has already answered, and the results are not yet available.  \\
+Possible answers to a question will be displayed as  buttons. After the desired answer is selected, the user will be able to send his response by long pressing the question button. The send button is hidden in order to reduce the risk of accidental sending. \\
+When designing the GUI, the possibility of a third person being able to look at the devices display has to be taken into account. The passwords are never shown as text, therefore no risk exists in that somebody will see the password. However, there is a risk that someone will, on purpose or by accident see what answers are highlighted. One secure way of displaying the chosen answer is, of course, not to display them at all. This, however, poses more dangers than benefits. It introduces uncertainty for the voter about which answer they have chosen as touch screens are not very precise. A compromise is, that the choice will be highlighted for only a few second after the user has made his choice. With this in mind the user inteface will print out a small discrete message with the chosen answer for a shot amount of time after choosing the answer. \\
+Every action will be confirmed by a notification.\cite{bakalarkaJV}	
+
+\subsection{Persistence}
+The application will need to store user login credentials, server information and temporarily store questions and related data. The data that needs to be saved even after a system reboot - credentials and server info, will be in a private SQL database that Android provides for every application. The databas,on an non-rooted\cite{whatIsRoot}  phone,  is completely private and no other applications can gain access to it. If the device should be stolen and rooted, the password encryption should offer the legitimate user time, to reset his password and prevent any damage. \\
+Another problem is, what will happen when the device receives a phone call or switches to some other application \cite{bakalarkaJV} at some point during the voting process. Because Android typically runs on low memory devices, it often simply kills an application when it needs more memory. This however, is not without saving the data structures belonging to that application first. The user notices nothing. This is entirely done by the Android system.\\
+
+\subsection{Communication}
+As it was stated in the previous section, Android kills an application when it runs out of memory. This can happen to the voting application too. When this happens, the connection would normally be lost. The platform thinks of this and provides a component called "service". The service runs independently from the graphical interface and has a lower "to kill" priority when memory shortage occurs. \\
+
+Because of this, the communication part of the application will be in the "service" component and will dynamically bind with new views in case the former got killed. The subsystem will have to be efficient and conserve battery as much as possible. It will also have to take into account the specific problems of a portable device - sudden loss of connectivity \cite{bakalarkaJV}. 
+
+
+
+
+	
+%*****************************************************************************
+\chapter{Implementation}
+Implementation in progress
+
+
+%*****************************************************************************
+\chapter{Testing}
+
+\begin{itemize}
+ \item Způsob, průběh a výsledky testování.
+ \item Srovnání s existujícími řešeními, pokud jsou známy.
+\end{itemize} 
+ 
+ \chapter{Deployment}
+
+%*****************************************************************************
+\chapter{Conclusion}
+
+\begin{itemize}
+\item Zhodnocení splnění cílů DP/BP a  vlastního přínosu práce (při formulaci je třeba vzít v potaz zadání práce).
+\item Diskuse dalšího možného pokračování práce.
+
+\end{itemize} 	
+
+
+\bibliographystyle{csplainnat}
+
+{
+%JZ: 11.12.2008 Kdo chce mit v techto ukazkovych odkazech take odkaz na CSTeX:
+\def\CS{$\cal C\kern-0.1667em\lower.5ex\hbox{$\cal S$}\kern-0.075em $}
+\bibliography{reference}
+}
+
+% M. Dušek radi:
+%\bibliographystyle{alpha}
+% kdy citace ma tvar [AutorRok] (napriklad [Cook97]). Sice to asi neni  podle ceske normy (BTW BibTeX stejne neodpovida ceske norme), ale je to nejprehlednejsi.
+% 3.5.2009 JZ polemizuje: BibTeX neobvinujte, napiste a poskytnete nam styl (.bst) splnujici citacni normu CSN/ISO.
+
+
+\appendix
+
+
+
+%*****************************************************************************
+\chapter{Abbreviations}
+
+\begin{description}
+\item
+\end{description}
+\vdots
+
+%*****************************************************************************
+\chapter{UML diagrams}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=14cm]{figures/VotingCZECH}
+\caption{Business process model of voting, model by Jakub Valenta}
+\label{fig:businessMOD}
+\end{center}
+\end{figure}
+
+%*****************************************************************************
+\chapter{Installation and how to use}
+\textbf{\large Tato příloha velmi žádoucí zejména u softwarových implementačních prací.}
+
+%*****************************************************************************
+\chapter{Enclosed CD Table of Contents}
+\textbf{\large Tato příloha je povinná pro každou práci. Každá práce musí totiž obsahovat přiložené CD. Viz dále.}
+
+Může vypadat například takto. Váš seznam samozřejmě bude odpovídat typu vaší práce. (viz \cite{infodp}):
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=14cm]{figures/seznamcd}
+\caption{Seznam přiloženého CD --- příklad}
+\label{fig:seznamcd}
+\end{center}
+\end{figure}
+
+
+
+Na GNU/Linuxu si strukturu přiloženého CD můžete snadno vyrobit příkazem:\\ 
+\verb|$ tree . >tree.txt|\\
+Ve vzniklém souboru pak stačí pouze doplnit komentáře.
+
+Z \textbf{README.TXT} (případne index.html apod.)  musí být rovněž zřejmé, jak programy instalovat, spouštět a jaké požadavky mají tyto programy na hardware.
+
+Adresář \textbf{text}  musí obsahovat soubor s vlastním textem práce v PDF nebo PS formátu, který bude později použit pro prezentaci diplomové práce na WWW.
+
+\end{document}

@@ -1,0 +1,3 @@
+Preconditions: None
+Postconditions: Application is launched
+Use Case : Launch Application
