@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (MiKTeX 2.9) (preloaded format=pdflatex 2011.3.17)  18 MAR 2011 00:41
+This is pdfTeX, Version 3.1415926-1.40.11 (MiKTeX 2.9) (preloaded format=pdflatex 2011.3.17)  31 MAR 2011 00:31
 entering extended mode
 **murinradThesis.tex
-(C:\Users\Murko\Desktop\Bakalarka\murinradThesis.tex
+(C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -307,9 +307,9 @@ File: pdftex.def 2010/09/14 v0.05b Graphics/color for pdfTeX
 \Gin@req@height=\dimen104
 \Gin@req@width=\dimen105
 )
-(C:\Users\Murko\Desktop\Bakalarka\k336_thesis_macros.sty
+(C:\Users\Murko\Documents\Bakalarka\txt\k336_thesis_macros.sty
 Two side layout redefined.
-(C:\Users\Murko\Desktop\Bakalarka\hyphen.tex))
+(C:\Users\Murko\Documents\Bakalarka\txt\hyphen.tex))
 Bachelor's Project
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
 Package: hyperref 2010/10/30 v6.81t Hypertext links for LaTeX
@@ -468,7 +468,7 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count101
 )
-(C:\Users\Murko\Desktop\Bakalarka\murinradThesis.aux)
+(C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 136.
 LaTeX Font Info:    ... okay on input line 136.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 136.
@@ -525,8 +525,8 @@ LaTeX Info: Redefining \ref on input line 136.
 LaTeX Info: Redefining \pageref on input line 136.
 LaTeX Info: Redefining \nameref on input line 136.
 
-(C:\Users\Murko\Desktop\Bakalarka\murinradThesis.out)
-(C:\Users\Murko\Desktop\Bakalarka\murinradThesis.out)
+(C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.out)
+(C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.out)
 \@outlinefile=\write3
 
 ************************************************
@@ -538,35 +538,34 @@ Author: Radovan Murin
 Title: Mobile voting application for Android
 Supervisor: Ing. Martin Kom\IeC {\'a}rek
 ***************************************************
-<figures/LogoCVUT.pdf, id=203, 93.34875pt x 70.2625pt>
+<figures/LogoCVUT.pdf, id=255, 93.34875pt x 70.2625pt>
 File: figures/LogoCVUT.pdf Graphic file (type pdf)
 
 <use figures/LogoCVUT.pdf> [3
 
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/Murko/Desktop/Ba
-kalarka/figures/LogoCVUT.pdf>] [4
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/Murko/Documents/
+Bakalarka/txt/figures/LogoCVUT.pdf>] [4
 
-] [5] [6
+] [5]
+[6
 
-]
-[7] [8
+] [7] [8
 
 ] [9
 
 ] [10
 
-] (C:\Users\Murko\Desktop\Bakalarka\murinradThesis.toc
+] (C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 5.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 5.
- [11])
+[11])
 \tf@toc=\write4
-
-[12] (C:\Users\Murko\Desktop\Bakalarka\murinradThesis.lof
+ [12] (C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.lof
 Overfull \hbox (116.50122pt too wide) in paragraph at lines 6--6
  [][] [][][]\T1/cmr/m/n/10.95 Version Dis-tri-bu-tion of An-droid [[]] from htt
 p://developer.android.com/resources/dashboard/platform- 
@@ -578,9 +577,10 @@ p://developer.android.com/resources/dashboard/platform-
 
 ] [14
 
-] (C:\Users\Murko\Desktop\Bakalarka\murinradThesis.lot)
+] (C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.lot)
 \tf@lot=\write6
- [15] [16
+
+[15] [16
 
 ]
 Chapter 1.
@@ -590,45 +590,45 @@ Chapter 1.
 
 ]
 Chapter 2.
-
-Underfull \hbox (badness 10000) in paragraph at lines 299--302
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 293--296
 
  []
 
-[3]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 307.
+[4]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 325.
 
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 307.
- [4]
-Underfull \hbox (badness 10000) in paragraph at lines 330--331
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 325.
+
+Underfull \hbox (badness 10000) in paragraph at lines 348--349
 
  []
 
-[5] [6
-
-]
+[5] [6]
 Chapter 3.
 
-Overfull \hbox (20.90881pt too wide) in paragraph at lines 348--349
+Overfull \hbox (20.90881pt too wide) in paragraph at lines 367--368
 \T1/cmr/m/n/10.95 This elec-tronic vot-ing sys-tem will be based on the ex-ist-
 ing work of Jakub Va-lenta/citebakalarkaJV
  []
 
-[7] <figures/VersionDistribution.PNG, id=400, 208.52907pt x 133.24782pt>
+[7
+
+] <figures/VersionDistribution.PNG, id=472, 208.52907pt x 133.24782pt>
 File: figures/VersionDistribution.PNG Graphic file (type png)
 
 <use figures/VersionDistribution.PNG>
-Underfull \hbox (badness 10000) in paragraph at lines 373--373
+Underfull \hbox (badness 10000) in paragraph at lines 397--397
 []\T1/cmr/m/n/10.95 Figure 3.1: []Version Dis-tri-bu-tion of An-droid [[]] from
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 373--373
+Underfull \hbox (badness 10000) in paragraph at lines 397--397
 \T1/cmr/m/n/10.95 http://developer.android.com/resources/dashboard/platform-ver
 sions.html re-trieved on
  []
@@ -636,71 +636,89 @@ sions.html re-trieved on
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[8] [9 <C:/Users/Murko/Desktop/Bakalarka/figures/VersionDistribution.PNG>]
-[10] [11] <figures/AndroidUCs.PNG, id=472, 503.63156pt x 373.395pt>
+
+Package natbib Warning: Citation `whatIsUPD' on page 8 undefined on input line 
+406.
+
+
+Package natbib Warning: Citation `whatIsBroadcasting' on page 8 undefined on in
+put line 406.
+
+[8] [9 <C:/Users/Murko/Documents/Bakalarka/txt/figures/VersionDistribution.PNG>
+] [10] [11] [12] <figures/AndroidUCs.PNG, id=556, 503.63156pt x 373.395pt>
 File: figures/AndroidUCs.PNG Graphic file (type png)
 
 <use figures/AndroidUCs.PNG>
-Overfull \hbox (68.11519pt too wide) in paragraph at lines 461--462
+Overfull \hbox (68.11519pt too wide) in paragraph at lines 504--505
  [] 
  []
 
-[12 <C:/Users/Murko/Desktop/Bakalarka/figures/AndroidUCs.PNG>] [13]
-<figures/DomainObjects.png, id=489, 355.3275pt x 421.575pt>
+[13 <C:/Users/Murko/Documents/Bakalarka/txt/figures/AndroidUCs.PNG>] [14]
+<figures/DomainObjects.png, id=576, 355.3275pt x 421.575pt>
 File: figures/DomainObjects.png Graphic file (type png)
 
-<use figures/DomainObjects.png> [14 <C:/Users/Murko/Desktop/Bakalarka/figures/D
-omainObjects.png>]
-Chapter 4.
-
-Underfull \hbox (badness 10000) in paragraph at lines 523--526
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 527--528
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 529--530
-
- []
-
-[15
+<use figures/DomainObjects.png> [15 <C:/Users/Murko/Documents/Bakalarka/txt/fig
+ures/DomainObjects.png>] [16
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 540--541
+Chapter 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 566--569
 
  []
 
-[16]
-Underfull \hbox (badness 10000) in paragraph at lines 564--566
+
+Underfull \hbox (badness 10000) in paragraph at lines 570--571
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 568--569
+Underfull \hbox (badness 10000) in paragraph at lines 572--573
 
  []
 
-[17] [18]
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 583--584
+
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 607--609
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 611--612
+
+ []
+
+[19] [20]
 Chapter 5.
-[19
+[21
 
-] [20
+] [22
 
 ]
 Chapter 6.
-[21] [22
-
-]
-Chapter 7.
 [23] [24
 
 ]
+Chapter 7.
+
+Underfull \hbox (badness 10000) in paragraph at lines 640--647
+
+ []
+
+[25]
+
+Package natbib Warning: Citation `androCompatDef' on page 26 undefined on input
+ line 655.
+
+[26]
 Chapter 8.
-(C:\Users\Murko\Desktop\Bakalarka\murinradThesis.bbl [25] [26
+(C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.bbl [27
+
+] [28
 
 ]
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 16.
@@ -749,49 +767,49 @@ Underfull \hbox (badness 10000) in paragraph at lines 79--83
 mr/m/n/10.95 , Re-trieved on
  []
 
-[27]
+[29]
 Underfull \hbox (badness 10000) in paragraph at lines 85--89
 []\T1/cmtt/m/n/10.95 http://en.wikipedia.org/wiki/Base_transceiver_station\T1/c
 mr/m/n/10.95 , Re-trieved on
  []
 
-) [28]
+) [30]
 Appendix A.
-[29
+[31
 
-] [30
+] [32
 
 ]
 Appendix B.
-<figures/VotingCZECH.png, id=573, 901.3675pt x 618.31pt>
+<figures/VotingCZECH.png, id=664, 901.3675pt x 618.31pt>
 File: figures/VotingCZECH.png Graphic file (type png)
 
-<use figures/VotingCZECH.png> [31 <C:/Users/Murko/Desktop/Bakalarka/figures/Vot
-ingCZECH.png (PNG copy)>] [32
+<use figures/VotingCZECH.png> [33 <C:/Users/Murko/Documents/Bakalarka/txt/figur
+es/VotingCZECH.png (PNG copy)>] [34
 
 ]
 Appendix C.
-[33] [34
+[35] [36
 
 ]
 Appendix D.
 
-Package natbib Warning: Citation `infodp' on page 35 undefined on input line 64
-5.
+Package natbib Warning: Citation `infodp' on page 37 undefined on input line 71
+9.
 
-<figures/seznamcd.pdf, id=590, 793.96625pt x 539.01375pt>
+<figures/seznamcd.pdf, id=682, 793.96625pt x 539.01375pt>
 File: figures/seznamcd.pdf Graphic file (type pdf)
 
-<use figures/seznamcd.pdf> [35 <C:/Users/Murko/Desktop/Bakalarka/figures/seznam
-cd.pdf>]
+<use figures/seznamcd.pdf> [37 <C:/Users/Murko/Documents/Bakalarka/txt/figures/
+seznamcd.pdf>]
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 665.
-[36]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 665.
- (C:\Users\Murko\Desktop\Bakalarka\murinradThesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 665.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 739.
+[38]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 739.
+ (C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 739.
 
 
 Package rerunfilecheck Warning: File `murinradThesis.out' has changed.
@@ -799,34 +817,61 @@ Package rerunfilecheck Warning: File `murinradThesis.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `murinradThesis.out':
-(rerunfilecheck)             Before: D2BC6BED616A945D65FFD413B3B863DC;6602
-(rerunfilecheck)             After:  6913A6EA5A523C4AB419F9AA49901571;6602.
+(rerunfilecheck)             Before: 5CBCD31BB68F105FD94FD1D43568A72E;8682
+(rerunfilecheck)             After:  50D87AB2171ED9A67B150BCAF833D3FA;8913.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 7408 strings out of 494019
- 102634 string characters out of 3143882
- 184560 words of memory out of 3000000
- 10388 multiletter control sequences out of 15000+200000
+ 7456 strings out of 494019
+ 103460 string characters out of 3143882
+ 184605 words of memory out of 3000000
+ 10405 multiletter control sequences out of 15000+200000
  16703 words of font info for 37 fonts, out of 3000000 for 9000
  718 hyphenation exceptions out of 8191
- 31i,7n,33p,879b,454s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\
-ectt1095.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\
-ec\dpi600\ecbx1200.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour
-\jknappen\ec\dpi600\ecsl1095.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts
-\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk> <C:\Users\Murko\AppData\Local\MiKTeX
-\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2488.pk> <C:\Users\Murko\AppData\Lo
-cal\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0600.pk> <C:\Users\Murko\
-AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2074.pk> <C:\Us
-ers\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1095.
-pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600
-\ecti1440.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen
-\ec\dpi600\ecbx1440.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfou
-r\jknappen\ec\dpi600\ecrm1200.pk><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1
-/public/amsfonts/cm/cmsy10.pfb>
-Output written on murinradThesis.pdf (50 pages, 552730 bytes).
+ 31i,7n,33p,2592b,454s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{subsection.3.9.2} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.9.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.7.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.7.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.5.4} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.5.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.5.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.5.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+ <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ec
+tt1095.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
+\dpi600\ecbx1200.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\j
+knappen\ec\dpi600\ecsl1095.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\p
+k\ljfour\jknappen\ec\dpi600\ecbx1095.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2
+.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2488.pk> <C:\Users\Murko\AppData\Loca
+l\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0600.pk> <C:\Users\Murko\Ap
+pData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2074.pk> <C:\User
+s\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1095.pk
+> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
+cti1440.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\e
+c\dpi600\ecbx1440.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\
+jknappen\ec\dpi600\ecrm1200.pk><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmsy10.pfb>
+Output written on murinradThesis.pdf (52 pages, 575814 bytes).
 PDF statistics:
- 1128 PDF objects out of 1200 (max. 8388607)
- 172 named destinations out of 1000 (max. 500000)
- 431 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1235 PDF objects out of 1440 (max. 8388607)
+ 203 named destinations out of 1000 (max. 500000)
+ 535 words of extra memory for PDF output out of 10000 (max. 10000000)
 
