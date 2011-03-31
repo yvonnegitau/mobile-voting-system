@@ -27,24 +27,24 @@
 \contentsline {section}{\numberline {3.4}Server}{9}{section.3.4}
 \contentsline {section}{\numberline {3.5}Client}{10}{section.3.5}
 \contentsline {section}{\numberline {3.6}Security analysis}{10}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Physical theft}{10}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}Man in the middle attack}{10}{subsection.3.6.2}
-\contentsline {subsection}{\numberline {3.6.3}Malicious software}{10}{subsection.3.6.3}
+\contentsline {subsection}{\numberline {3.6.1}Physical theft}{11}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Man in the middle attack}{11}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.3}Malicious software}{11}{subsection.3.6.3}
 \contentsline {subsection}{\numberline {3.6.4}"Rooted" device}{11}{subsection.3.6.4}
 \contentsline {section}{\numberline {3.7}Business process model}{11}{section.3.7}
 \contentsline {section}{\numberline {3.8}Requirements analysis}{11}{section.3.8}
-\contentsline {subsection}{\numberline {3.8.1}Functional requirements}{11}{subsection.3.8.1}
+\contentsline {subsection}{\numberline {3.8.1}Functional requirements}{12}{subsection.3.8.1}
 \contentsline {subsection}{\numberline {3.8.2}Non-Functional requirements}{12}{subsection.3.8.2}
 \contentsline {section}{\numberline {3.9}Use Cases}{13}{section.3.9}
 \contentsline {section}{\numberline {3.10}Domain Model}{13}{section.3.10}
-\contentsline {subsection}{\numberline {3.10.1}Server}{14}{subsection.3.10.1}
-\contentsline {paragraph}{Voting Entity}{14}{section*.12}
-\contentsline {paragraph}{User}{14}{section*.13}
-\contentsline {paragraph}{Vote}{14}{section*.14}
+\contentsline {subsection}{\numberline {3.10.1}Server}{13}{subsection.3.10.1}
+\contentsline {paragraph}{Voting Entity}{13}{section*.12}
+\contentsline {paragraph}{User}{13}{section*.13}
+\contentsline {paragraph}{Vote}{13}{section*.14}
 \contentsline {paragraph}{Question}{14}{section*.15}
 \contentsline {subsection}{\numberline {3.10.2}Android}{14}{subsection.3.10.2}
 \contentsline {paragraph}{ServerData entity}{14}{section*.16}
-\contentsline {paragraph}{QuestionData entity}{14}{section*.17}
+\contentsline {paragraph}{QuestionData entity}{15}{section*.17}
 \contentsline {paragraph}{Answer entity}{15}{section*.18}
 \contentsline {chapter}{\numberline {4}Design}{17}{chapter.4}
 \contentsline {section}{\numberline {4.1}Communication}{17}{section.4.1}
