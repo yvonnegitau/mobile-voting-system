@@ -121,7 +121,7 @@ public class ConnectionHTTP extends Thread implements Runnable, ConnectionInterf
 					if (bodySize > 0)
 						Log.i("Header sent for parsing",
 								headers.get(headers.size() - 1));
-					XMLParser.XMLParser.parseString(
+					XMLParser.XMLParser.parseQuestionXML(
 							headers.get(headers.size() - 1), parent);
 				}
 

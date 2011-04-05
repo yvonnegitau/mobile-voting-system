@@ -51,6 +51,10 @@ public class ServerButton extends DefaultButton {
 					deleteMe();
 					break;
 				case 2:
+					if(server.getId()==-2) {
+						editMe();
+						break;
+					}
 					connectMe();
 					break;
 				default:

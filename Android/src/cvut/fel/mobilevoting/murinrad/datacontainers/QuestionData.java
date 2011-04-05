@@ -19,7 +19,7 @@ public class QuestionData {
 		this.details = details;
 	}
 
-	String text = null;
+	String text = "";
 	ArrayList<String> answers = null;
 
 	public QuestionData(int id, String text,String details, ArrayList<String> answers,int min,int max) {

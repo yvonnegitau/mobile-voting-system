@@ -1,7 +1,5 @@
 package cvut.fel.mobilevoting.murinrad.views;
 
-
-
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -24,6 +22,7 @@ import cvut.fel.mobilevoting.murinrad.R;
 import cvut.fel.mobilevoting.murinrad.R.id;
 import cvut.fel.mobilevoting.murinrad.R.menu;
 import cvut.fel.mobilevoting.murinrad.R.string;
+import cvut.fel.mobilevoting.murinrad.communications.BeaconListener;
 import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.gui.PasswordSetterDialogue;
 import cvut.fel.mobilevoting.murinrad.gui.ServerButton;
@@ -34,10 +33,12 @@ public class ServerListView extends Activity {
 	private DatabaseStorage storage;
 	// private ArrayList<ServerData> servers = new ArrayList<ServerData>();
 	private ArrayList<ServerData> servers;
+	int helper = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		BeaconListener bl = new BeaconListener(this);
 		onResume();
 
 	}
@@ -46,7 +47,7 @@ public class ServerListView extends Activity {
 	public void onResume() {
 		super.onResume();
 		storage = new DatabaseStorage(this);
-		//storage.dropDatabase();
+		// storage.dropDatabase();
 		servers = storage.getServers();
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
@@ -55,12 +56,11 @@ public class ServerListView extends Activity {
 		header.setText(R.string.HeaderServerList);
 		layout.addView(header);
 		for (int i = 0; i < servers.size(); i++) {
-			final ServerButton serverBTN = new ServerButton(this,
-					servers.get(i), this);
-
-			layout.addView(serverBTN, i + 1);
+			addServer(servers.get(i));
 		}
 		setContentView(layout);
+		
+		//bl.start();
 	}
 
 	@Override
@@ -109,6 +109,12 @@ public class ServerListView extends Activity {
 				cvut.fel.mobilevoting.murinrad.views.ChangeServerView.class);
 		i.putExtra("id", -1);
 		startActivity(i);
+
+	}
+
+	public void addServer(ServerData sd) {
+		final ServerButton serverBTN = new ServerButton(this, sd, this);
+		layout.addView(serverBTN, 1);
 
 	}
 
