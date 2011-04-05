@@ -19,7 +19,8 @@ public class QuestionButtonLayout extends LinearLayout {
 		setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT));
 		qb = new QuestionButton(context, qData, parent);
-		qb.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		qb.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT));
 		addView(qb, 0);
 
 		checker = new ImageView(context);
@@ -42,34 +43,36 @@ public class QuestionButtonLayout extends LinearLayout {
 			}
 		});
 		addView(checker, 1);
-		
+
 	}
 
 	public void showCheckers() {
-		//invalidate();
+		// invalidate();
 		checker.setVisibility(VISIBLE);
 		checker.invalidate();
 		qb.setLayoutParams(new LayoutParams(280, LayoutParams.WRAP_CONTENT));
-		//updateViewLayout(qb, new LayoutParams(220, LayoutParams.WRAP_CONTENT));
-		//requestLayout();
-		
-		
+		// updateViewLayout(qb, new LayoutParams(220,
+		// LayoutParams.WRAP_CONTENT));
+		// requestLayout();
+
 	}
 
 	public void hideCheckers() {
 		checker.setVisibility(GONE);
-		qb.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		qb.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT));
 		checker.invalidate();
-		//invalidate();
-		//checker.setVisibility(GONE);
-		//qb.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		 //requestLayout();
+		// invalidate();
+		// checker.setVisibility(GONE);
+		// qb.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+		// LayoutParams.WRAP_CONTENT));
+		// requestLayout();
 	}
-	
+
 	public boolean isChecked() {
 		return checked;
 	}
-	
+
 	public QuestionData extractQData() {
 		return qb.extractQData();
 	}

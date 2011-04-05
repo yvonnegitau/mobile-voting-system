@@ -49,4 +49,6 @@
 	<string name="sendAnswers">Send answers</string>
 	<string name="notEnoughAnswers">Pick more answers</string>
 	<string name="TooMuchAnswers">Maximum Answers Reached</string>
+	<string name="dismissLabel">Dismiss</string>
+	 <string name="QDDTitle">Question Details</string>
 </resources>

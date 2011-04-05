@@ -11,6 +11,7 @@ import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuestionButton extends DefaultButton {
@@ -125,7 +127,28 @@ public class QuestionButton extends DefaultButton {
 
 	@Override
 	public void onLongClickAction() {
-		prepForSending();
+		//prepForSending();
+		showDetails();	
+	}
+
+	private void showDetails() {
+		final Dialog d = new Dialog(parent);
+		d.setContentView(R.layout.questiondetailsdialog);
+		d.setTitle(parent.getString(R.string.QDDTitle));
+		TextView tv = (TextView) findViewById(R.id.QDDText);
+		Button btn = (Button) findViewById(R.id.QDDDismiss);
+		btn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				d.dismiss();
+				
+			}
+		});
+		tv.setText(qData.getDetails());
+		d.show();
+		
+		
 	}
 
 	public boolean getChecked() {
