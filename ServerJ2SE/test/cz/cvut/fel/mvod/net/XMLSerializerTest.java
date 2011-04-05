@@ -27,6 +27,7 @@ package cz.cvut.fel.mvod.net;
 
 import cz.cvut.fel.mvod.common.Alternative;
 import cz.cvut.fel.mvod.common.Question;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +109,7 @@ public class XMLSerializerTest {
 	 * Test of parseVote method, of class XMLSerializer.
 	 */
 //	@Test
-	public void testParseVote() {
+	public void testParseVote() throws IOException {
 		System.out.println("parseVote");
 		InputStream in = null;
 		List expResult = null;

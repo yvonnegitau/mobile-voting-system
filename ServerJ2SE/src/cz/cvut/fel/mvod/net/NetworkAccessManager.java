@@ -145,7 +145,8 @@ public class NetworkAccessManager implements NetworkConnection, DataProvider {
 	 */
 	public List<Question> getQuestions(String userName) {
 		synchronized(sendQueue) {
-			return sendQueue.remove(userName);
+                    //Altered .remove to get
+			return sendQueue.get(userName);
 		}
 	}
 
@@ -169,6 +170,7 @@ public class NetworkAccessManager implements NetworkConnection, DataProvider {
 					vote.setVoter(voter);
 					try {
 						dao.saveVote(vote);
+                                                sendQueue.remove(userName);
 					} catch(DAOException ex) {
 //FIXME some reaction?
 						return;

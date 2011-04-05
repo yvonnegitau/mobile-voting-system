@@ -73,6 +73,8 @@ class Server {
 	public void connect() throws IOException {
 		if(!connected) {
 			server = HttpServer.create(new InetSocketAddress(port), client_count);
+                        BeaconBroadcaster b = new BeaconBroadcaster("Temporary Value", port);
+                        b.start();
 //			server = HttpsServer.create(new InetSocketAddress(port), client_count);
 //			try {
 //				SSLContext sslContext = SSLContext.getInstance("TLS");
