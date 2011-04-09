@@ -87,4 +87,10 @@ public class ServerData implements Serializable {
 		this.friendlyName = friendlyName;
 		changed = true;
 	}
+	
+	@Override
+	public String toString() {
+		String s = "Server ID = "+getId()+"IP = "+getAddress()+"Port = "+getPort();
+		return s;
+	}
 }

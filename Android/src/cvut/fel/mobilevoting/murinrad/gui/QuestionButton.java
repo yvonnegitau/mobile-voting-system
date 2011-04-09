@@ -135,8 +135,9 @@ public class QuestionButton extends DefaultButton {
 		final Dialog d = new Dialog(parent);
 		d.setContentView(R.layout.questiondetailsdialog);
 		d.setTitle(parent.getString(R.string.QDDTitle));
-		TextView tv = (TextView) findViewById(R.id.QDDText);
-		Button btn = (Button) findViewById(R.id.QDDDismiss);
+		d.show();
+		TextView tv = (TextView) d.findViewById(R.id.QDDText);
+		Button btn = (Button) d.findViewById(R.id.QDDDismiss);
 		btn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -146,7 +147,7 @@ public class QuestionButton extends DefaultButton {
 			}
 		});
 		tv.setText(qData.getDetails());
-		d.show();
+		
 		
 		
 	}

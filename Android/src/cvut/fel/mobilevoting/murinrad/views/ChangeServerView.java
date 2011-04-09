@@ -1,6 +1,5 @@
 package cvut.fel.mobilevoting.murinrad.views;
 
-
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -50,8 +49,13 @@ public class ChangeServerView extends Activity {
 		pass = (TextView) findViewById(R.id.idPass);
 		pNumber = (TextView) findViewById(R.id.idPortNumber);
 		id = (Integer) getIntent().getSerializableExtra("id");
-		// server = (ServerData) getIntent().getSerializableExtra("ServerData");
-		if (id != -1) {
+		if (id == -2) {
+			server = (ServerData) getIntent().getSerializableExtra("server");
+			if (server != null)
+				server.setId(-1);
+
+		}
+		if (id > 0) {
 			try {
 				server = storage.getServer(id);
 			} catch (InvalidKeyException e) {
@@ -119,7 +123,7 @@ public class ChangeServerView extends Activity {
 
 	private void back() throws Exception {
 		save();
-		//finish();
+		// finish();
 
 	}
 
@@ -162,9 +166,9 @@ public class ChangeServerView extends Activity {
 		ServerData s = new ServerData(userName.getText().toString(), pass
 				.getText().toString(), -1, ipAdd.getText().toString(), port,
 				getString(R.string.temporaryserverTag));
-		Intent i = new Intent();
-		i.setClassName("cvut.fel.mobilevoting.murinrad",
-				"cvut.fel.mobilevoting.murinrad.QuestionsView");
+		Intent i = new Intent(this,
+				cvut.fel.mobilevoting.murinrad.views.QuestionsView.class);
+
 		i.putExtra("ServerData", s);
 		startActivity(i);
 	}
@@ -177,7 +181,7 @@ public class ChangeServerView extends Activity {
 			Toast.makeText(this, getString(R.string.badPortFormatError),
 					Toast.LENGTH_LONG).show();
 		}
-		if(i<1 || i>65535) {
+		if (i < 1 || i > 65535) {
 			Toast.makeText(this, getString(R.string.badPortFormatError),
 					Toast.LENGTH_LONG).show();
 			return -1;
