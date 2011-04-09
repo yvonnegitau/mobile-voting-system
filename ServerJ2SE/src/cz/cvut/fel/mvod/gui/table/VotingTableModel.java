@@ -35,20 +35,22 @@ public class VotingTableModel extends QuestionsTableModel {
 
 	private final static TableColumnInformation SELECTED = new TableColumnInformation(0, "Výběr", Boolean.class, true);
 	private final static TableColumnInformation TEXT = new TableColumnInformation(1, "Text otázky", String.class, true);
-	private final static TableColumnInformation MIN_PERCENT = new TableColumnInformation(2, "Minimum % pro vítězství", Integer.class, true);
-	private final static TableColumnInformation WINNERS = new TableColumnInformation(3, "Počet vítězů", Integer.class, true);
-	private final static TableColumnInformation MAX_SELECTED = new TableColumnInformation(4, "Maximum zaškrtnutých", Integer.class, true);
-	private final static TableColumnInformation MIN_SELECTED = new TableColumnInformation(5, "Minimum zaškrtnutých", Integer.class, true);
-	private final static int COLLUMN_COUNT = 6;
+        private final static TableColumnInformation DETAILS = new TableColumnInformation(2, "Popis otázky",String.class,true);
+	private final static TableColumnInformation MIN_PERCENT = new TableColumnInformation(3, "Minimum % pro vítězství", Integer.class, true);
+	private final static TableColumnInformation WINNERS = new TableColumnInformation(4, "Počet vítězů", Integer.class, true);
+	private final static TableColumnInformation MAX_SELECTED = new TableColumnInformation(5, "Maximum zaškrtnutých", Integer.class, true);
+	private final static TableColumnInformation MIN_SELECTED = new TableColumnInformation(6, "Minimum zaškrtnutých", Integer.class, true);
+	private final static int COLLUMN_COUNT = 7;
 
 	public VotingTableModel() {
 		super(COLLUMN_COUNT, Question.State.NOT_SET);
 		COLUMNS[0] = SELECTED;
 		COLUMNS[1] = TEXT;
-		COLUMNS[2] = MIN_PERCENT;
-		COLUMNS[3] = WINNERS;
-		COLUMNS[4] = MAX_SELECTED;
-		COLUMNS[5] = MIN_SELECTED;
+                COLUMNS[2] = DETAILS;
+		COLUMNS[3] = MIN_PERCENT;
+		COLUMNS[4] = WINNERS;
+		COLUMNS[5] = MAX_SELECTED;
+		COLUMNS[6] = MIN_SELECTED;
 	}
 
 	/**
@@ -68,7 +70,9 @@ public class VotingTableModel extends QuestionsTableModel {
 			return rows.get(rowIndex).question.getMaxSelect();
 		} else if(columnIndex == MIN_SELECTED.INDEX) {
 			return rows.get(rowIndex).question.getMinSelect();
-		}
+		} else if(columnIndex == DETAILS.INDEX) {
+                        return rows.get(rowIndex).question.getDetails();
+                }
 		throw new IndexOutOfBoundsException("No such column.");
 	}
 
@@ -90,7 +94,9 @@ public class VotingTableModel extends QuestionsTableModel {
 				rows.get(rowIndex).question.setMaxSelect((Integer) aValue);
 			} else if(columnIndex == MIN_SELECTED.INDEX) {
 				rows.get(rowIndex).question.setMinSelect((Integer) aValue);
-			}
+			} else if(columnIndex == DETAILS.INDEX) {
+                                rows.get(rowIndex).question.setDetails((String) aValue);
+                        }
 		}
 	}
 

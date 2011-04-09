@@ -39,6 +39,7 @@ public class Question implements Serializable, Cloneable {
 	private int evaluation;
 	private int id;
 	private String text;
+        private String details;
 	private int minPercent;
 	private int maxWinners;
 	private int maxSelect;
@@ -50,6 +51,14 @@ public class Question implements Serializable, Cloneable {
 	public Question() {
 		this("", 0, 1, 1, 0, 1, null);
 	}
+
+        public Question(String text, String details,int minPercent, int maxWinners,
+                                         int maxSelect, int minSelect, int evaluation, List<Alternative> alternatives) {
+                this(text,minPercent,maxWinners,maxSelect,minSelect,evaluation,alternatives);
+                this.details = details;
+
+            
+        }
 
 	public Question(String text, int minPercent, int maxWinners,
 					int maxSelect, int minSelect, int evaluation, List<Alternative> alternatives) {
@@ -174,6 +183,14 @@ public class Question implements Serializable, Cloneable {
 	public String getText() {
 		return text;
 	}
+
+        public String getDetails() {
+            return details;
+        }
+
+        public void setDetails(String d) {
+            details = d;
+        }
 
 	/**
 	 * Nastaví text otázky.

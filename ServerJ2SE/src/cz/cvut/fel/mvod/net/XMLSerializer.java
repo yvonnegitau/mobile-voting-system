@@ -69,6 +69,7 @@ class XMLSerializer {
 	private static final String PASSWORD = "password";
 	private static final String NEEDED = "true";
 	private static final String NOT_NEEDED = "false";
+        private static final String DETAILS = "details";
 
 
 	/**
@@ -97,7 +98,10 @@ class XMLSerializer {
 			questionElement.setAttribute(MIN_ALTERNATIVES, question.getMinSelect() + "");
 			Element text = doc.createElement(QUESTION_TEXT);
 			text.appendChild(doc.createTextNode(question.getText()));
+                        Element details = doc.createElement(DETAILS);
+                        details.appendChild(doc.createTextNode(question.getDetails()));
 			questionElement.appendChild(text);
+                        questionElement.appendChild(details);
 			for(Alternative alternative: question.getAlternatives()) {
 				Element alternativeElement = doc.createElement(ALTERNATIVE);
 				alternativeElement.appendChild(doc.createTextNode(alternative.getText()));
