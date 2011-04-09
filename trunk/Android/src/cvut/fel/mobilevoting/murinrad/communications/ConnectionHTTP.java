@@ -1,7 +1,5 @@
 package cvut.fel.mobilevoting.murinrad.communications;
 
-
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -31,13 +29,13 @@ import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
 
-
 import android.content.Context;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-public class ConnectionHTTP extends Thread implements Runnable, ConnectionInterface {
+public class ConnectionHTTP extends Thread implements Runnable,
+		ConnectionInterface {
 	DefaultHttpClientConnection connection;
 	BufferedReader in = null;
 	Socket MyClient;
@@ -48,8 +46,11 @@ public class ConnectionHTTP extends Thread implements Runnable, ConnectionInterf
 	QuestionsView parent;
 	ServerData server;
 
-	/* (non-Javadoc)
-	 * @see cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#run()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#run()
 	 */
 
 	@Override
@@ -80,8 +81,8 @@ public class ConnectionHTTP extends Thread implements Runnable, ConnectionInterf
 						Log.v("char read 1", c + "");
 
 					}
-					// if (!(s == ""))
-					headers.add(s);
+					if (!(s.equals("")))
+						headers.add(s);
 					Log.i("Adding to haeders", s);
 					if (s.contains("Content-length: ")) {
 						// hasBody = true;
@@ -168,13 +169,17 @@ public class ConnectionHTTP extends Thread implements Runnable, ConnectionInterf
 			Log.e("Android Mobile Voting", ex.toString());
 			parent.showToast(ex.toString());
 			parent.finish();
-			
+
 		}
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#sendReq()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#sendReq
+	 * ()
 	 */
 	@Override
 	public void sendReq() throws Exception {
@@ -264,8 +269,11 @@ public class ConnectionHTTP extends Thread implements Runnable, ConnectionInterf
 
 	}
 
-	/* (non-Javadoc)
-	 * @see cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#closeConnection()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#
+	 * closeConnection()
 	 */
 	@Override
 	public void closeConnection() {
@@ -282,17 +290,23 @@ public class ConnectionHTTP extends Thread implements Runnable, ConnectionInterf
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#post(int, int)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#post
+	 * (int, int)
 	 */
 	@Override
 	public void postAnswers(ArrayList<QuestionData> answers) {
 		Log.i("Android Mobile Voting", "in posting method");
 		String xml = XMLMaker.XMLMaker.buildAnswer(answers);
-		BasicHttpEntityEnclosingRequest request = new BasicHttpEntityEnclosingRequest("POST", "/");
+		BasicHttpEntityEnclosingRequest request = new BasicHttpEntityEnclosingRequest(
+				"POST", "/");
 		BasicHeader head = new BasicHeader("ID", server.getLogin());
 		BasicHeader h2 = new BasicHeader("Password", server.getPassword());
-		BasicHeader cl = new BasicHeader("Content-length", xml.getBytes().length+"");
+		BasicHeader cl = new BasicHeader("Content-length",
+				xml.getBytes().length + "");
 		BasicHttpEntity entity = new BasicHttpEntity();
 		InputStream in = null;
 		Log.i("Android Mobile Voting", "loading entity");
@@ -314,10 +328,10 @@ public class ConnectionHTTP extends Thread implements Runnable, ConnectionInterf
 			connection.flush();
 			Log.e("Android Mobile Voting", "sending");
 		} catch (HttpException e) {
-			Log.e("Android Mobile Voting",e.toString());
+			Log.e("Android Mobile Voting", e.toString());
 			e.printStackTrace();
 		} catch (IOException e) {
-			Log.e("Android Mobile Voting",e.toString());
+			Log.e("Android Mobile Voting", e.toString());
 		}
 
 	}

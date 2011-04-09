@@ -12,7 +12,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
-
 public class ServerButton extends DefaultButton {
 	final ServerData server;
 	final ServerButton me = this;
@@ -29,7 +28,12 @@ public class ServerButton extends DefaultButton {
 
 	@Override
 	public void onClickAction() {
-		connectMe();
+		if (server.getId() == -2) {
+			editMe();
+		} else {
+			connectMe();
+
+		}
 
 	}
 
@@ -51,7 +55,7 @@ public class ServerButton extends DefaultButton {
 					deleteMe();
 					break;
 				case 2:
-					if(server.getId()==-2) {
+					if (server.getId() == -2) {
 						editMe();
 						break;
 					}
@@ -83,7 +87,9 @@ public class ServerButton extends DefaultButton {
 	void editMe() {
 		Intent i = new Intent(me.context,
 				cvut.fel.mobilevoting.murinrad.views.ChangeServerView.class);
-		i.putExtra("id", me.server.getId()); 
+		i.putExtra("id", me.server.getId());
+		if (me.server.getId() == -2)
+			i.putExtra("server", me.server);
 		me.context.startActivity(i);
 	}
 

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,22 +34,43 @@ public class ServerListView extends Activity {
 	private DatabaseStorage storage;
 	// private ArrayList<ServerData> servers = new ArrayList<ServerData>();
 	private ArrayList<ServerData> servers;
+	private ArrayList<ServerData> beaconingServers;
 	int helper = 0;
+	public Handler handler = new Handler();
+	BeaconListener bl;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		BeaconListener bl = new BeaconListener(this);
+		// beaconingServers = new ArrayList<ServerData>();
+		bl = new BeaconListener(this);
 		onResume();
 
 	}
 
 	@Override
+	public void onPause() {
+		super.onPause();
+		//bl.resetFilter();
+
+	}
+
+	
+	
+	@Override
+	public void onRestart() {
+		super.onRestart();
+		bl.resetFilter();
+		
+	}
+	@Override
 	public void onResume() {
 		super.onResume();
+		bl.resetFilter();
 		storage = new DatabaseStorage(this);
 		// storage.dropDatabase();
 		servers = storage.getServers();
+		// servers.addAll(beaconingServers);
 		layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		TextView header = new TextView(this);
@@ -58,9 +80,13 @@ public class ServerListView extends Activity {
 		for (int i = 0; i < servers.size(); i++) {
 			addServer(servers.get(i));
 		}
+		TextView delimiter = new TextView(this);
+		delimiter.setText(getString(R.string.LANServersDelimiter));
+		delimiter.setTextSize(15);
+		layout.addView(delimiter,layout.getChildCount());
 		setContentView(layout);
-		
-		//bl.start();
+
+		// bl.start();
 	}
 
 	@Override
@@ -112,9 +138,11 @@ public class ServerListView extends Activity {
 
 	}
 
+	
+
 	public void addServer(ServerData sd) {
 		final ServerButton serverBTN = new ServerButton(this, sd, this);
-		layout.addView(serverBTN, 1);
+		layout.addView(serverBTN, layout.getChildCount());
 
 	}
 

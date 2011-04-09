@@ -68,7 +68,7 @@ public class XMLParser {
 
 			Log.i("Android Mobile Voting", "Number of elements named text = "
 					+ node.getElementsByTagName("text").getLength());
-			String dText = "";
+			String dText = "No Details";
 			String qText = getNodeValue(txt);
 			if (details != null)
 				dText = getNodeValue(details);
@@ -108,16 +108,16 @@ public class XMLParser {
 		
 		NodeList serverNode = doc.getElementsByTagName("serverinfo");
 			Element serverElement = (Element) serverNode.item(0);
+			int id = Integer.parseInt(serverElement.getAttribute("id"));
 			//int id = Integer.parseInt(node.getAttribute("id"));
 			Node FN = (Node) serverElement.getElementsByTagName("friendlyname").item(0);
-
-			
 			String FNtxt = "";
 			FNtxt = getNodeValue(FN);
 			Node PN = serverElement.getElementsByTagName("port").item(0);
 			int port = -1;
 			port = Integer.parseInt(getNodeValue(PN));
-			ServerData s = new ServerData("temporary", "null", -2, IP, port, FNtxt);
+			ServerData s = new ServerData("temporary", "null", id, IP, port, FNtxt);
+			Log.d("Android mobile Voting", s.toString());
 			return s;
 
 	}

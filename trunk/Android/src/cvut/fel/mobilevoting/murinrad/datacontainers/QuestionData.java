@@ -9,7 +9,7 @@ public class QuestionData {
 	int id, max, min;
 	private int answer = -1;
 	private int[] answerField;
-	String details = "";
+	String details = "Details field";
 
 	public String getDetails() {
 		return details;
@@ -27,7 +27,7 @@ public class QuestionData {
 		this.text = text;
 		this.min = min;
 		this.max = max;
-		this.details = details;
+		if(details!=null) this.details = details;
 		max = 1;
 		answerField = new int[answers.size()];
 		for(int i=0;i<max;i++) {
