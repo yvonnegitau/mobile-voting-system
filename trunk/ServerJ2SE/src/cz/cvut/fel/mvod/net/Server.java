@@ -46,6 +46,7 @@ import java.util.List;
 class Server {
 
 	private static final int DEFAULT_PORT = 10666;
+        private static final int DEFAULT_SSH_PORT = 10777;
 	private static final int CLIENT_COUNT = 100;
 	private static final Server instance = new Server();
 	
