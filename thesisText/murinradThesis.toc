@@ -23,29 +23,31 @@
 \contentsline {paragraph}{}{7}{section*.7}
 \contentsline {subsection}{\numberline {3.2.2}Negatives}{7}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}Positives}{8}{subsection.3.2.3}
-\contentsline {section}{\numberline {3.3}Android analysis}{8}{section.3.3}
-\contentsline {section}{\numberline {3.4}Server}{9}{section.3.4}
-\contentsline {section}{\numberline {3.5}Client}{10}{section.3.5}
-\contentsline {section}{\numberline {3.6}Security analysis}{10}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Physical theft}{11}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}Man in the middle attack}{11}{subsection.3.6.2}
-\contentsline {subsection}{\numberline {3.6.3}Malicious software}{11}{subsection.3.6.3}
-\contentsline {subsection}{\numberline {3.6.4}"Rooted" device}{11}{subsection.3.6.4}
-\contentsline {section}{\numberline {3.7}Business process model}{11}{section.3.7}
-\contentsline {section}{\numberline {3.8}Requirements analysis}{11}{section.3.8}
-\contentsline {subsection}{\numberline {3.8.1}Functional requirements}{12}{subsection.3.8.1}
-\contentsline {subsection}{\numberline {3.8.2}Non-Functional requirements}{12}{subsection.3.8.2}
-\contentsline {section}{\numberline {3.9}Use Cases}{13}{section.3.9}
-\contentsline {section}{\numberline {3.10}Domain Model}{13}{section.3.10}
-\contentsline {subsection}{\numberline {3.10.1}Server}{13}{subsection.3.10.1}
-\contentsline {paragraph}{Voting Entity}{13}{section*.12}
-\contentsline {paragraph}{User}{13}{section*.13}
-\contentsline {paragraph}{Vote}{13}{section*.14}
-\contentsline {paragraph}{Question}{14}{section*.15}
-\contentsline {subsection}{\numberline {3.10.2}Android}{14}{subsection.3.10.2}
-\contentsline {paragraph}{ServerData entity}{14}{section*.16}
+\contentsline {section}{\numberline {3.3}Server}{8}{section.3.3}
+\contentsline {section}{\numberline {3.4}Client}{9}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Feature phone}{10}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Android device}{10}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}Security analysis}{10}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Physical theft}{11}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Man in the middle attack}{11}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}Malicious software}{11}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.4}Malicious servers}{11}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.5}"Rooted" device}{12}{subsection.3.5.5}
+\contentsline {section}{\numberline {3.6}Business process model}{12}{section.3.6}
+\contentsline {section}{\numberline {3.7}Requirements analysis}{12}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Functional requirements}{12}{subsection.3.7.1}
+\contentsline {subsection}{\numberline {3.7.2}Non-Functional requirements}{13}{subsection.3.7.2}
+\contentsline {section}{\numberline {3.8}Use Cases}{14}{section.3.8}
+\contentsline {section}{\numberline {3.9}Domain Model}{14}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}Server}{15}{subsection.3.9.1}
+\contentsline {paragraph}{Voting Entity}{15}{section*.12}
+\contentsline {paragraph}{User}{15}{section*.13}
+\contentsline {paragraph}{Vote}{15}{section*.14}
+\contentsline {paragraph}{Question}{15}{section*.15}
+\contentsline {subsection}{\numberline {3.9.2}Android}{15}{subsection.3.9.2}
+\contentsline {paragraph}{ServerData entity}{15}{section*.16}
 \contentsline {paragraph}{QuestionData entity}{15}{section*.17}
-\contentsline {paragraph}{Answer entity}{15}{section*.18}
+\contentsline {paragraph}{Answer entity}{16}{section*.18}
 \contentsline {chapter}{\numberline {4}Design}{17}{chapter.4}
 \contentsline {section}{\numberline {4.1}Communication}{17}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Summary of codes used in communication}{18}{subsection.4.1.1}
@@ -62,14 +64,16 @@
 \contentsline {section}{\numberline {7.2}Server deployment}{25}{section.7.2}
 \contentsline {section}{\numberline {7.3}Hardware}{25}{section.7.3}
 \contentsline {subsection}{\numberline {7.3.1}Connectivity}{25}{subsection.7.3.1}
-\contentsline {subsection}{\numberline {7.3.2}Operating system and software}{26}{subsection.7.3.2}
+\contentsline {subsubsection}{\numberline {7.3.1.1}General}{25}{subsubsection.7.3.1.1}
+\contentsline {subsection}{\numberline {7.3.2}Wireless Ethernet (Wi-Fi)}{26}{subsection.7.3.2}
+\contentsline {subsection}{\numberline {7.3.3}Operating system and software}{26}{subsection.7.3.3}
 \contentsline {section}{\numberline {7.4}Client deployment}{26}{section.7.4}
 \contentsline {subsection}{\numberline {7.4.1}Hardware and software}{26}{subsection.7.4.1}
 \contentsline {subsubsection}{\numberline {7.4.1.1}Android}{26}{subsubsection.7.4.1.1}
 \contentsline {subsubsection}{\numberline {7.4.1.2}Feature phone}{26}{subsubsection.7.4.1.2}
-\contentsline {subsection}{\numberline {7.4.2}Connectivity}{26}{subsection.7.4.2}
-\contentsline {chapter}{\numberline {8}Conclusion}{27}{chapter.8}
-\contentsline {chapter}{\numberline {A}Abbreviations}{31}{appendix.A}
-\contentsline {chapter}{\numberline {B}UML diagrams}{33}{appendix.B}
-\contentsline {chapter}{\numberline {C}Installation and how to use}{35}{appendix.C}
-\contentsline {chapter}{\numberline {D}Enclosed CD Table of Contents}{37}{appendix.D}
+\contentsline {subsection}{\numberline {7.4.2}Connectivity}{27}{subsection.7.4.2}
+\contentsline {chapter}{\numberline {8}Conclusion}{29}{chapter.8}
+\contentsline {chapter}{\numberline {A}Abbreviations}{33}{appendix.A}
+\contentsline {chapter}{\numberline {B}UML diagrams}{35}{appendix.B}
+\contentsline {chapter}{\numberline {C}Installation and how to use}{37}{appendix.C}
+\contentsline {chapter}{\numberline {D}Enclosed CD Table of Contents}{39}{appendix.D}
