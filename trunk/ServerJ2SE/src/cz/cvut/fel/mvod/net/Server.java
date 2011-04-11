@@ -76,44 +76,6 @@ class Server {
 			server = HttpServer.create(new InetSocketAddress(port), client_count);
                         BeaconBroadcaster b = new BeaconBroadcaster("Temporary Value", port);
                         b.start();
-//			server = HttpsServer.create(new InetSocketAddress(port), client_count);
-//			try {
-//				SSLContext sslContext = SSLContext.getInstance("TLS");
-//				KeyStore ks = KeyStore.getInstance("JKS");
-//				ks.load(new FileInputStream("mvod.ks"), "qwertz".toCharArray());
-//				KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-//				kmf.init(ks, "qwertz".toCharArray());
-//				TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
-//				sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
-//				tmf.init(ks);
-//				final SSLEngine engine = sslContext.createSSLEngine();
-//				server.setHttpsConfigurator(new HttpsConfigurator(sslContext) {
-//					@Override
-//					public void configure(HttpsParameters params) {
-//						params.setCipherSuites(engine.getEnabledCipherSuites());
-//						params.setProtocols(engine.getEnabledProtocols());
-//						 // get the remote address if needed
-//						InetSocketAddress remote = params.getClientAddress();
-//
-//						SSLContext c = getSSLContext();
-//
-//						// get the default parameters
-//						SSLParameters sslparams = c.getDefaultSSLParameters();
-//						if (remote.equals (...) ) {
-//							// modify the default set for client x
-//						}
-//
-//						params.setSSLParameters(sslparams);
-//						// statement above could throw IAE if any params invalid.
-//						// eg. if app has a UI and parameters supplied by a user.
-//
-//						}
-//				});
-//			} catch(NoSuchAlgorithmException ex) {
-//				assert false;
-//			} catch(Exception ex) {
-//				assert false;
-//			}
 			server.createContext("/", new Handler());
 			server.start();
 			connected = true;
