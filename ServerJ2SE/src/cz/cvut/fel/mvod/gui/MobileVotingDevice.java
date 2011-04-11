@@ -28,6 +28,7 @@ package cz.cvut.fel.mvod.gui;
 import cz.cvut.fel.mvod.persistence.DAOException;
 import cz.cvut.fel.mvod.persistence.DAOFacadeImpl;
 import cz.cvut.fel.mvod.persistence.DAOFactoryImpl;
+import cz.cvut.fel.mvod.prologueServer.Server;
 
 /**
  *
@@ -48,6 +49,7 @@ public class MobileVotingDevice {
 		}
 		java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                Server prologueServer = new Server();
 				mainWindow = new MainWindow();
                 mainWindow.start();
             }
