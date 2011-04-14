@@ -1,43 +1,46 @@
 package cvut.fel.mobilevoting.murinrad.communications;
 
-import java.io.BufferedReader;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+
 import java.io.UnsupportedEncodingException;
-import java.net.InetSocketAddress;
+
 import java.net.Socket;
 import java.util.ArrayList;
 
-import javax.net.SocketFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 
 import org.apache.http.*;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.impl.DefaultHttpClientConnection;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicHeaderElement;
 import org.apache.http.message.BasicHttpEntityEnclosingRequest;
-import org.apache.http.message.BasicHttpRequest;
-import org.apache.http.message.BasicHttpResponse;
+
 import org.apache.http.params.BasicHttpParams;
 
+import org.apache.http.protocol.HttpContext;
+import org.xml.sax.SAXException;
+
 import cvut.fel.mobilevoting.murinrad.R;
-import cvut.fel.mobilevoting.murinrad.R.string;
 import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
 
 import android.content.Context;
-import android.os.Looper;
+
 import android.util.Log;
-import android.widget.Toast;
+
 
 public class ConnectionHTTP extends Thread implements Runnable,
 		ConnectionInterface {
-	DefaultHttpClientConnection connection;
-	BufferedReader in = null;
+	DefaultHttpClient connection;
 	Socket MyClient;
 	Context context;
 	boolean connected = false;
@@ -55,115 +58,32 @@ public class ConnectionHTTP extends Thread implements Runnable,
 
 	@Override
 	public void run() {
-		Looper.prepare();
-		String s = "";
-		char c;
-		ArrayList<String> headers = null;
-		boolean messageEnd = false;
-		while (true) {
-			headers = new ArrayList<String>();
-			messageEnd = false;
-			if (!connected)
-				break;
-			s = "";
-			try {
-				while (true) {
-					if (headers.isEmpty()) {
-
-					} else {
-						if (headers.get(headers.size() - 1).equals("\r\n"))
-							break;
-					}
-
-					while (!s.contains("\r\n") && connected) {
-						c = (char) in.read();
-						s += c;
-						Log.v("char read 1", c + "");
-
-					}
-					if (!(s.equals("")))
-						headers.add(s);
-					Log.i("Adding to haeders", s);
-					if (s.contains("Content-length: ")) {
-						// hasBody = true;
-						bodySize = Integer.parseInt(s
-								.replace("Content-length: ", "")
-								.replace("\r\n", "").replace(" ", ""));
-					}
-					s = "";
-				}
-				if (bodySize > 0) {
-					for (int i = 0; i < bodySize; i++) {
-						if (!connected)
-							break;
-						c = (char) in.read();
-						Log.v("char read" + i, c + "");
-						if (c > 128) {
-							i++;
-							Log.v("char read" + i, c + "Was in UTF");
-						}
-						s += c;
-
-					}
-					Log.i("Adding to headers", s);
-					headers.add(s);
-
-				}
-
-				// */*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/* AREA FOR MESSAGE
-				// PROCESSING
-				if (!headers.isEmpty()) {
-					parseHeader(headers.get(0));
-					for (int i = 0; i < headers.size(); i++) {
-						Log.e("Android Mobile Voting", "Header number " + i
-								+ ": " + headers.get(i));
-
-					}
-					if (bodySize > 0)
-						Log.i("Header sent for parsing",
-								headers.get(headers.size() - 1));
-					XMLParser.XMLParser.parseQuestionXML(
-							headers.get(headers.size() - 1), parent);
-				}
-
-				Looper.loop();
-				// */*/*/*/*/*/*/*//*/*/*/*/*/*/*/*/*/*/*/
-				s = "";
-				bodySize = 0;
-
-			} catch (Exception ex) {
-				Log.e("Android Mobile Voting Run Loop", ex.toString());
-			}
-
-		}
-
 	}
 
 	public ConnectionHTTP(ServerData server, QuestionsView parent) {
 		try {
-			this.connection = new DefaultHttpClientConnection();
-			this.parent = parent;
-			this.server = server;
+			Log.d("Android mobile voting", "Creating Connection");
+			SchemeRegistry sr = new SchemeRegistry();
+			Log.d("Android mobile voting", "Creating schreg");
+			Scheme http = new Scheme("http", new PlainSocketFactory(),
+					server.getPort());
+			Log.d("Android mobile voting", "scheme");
+			sr.register(http);
+			Log.d("Android mobile voting", "sch registered");
 			BasicHttpParams params = new BasicHttpParams();
 			params.setParameter("test", "in order");
-			MyClient = new Socket();
-			// MyClient.setSoTimeout(2000);
-			MyClient.connect(
-					new InetSocketAddress(server.getAddress(), server.getPort()),
-					2000);
-			// MyClient = new Socket(server.getAddress(), server.getPort());
-			connection.bind(MyClient, params);
-			in = new BufferedReader(new InputStreamReader(
-					MyClient.getInputStream()));
-			// parent.showToast("Login Success");
-			HttpRequest request = new BasicHttpRequest("GET", "/");
-			BasicHeader head = new BasicHeader("ID", server.getLogin());
-			BasicHeader h2 = new BasicHeader("Password", server.getPassword());
-			request.addHeader(head);
-			request.addHeader(h2);
+			SingleClientConnManager sccm = new SingleClientConnManager(params,
+					sr);
+			Log.d("Android mobile voting", "Connection Manager Created");
+			this.connection = new DefaultHttpClient(sccm, params);
+			this.connection.addResponseInterceptor(new MyInterceptor());
+			Log.d("Android mobile voting", "bound");
+			// this.connection.addResponseInterceptor(new )
+			this.parent = parent;
+			this.server = server;
 
-			connection.sendRequestHeader(request);
-			connection.flush();
+			postAndRecieve("GET", "/", null, null);
+			Log.d("Android mobile voting", "request sent");
 			this.connected = true;
 		} catch (Exception ex) {
 			Log.e("Android Mobile Voting", ex.toString());
@@ -181,20 +101,14 @@ public class ConnectionHTTP extends Thread implements Runnable,
 	 * cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#sendReq
 	 * ()
 	 */
-	@Override
-	public void sendReq() throws Exception {
-		HttpRequest request = new BasicHttpRequest("GET", "localhost");
-		connection.sendRequestHeader(request);
-		connection.flush();
-	}
 
 	/**
-	 * Parses the 1st header
+	 * Parses the responce code
 	 * 
 	 * @param data
 	 * @return
 	 */
-	private boolean parseHeader(String data) {
+	private boolean parseResponceCode(String data) {
 		if (data.contains("400")) {
 
 			parent.mHandler.post(new Runnable() {
@@ -279,7 +193,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 	public void closeConnection() {
 		if (connected) {
 			try {
-				connection.shutdown();
+				// connection.shutdown();
 				parent.showToast("Disconnected from "
 						+ server.getFriendlyName());
 			} catch (Exception ex) {
@@ -297,41 +211,106 @@ public class ConnectionHTTP extends Thread implements Runnable,
 	 * cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#post
 	 * (int, int)
 	 */
-	@Override
 	public void postAnswers(ArrayList<QuestionData> answers) {
 		Log.i("Android Mobile Voting", "in posting method");
 		String xml = XMLMaker.XMLMaker.buildAnswer(answers);
+		postAndRecieve("POST", "/", null, xml);
+	}
+
+	public void postAndRecieve(String method, String URL,
+			ArrayList<BasicHeader> headers, String body) {
 		BasicHttpEntityEnclosingRequest request = new BasicHttpEntityEnclosingRequest(
-				"POST", "/");
+				method, URL);
 		BasicHeader head = new BasicHeader("ID", server.getLogin());
 		BasicHeader h2 = new BasicHeader("Password", server.getPassword());
-		BasicHeader cl = new BasicHeader("Content-length",
-				xml.getBytes().length + "");
-		BasicHttpEntity entity = new BasicHttpEntity();
-		InputStream in = null;
-		Log.i("Android Mobile Voting", "loading entity");
-		try {
-			in = new ByteArrayInputStream(xml.getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
+		BasicHeader cl = null;
+		if (body != null) {
+			cl = new BasicHeader("Content-length", body.getBytes().length + "");
+			Log.d("Android mobile voting", "Calculating payload size");
 		}
-		Log.i("Android Mobile Voting", "setting content");
-		entity.setContent(in);
-		request.setEntity(entity);
+
+		BasicHttpEntity entity = new BasicHttpEntity();
+		if (body != null) {
+			InputStream in = null;
+			Log.i("Android Mobile Voting", "loading entity");
+			try {
+				in = new ByteArrayInputStream(body.getBytes("UTF-8"));
+			} catch (UnsupportedEncodingException e1) {
+				e1.printStackTrace();
+			}
+
+			entity.setContent(in);
+			request.setEntity(entity);
+		}
 		request.addHeader(head);
 		request.addHeader(h2);
-		request.addHeader(cl);
+		if (cl != null)
+			Log.d("Android mobile voting", "Added payload size");
+			request.addHeader(cl);
+
+		if (headers != null) {
+		}
 
 		try {
-			connection.sendRequestHeader(request);
-			connection.sendRequestEntity(request);
-			connection.flush();
+			HttpHost g = new HttpHost(server.getAddress(), server.getPort());
+			// connection.
+			connection.execute(g, request);
+			/*
+			 * connection.sendRequestHeader(request);
+			 * connection.sendRequestEntity(request); connection.flush();
+			 */
+			// recieveResponce();
 			Log.e("Android Mobile Voting", "sending");
-		} catch (HttpException e) {
-			Log.e("Android Mobile Voting", e.toString());
-			e.printStackTrace();
 		} catch (IOException e) {
-			Log.e("Android Mobile Voting", e.toString());
+			Log.e("Android Mobile VotingS&RError", e.toString());
+		}
+	}
+
+	/*private void recieveResponce() throws HttpException, IOException {
+		
+		 * HttpResponse res = connection.receiveResponseHeader();
+		 * parseResponceCode(res.getStatusLine().getStatusCode()+""); Header[]
+		 * cl = res.getHeaders("Content-length"); if(cl!=null &&
+		 * !cl[0].getValue().equals("0")){
+		 * 
+		 * //connection.receiveResponseEntity(new Basi)
+		 * 
+		 * }
+		 
+
+	}*/
+
+	public class MyInterceptor implements HttpResponseInterceptor {
+
+		@Override
+		public void process(HttpResponse response, HttpContext context)
+				throws HttpException, IOException {
+			parseResponceCode(response.getStatusLine().getStatusCode() + "");
+			Log.d("Android mobiel voting", "IM INT THE INTERCEPTOR");
+			Header[] cl = response.getHeaders("Content-length");
+			Log.d("Android mobiel voting", "content length");
+			if (cl != null && !cl[0].getValue().equals("0")) {
+				Log.d("Android mobiel voting", "Goodies!");
+				HttpEntity hE = response.getEntity();
+				Log.d("Android mobiel voting", "Whats innit?");
+				byte[] buffer = new byte[Integer.parseInt(cl[0].getValue())];
+				Log.d("Android mobiel voting", "Delicious cake?");
+				hE.getContent().read(buffer);
+				Log.d("Android mobiel voting", "You shouldnt have");
+				try {
+					XMLParser.XMLParser.parseQuestionXML(new String(buffer)	,parent);
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				// connection.receiveResponseEntity(new Basi)
+
+			}
+
 		}
 
 	}
