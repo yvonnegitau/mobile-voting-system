@@ -32,6 +32,11 @@ import cz.cvut.fel.mvod.persistence.DAOException;
 import cz.cvut.fel.mvod.persistence.DAOFacade;
 import cz.cvut.fel.mvod.persistence.DAOFacadeImpl;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,6 +45,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Tvoří rozhraní síťového modulu. 
@@ -144,7 +151,7 @@ public class NetworkAccessManager implements NetworkConnection, DataProvider {
     public List<Question> getQuestions(String userName) {
         synchronized (sendQueue) {
             //Altered .remove to get
-            return sendQueue.get(userName);
+            return sendQueue.remove(userName);
         }
     }
 
@@ -201,7 +208,19 @@ public class NetworkAccessManager implements NetworkConnection, DataProvider {
      * {@inheritDoc }
      */
     public void startServer() throws IOException {
-        Server.getInstance().connect();
+        try {
+            Server.getInstance().connect();
+        } catch (KeyStoreException ex) {
+            Logger.getLogger(NetworkAccessManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(NetworkAccessManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnrecoverableKeyException ex) {
+            Logger.getLogger(NetworkAccessManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (KeyManagementException ex) {
+            Logger.getLogger(NetworkAccessManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CertificateException ex) {
+            Logger.getLogger(NetworkAccessManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

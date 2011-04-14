@@ -4,6 +4,8 @@
  */
 package cz.cvut.fel.mvod.net;
 
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
+import cz.cvut.fel.mvod.global.Notifiable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -17,7 +19,7 @@ import javax.swing.Timer;
  *
  * @author Murko
  */
-public class BeaconBroadcaster extends Thread {
+public class BeaconBroadcaster extends Thread implements Notifiable {
 
     private static int BROADCAST_PORT = 50666;
     private DatagramSocket s = null;
@@ -28,8 +30,10 @@ public class BeaconBroadcaster extends Thread {
     private ActionListener sender = null;
     private int ID;
     private BeaconXMLGenerator payload;
+    private String state = GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon");
 
-    public BeaconBroadcaster(String FriendlyName,int listenPort) throws UnknownHostException {
+    public BeaconBroadcaster(String FriendlyName, int listenPort) throws UnknownHostException {
+        if (state == null) GlobalSettingsAndNotifier.singleton.modifySettings("allowBeacon", "true",false);
         payload = new BeaconXMLGenerator(FriendlyName, listenPort);
         try {
             s = new DatagramSocket();
@@ -37,7 +41,7 @@ public class BeaconBroadcaster extends Thread {
             System.out.println(ex.toString());
         }
         address = (Inet4Address) s.getLocalAddress();
-        System.out.println(address.toString());
+       
         try {
             Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
             while (nis.hasMoreElements()) {
@@ -55,7 +59,7 @@ public class BeaconBroadcaster extends Thread {
         final String buf = payload.getBeaconMSG();
         for (int i = 0; i < broadcasts.size(); i++) {
             DatagramPacket bp = new DatagramPacket(buf.getBytes(), buf.getBytes().length, broadcasts.get(i), BROADCAST_PORT);
-            System.out.println(new String(bp.getData()));
+            
             beaconPacket.add(bp);
         }
         sender = new ActionListener() {
@@ -64,17 +68,18 @@ public class BeaconBroadcaster extends Thread {
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < beaconPacket.size(); i++) {
                     try {
-                        s.send(beaconPacket.get(i));
+                       // s.send(beaconPacket.get(i));
                         Inet4Address deb = (Inet4Address) InetAddress.getByName("147.32.89.127");
                         byte[] buffer = new byte[644];
                         DatagramPacket packet = new DatagramPacket(buffer, buffer.length, deb, 9000);
-                        s.send(packet);
-                        System.out.println("SENT to " + beaconPacket.get(i).getAddress());
+
+                       if(state.equals("true")) s.send(packet);
+
                     } catch (IOException ex) {
                         System.out.println(ex.toString());
                     }
                 }
-                System.out.println("*************************************");
+
             }
         };
     }
@@ -84,5 +89,11 @@ public class BeaconBroadcaster extends Thread {
         new Timer(frequency, sender).start();
         while (true) {
         }
+    }
+
+    @Override
+    public void notifyOfChange() {
+        String b = GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon");
+        state = b;
     }
 }

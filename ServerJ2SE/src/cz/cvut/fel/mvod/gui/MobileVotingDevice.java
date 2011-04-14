@@ -22,13 +22,21 @@
  * liability, or tort (including negligence or otherwise) arising in any way out of the use
  * of this software, even if advised of the possibility of such damage.
  */
-
 package cz.cvut.fel.mvod.gui;
 
 import cz.cvut.fel.mvod.persistence.DAOException;
 import cz.cvut.fel.mvod.persistence.DAOFacadeImpl;
 import cz.cvut.fel.mvod.persistence.DAOFactoryImpl;
-import cz.cvut.fel.mvod.prologueServer.Server;
+import cz.cvut.fel.mvod.prologueServer.PrologueServer;
+import cz.cvut.fel.mvod.prologueServer.RegistrantAuthorisationWindow;
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,23 +44,39 @@ import cz.cvut.fel.mvod.prologueServer.Server;
  */
 public class MobileVotingDevice {
 
-	private static MainWindow mainWindow;
+    private static MainWindow mainWindow;
 
-	public static void main(String[] args) {
-		try {
-			DAOFactoryImpl.initInstance();
-			DAOFacadeImpl.initInstance();
-		} catch(DAOException ex) {
-			System.out.println("Nepodařilo se inicializovat databázi." +
-					"Zřejmě je spuštěná jiná instance programu.");
-			System.exit(1);
-		}
-		java.awt.EventQueue.invokeLater(new Runnable() {
+    public static void main(String[] args) {
+        try {
+            DAOFactoryImpl.initInstance();
+            DAOFacadeImpl.initInstance();
+        } catch (DAOException ex) {
+            System.out.println("Nepodařilo se inicializovat databázi."
+                    + "Zřejmě je spuštěná jiná instance programu.");
+            System.exit(1);
+        }
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
-                Server prologueServer = new Server();
-				mainWindow = new MainWindow();
+                try {
+                    PrologueServer prologueServer = new PrologueServer();
+                    RegistrantAuthorisationWindow r = new RegistrantAuthorisationWindow(prologueServer);
+                } catch (IOException ex) {
+                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyStoreException ex) {
+                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (CertificateException ex) {
+                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnrecoverableKeyException ex) {
+                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyManagementException ex) {
+                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                mainWindow = new MainWindow();
                 mainWindow.start();
             }
         });
-	}
+    }
 }
