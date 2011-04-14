@@ -32,8 +32,15 @@ import cz.cvut.fel.mvod.persistence.DAOException;
 import cz.cvut.fel.mvod.persistence.DAOFacadeImpl;
 import cz.cvut.fel.mvod.persistence.DAOFactoryImpl;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,34 +48,46 @@ import java.util.List;
  */
 public class ServerTest {
 
-	public static void main(String[] args) {
-		initDao();
-		NetworkConnection instance = NetworkAccessManager.getInstance();
-		Alternative alt1 = new Alternative(1, "Alternativa 1", false);
-		Alternative alt2 = new Alternative(2, "Alternativa 2", true);
-		List<Alternative> alts = new ArrayList<Alternative>();
-		alts.add(alt1);
-		alts.add(alt2);
-		List<Question> qs = new ArrayList<Question>();
-		qs.add(new Question("Otazka 1", 30, 2, 2, 1, 0, alts));
-		qs.add(new Question("Otazka 2", 30, 2, 1, 1, 12, alts));
-		instance.sendData(new Voter("Pepa", "Zdepa", CryptoUtils.passwordDigest("qwert", "voter" + 1), "voter" + 1), qs, false);
-		instance.sendData(new Voter("Pepa", "Zdepa",  CryptoUtils.passwordDigest("qwert", "voter" + 2), "voter" + 2), qs, true);
-		Server server = Server.getInstance();
-		try {
-			server.connect();
-		} catch(IOException ex) {
-			ex.printStackTrace();
-		}
-	}
+    public static void main(String[] args) {
+        initDao();
+        NetworkConnection instance = NetworkAccessManager.getInstance();
+        Alternative alt1 = new Alternative(1, "Alternativa 1", false);
+        Alternative alt2 = new Alternative(2, "Alternativa 2", true);
+        List<Alternative> alts = new ArrayList<Alternative>();
+        alts.add(alt1);
+        alts.add(alt2);
+        List<Question> qs = new ArrayList<Question>();
+        qs.add(new Question("Otazka 1", 30, 2, 2, 1, 0, alts));
+        qs.add(new Question("Otazka 2", 30, 2, 1, 1, 12, alts));
+        instance.sendData(new Voter("Pepa", "Zdepa", CryptoUtils.passwordDigest("qwert", "voter" + 1), "voter" + 1), qs, false);
+        instance.sendData(new Voter("Pepa", "Zdepa", CryptoUtils.passwordDigest("qwert", "voter" + 2), "voter" + 2), qs, true);
+        Server server = Server.getInstance();
+        try {
+            try {
+                server.connect();
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ServerTest.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ServerTest.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ServerTest.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ServerTest.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ServerTest.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
-	private static void initDao() {
-		try {
-			DAOFactoryImpl.initInstance();
-			DAOFacadeImpl.initInstance();
-		} catch(DAOException ex) {
-			ex.printStackTrace();
-			System.exit(1);
-		}
-	}
+    private static void initDao() {
+        try {
+            DAOFactoryImpl.initInstance();
+            DAOFacadeImpl.initInstance();
+        } catch (DAOException ex) {
+            ex.printStackTrace();
+            System.exit(1);
+        }
+    }
 }
