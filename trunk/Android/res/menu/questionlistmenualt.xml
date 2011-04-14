@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/sentAllBTN" android:title="@string/sendAnswers"></item>
-    <item android:id="@+id/cancelSending" android:title="@string/cancel"></item>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/sentAllBTN" android:title="@string/sendAnswers"></item>
+	<item android:id="@+id/cancelSending" android:title="@string/cancel"></item>
 </menu>

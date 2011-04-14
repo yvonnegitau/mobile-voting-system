@@ -2,10 +2,6 @@ package cvut.fel.mobilevoting.murinrad.communications;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.xml.parsers.FactoryConfigurationError;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.xmlpull.v1.XmlSerializer;
 

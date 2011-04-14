@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="cvut.fel.mobilevoting.murinrad"
-      android:versionCode="1"
-      android:versionName="1.0">
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
-        <activity android:name=".main"
-                  android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+	package="cvut.fel.mobilevoting.murinrad" android:versionCode="1"
+	android:versionName="1.0">
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+	<application android:icon="@drawable/icon" android:label="@string/app_name">
+		<activity android:name=".main" android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
 
-    <activity android:name="cvut.fel.mobilevoting.murinrad.views.ServerListView"></activity>
-    <activity android:name="cvut.fel.mobilevoting.murinrad.views.QuestionsView"></activity>
-    <activity android:name="cvut.fel.mobilevoting.murinrad.views.ChangeServerView"></activity>
-</application>
+		<activity android:name="cvut.fel.mobilevoting.murinrad.views.ServerListView"></activity>
+		<activity android:name="cvut.fel.mobilevoting.murinrad.views.QuestionsView"></activity>
+		<activity android:name="cvut.fel.mobilevoting.murinrad.views.ChangeServerView"></activity>
+	</application>
 
 
-<uses-sdk android:minSdkVersion="7"></uses-sdk>
+	<uses-sdk android:minSdkVersion="7"></uses-sdk>
 
-<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.INTERNET" />
 </manifest> 
