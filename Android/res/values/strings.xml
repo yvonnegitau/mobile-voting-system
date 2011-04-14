@@ -50,6 +50,6 @@
 	<string name="notEnoughAnswers">Pick more answers</string>
 	<string name="TooMuchAnswers">Maximum Answers Reached</string>
 	<string name="dismissLabel">Dismiss</string>
-	 <string name="QDDTitle">Question Details</string>
-	 <string name="LANServersDelimiter">Local servers found:</string>
+	<string name="QDDTitle">Question Details</string>
+	<string name="LANServersDelimiter">Local servers found:</string>
 </resources>
