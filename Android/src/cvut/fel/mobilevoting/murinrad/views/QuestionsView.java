@@ -9,8 +9,10 @@ import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.gui.QuestionButton;
 import cvut.fel.mobilevoting.murinrad.gui.QuestionButtonLayout;
+import cvut.fel.mobilevoting.murinrad.gui.SecurityExceptionDialogue;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -134,6 +136,12 @@ public class QuestionsView extends Activity {
 		// invalidate();
 		showingCheckers = b;
 
+	}
+	
+	public void askForTrust(String thumbPrint, ConnectionHTTP instance) {
+		Dialog d = new SecurityExceptionDialogue(this, thumbPrint, instance);
+		d.show();
+		
 	}
 
 }

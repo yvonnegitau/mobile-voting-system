@@ -10,6 +10,7 @@ import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -31,6 +32,29 @@ public class XMLParser {
 	private XMLParser() {
 	}
 
+	protected void parseXML(String XML, final QuestionsView surface,
+			ConnectionHTTP server) throws SAXException, IOException,
+			ParserConfigurationException {
+		Document doc = preprocess(XML);
+		Element root = doc.getDocumentElement();
+		if (root.getNodeName().equals("listenports")) {
+			NodeList nl = root.getElementsByTagName("port");
+			int p = -1;
+			for (int i = 0; i < nl.getLength(); i++) {
+				Element port = (Element) nl.item(i);
+				if (port.getAttribute("secure").equals("true"))
+					p = Integer.parseInt(getNodeValue(port));
+				Log.d("Android mobile voting port is ", p+"");
+			}
+			server.InitializeSecure(p);
+
+		} else if (root.getNodeName().equals("voting")) {
+			Log.d("parsing", "parsing");
+			parseQuestionXML(XML, surface);
+		}
+
+	}
+
 	/**
 	 * Parses the XML string into question objects and passes them to the View
 	 * that will display them
@@ -44,11 +68,7 @@ public class XMLParser {
 	protected void parseQuestionXML(String XML, final QuestionsView surface)
 			throws SAXException, IOException, ParserConfigurationException {
 		final ArrayList<QuestionData> questions = new ArrayList<QuestionData>();
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		InputStream in = new ByteArrayInputStream(XML.getBytes("UTF-8"));
-		DocumentBuilder db = dbf.newDocumentBuilder();
-		Document doc = db.parse(in);
-		doc.getDocumentElement().normalize();
+		Document doc = preprocess(XML);
 		Log.i("Android mobile Voting", "BEGINING PARSING QUESTION");
 		/******************************************************************/
 		NodeList questionList = doc.getElementsByTagName("question");
@@ -95,30 +115,37 @@ public class XMLParser {
 
 	}
 
-	protected ServerData parseBeacon(String b,String IP)
+	private Document preprocess(String XML)
 			throws ParserConfigurationException, SAXException, IOException {
-		final ArrayList<QuestionData> questions = new ArrayList<QuestionData>();
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		InputStream in = new ByteArrayInputStream(b.getBytes("UTF-8"));
+		InputStream in = new ByteArrayInputStream(XML.getBytes("UTF-8"));
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(in);
 		doc.getDocumentElement().normalize();
-		Log.i("Android mobile Voting", "BEGINING PARSING Beacon");
+		return doc;
+
+	}
+
+	protected ServerData parseBeacon(String xml, String IP)
+			throws ParserConfigurationException, SAXException, IOException {
+		Document doc = preprocess(xml);
+	//	Log.i("Android mobile Voting", "BEGINING PARSING Beacon");
 		/******************************************************************/
-		
+
 		NodeList serverNode = doc.getElementsByTagName("serverinfo");
-			Element serverElement = (Element) serverNode.item(0);
-			int id = Integer.parseInt(serverElement.getAttribute("id"));
-			//int id = Integer.parseInt(node.getAttribute("id"));
-			Node FN = (Node) serverElement.getElementsByTagName("friendlyname").item(0);
-			String FNtxt = "";
-			FNtxt = getNodeValue(FN);
-			Node PN = serverElement.getElementsByTagName("port").item(0);
-			int port = -1;
-			port = Integer.parseInt(getNodeValue(PN));
-			ServerData s = new ServerData("temporary", "null", id, IP, port, FNtxt);
-			Log.d("Android mobile Voting", s.toString());
-			return s;
+		Element serverElement = (Element) serverNode.item(0);
+		int id = Integer.parseInt(serverElement.getAttribute("id"));
+		// int id = Integer.parseInt(node.getAttribute("id"));
+		Node FN = (Node) serverElement.getElementsByTagName("friendlyname")
+				.item(0);
+		String FNtxt = "";
+		FNtxt = getNodeValue(FN);
+		Node PN = serverElement.getElementsByTagName("port").item(0);
+		int port = -1;
+		port = Integer.parseInt(getNodeValue(PN));
+		ServerData s = new ServerData("temporary", "null", id, IP, port, FNtxt);
+		//Log.d("Android mobile Voting", s.toString());
+		return s;
 
 	}
 
