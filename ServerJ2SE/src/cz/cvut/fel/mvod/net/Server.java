@@ -33,15 +33,19 @@ import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsParameters;
 import com.sun.net.httpserver.HttpsServer;
 import cz.cvut.fel.mvod.common.Vote;
+import cz.cvut.fel.mvod.common.networkAddressRange;
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.security.*;
 import java.security.cert.CertificateException;
+import java.util.Iterator;
 import java.util.List;
 import javax.net.ssl.*;
 
@@ -53,7 +57,7 @@ import javax.net.ssl.*;
 class Server {
 
     private static final int DEFAULT_PORT = 10666;
-    private static final int DEFAULT_SSH_PORT = 10443;
+    private static final int DEFAULT_SSH_PORT = 11109;
     private static final int CLIENT_COUNT = 100;
     private static final Server instance = new Server();
     private int port;
@@ -69,6 +73,8 @@ class Server {
 
     private Server() {
         port = DEFAULT_PORT;
+        GlobalSettingsAndNotifier.singleton.modifySettings("HTTP_PORT", DEFAULT_PORT + "", false);
+        GlobalSettingsAndNotifier.singleton.modifySettings("SSL_PORT", DEFAULT_SSH_PORT + "", false);
         client_count = CLIENT_COUNT;
         connected = false;
         this.provider = NetworkAccessManager.getDataProvider();
@@ -81,12 +87,12 @@ class Server {
      */
     public void connect() throws IOException, KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException, KeyManagementException, CertificateException {
         if (!connected) {
-            server = HttpServer.create(new InetSocketAddress(port), client_count);
-            BeaconBroadcaster b = new BeaconBroadcaster("Temporary Value", port);
+            server = HttpServer.create(new InetSocketAddress(Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT"))), client_count);
+            BeaconBroadcaster b = new BeaconBroadcaster("Temporary Value", Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT")));
             b.start();
             server.createContext("/", new Handler());
             server.start();
-          /*  secureServer = HttpsServer.create(new InetSocketAddress(DEFAULT_SSH_PORT), -1);
+            secureServer = HttpsServer.create(new InetSocketAddress(DEFAULT_SSH_PORT), -1);
             secureServer.createContext("/", new Handler());
             secureServer.setExecutor(null);
 
@@ -101,17 +107,16 @@ class Server {
             ssl.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
             secureServer.setHttpsConfigurator(new HttpsConfigurator(ssl) {
 
-                @Override
-                public void configure(HttpsParameters params) {
-                    InetSocketAddress remote = params.getClientAddress();
-                    SSLContext c = getSSLContext();
-                    SSLParameters sslparams = c.getDefaultSSLParameters();
-                    params.setSSLParameters(sslparams);
+            @Override
+            public void configure(HttpsParameters params) {
+            InetSocketAddress remote = params.getClientAddress();
+            SSLContext c = getSSLContext();
+            SSLParameters sslparams = c.getDefaultSSLParameters();
+            params.setSSLParameters(sslparams);
 
-                }
+            }
             });
-            secureServer.start();*/
-
+            secureServer.start();
             connected = true;
         }
     }
@@ -134,6 +139,7 @@ class Server {
 
         private static final String GET = "GET";
         private static final String POST = "POST";
+        private static final String OPTIONS = "OPTIONS";
         private static final String USER_NAME = "ID";
         private static final String PASSWORD = "Password";
         private static final String QUESTION = "Question";
@@ -148,9 +154,24 @@ class Server {
          * @param request
          * @throws IOException
          */
+        @Override
         public void handle(HttpExchange request) throws IOException {
             try {
+                if(!checkOrigin(request.getRemoteAddress())){
+                     System.out.println("BAD REQ");
+                    sendResponse(request, FORBIDDEN);
+
+                }
                 String method = request.getRequestMethod();
+                System.out.println(method);
+                if (method.equalsIgnoreCase(OPTIONS)) {
+                    System.out.println("PTIONS RECU");
+                    //ByteArrayOutputStream data = new ByteArrayOutputStream();
+                    byte[] buffer = InfoXMLGenerator.getListenPortMSG().getBytes();
+                    sendMessage(request, buffer);
+                    request.close();
+                    return;
+                }
                 String userName = checkHeaders(request);
                 if (userName == null) {
                     return;
@@ -176,6 +197,7 @@ class Server {
                     provider.setResponses(userName, votes);
                     sendResponse(request, OK);
                 } else {
+                    System.out.println("BAD REQ");
                     sendResponse(request, BAD_REQUEST);
                 }
             } finally {
@@ -190,6 +212,7 @@ class Server {
          * @throws IOException
          */
         private void sendResponse(HttpExchange request, int code) throws IOException {
+            System.out.println("Sending " + code);
             request.sendResponseHeaders(code, -1);
         }
 
@@ -226,5 +249,26 @@ class Server {
             }
             return userName;
         }
+
+        private boolean checkOrigin(InetSocketAddress remoteAddress) {
+            try{
+           String add = remoteAddress.getAddress().toString().replace("/", "");
+         //  String add = "147.2.5.4";
+           String[] parts = add.split("\\.");
+                System.out.println(parts);
+                System.out.println(parts.length);
+           int[] remote = new int[] {Integer.parseInt(parts[0]),Integer.parseInt(parts[1]),Integer.parseInt(parts[2]),Integer.parseInt(parts[3])};
+           Iterator<networkAddressRange> inar = GlobalSettingsAndNotifier.singleton.permited.iterator();
+           while(inar.hasNext()) {
+               networkAddressRange n = inar.next();
+               if(!n.isOnNetwork(remote)) return false;
+           }
+            }catch(Exception ex){
+                System.out.println(ex.toString());
+            }
+           return true;
+        }
     }
+
+   
 }

@@ -29,12 +29,12 @@ public class BeaconBroadcaster extends Thread implements Notifiable {
     private int frequency = 2000;
     private ActionListener sender = null;
     private int ID;
-    private BeaconXMLGenerator payload;
+    private InfoXMLGenerator payload;
     private String state = GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon");
 
     public BeaconBroadcaster(String FriendlyName, int listenPort) throws UnknownHostException {
-        if (state == null) GlobalSettingsAndNotifier.singleton.modifySettings("allowBeacon", "true",false);
-        payload = new BeaconXMLGenerator(FriendlyName, listenPort);
+       GlobalSettingsAndNotifier.singleton.modifySettings("allowBeacon", "true",false);
+        payload = new InfoXMLGenerator(FriendlyName, listenPort);
         try {
             s = new DatagramSocket();
         } catch (Exception ex) {
@@ -68,12 +68,9 @@ public class BeaconBroadcaster extends Thread implements Notifiable {
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < beaconPacket.size(); i++) {
                     try {
-                       // s.send(beaconPacket.get(i));
-                        Inet4Address deb = (Inet4Address) InetAddress.getByName("147.32.89.127");
-                        byte[] buffer = new byte[644];
-                        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, deb, 9000);
-
-                       if(state.equals("true")) s.send(packet);
+                        s.send(beaconPacket.get(i));
+                        
+                          //System.out.println("BEACONING");
 
                     } catch (IOException ex) {
                         System.out.println(ex.toString());
