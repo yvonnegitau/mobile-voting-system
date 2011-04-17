@@ -52,4 +52,8 @@
 	<string name="dismissLabel">Dismiss</string>
 	<string name="QDDTitle">Question Details</string>
 	<string name="LANServersDelimiter">Local servers found:</string>
+	<string name="CertWindowTitle">Certificate information</string>
+	<string name="CertificateWindNotTrusted">This certificate is issued by an untrusted authority, the authenticity of the server cannot be verified. Consult the voting administrator.</string>
+	<string name="CertificateWindDisclaimer">I understand the risks of untrusted certificates and wish to continue</string>
+	<string name="CertificateWindFingerprint">The fingerprint of the certificate is: </string>
 </resources>

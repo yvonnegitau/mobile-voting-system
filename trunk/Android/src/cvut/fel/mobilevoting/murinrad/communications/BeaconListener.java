@@ -52,19 +52,19 @@ public class BeaconListener extends Thread {
 			byte[] buffer = new byte[128];
 			DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 			try {
-				Log.d("Android mobile voting",
+				/*Log.d("Android mobile voting",
 						"trying to recieve the beacon on add "
 								+ datagramSocket.getLocalAddress() + " "
-								+ datagramSocket.getLocalPort());
+								+ datagramSocket.getLocalPort());*/
 				datagramSocket.receive(packet);
-				Log.d("Android mobile voting", "Packet recieved");
+			//	Log.d("Android mobile voting", "Packet recieved");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				Log.w("Android Mobile Voting",
 						"Beacon Recieval Error " + e.toString());
 			}
 			String a = new String(packet.getData());
-			Log.d("Android mobile voting", a);
+			//Log.d("Android mobile voting", a);
 			try {
 				final ServerData s = XMLParser.XMLParser.parseBeacon(a, packet
 						.getAddress().getHostAddress());
