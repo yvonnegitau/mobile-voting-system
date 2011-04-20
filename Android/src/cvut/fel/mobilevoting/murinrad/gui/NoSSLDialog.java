@@ -1,7 +1,5 @@
 package cvut.fel.mobilevoting.murinrad.gui;
 
-import cvut.fel.mobilevoting.murinrad.R;
-import cvut.fel.mobilevoting.murinrad.communications.ConnectionHTTP;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
@@ -9,18 +7,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import cvut.fel.mobilevoting.murinrad.R;
+import cvut.fel.mobilevoting.murinrad.communications.ConnectionHTTP;
 
-public class SecurityExceptionDialogue extends Dialog {
+public class NoSSLDialog extends Dialog {
 	CheckBox check;
 	Button confirmer;
-	public SecurityExceptionDialogue(Context context,String fingerprint,final ConnectionHTTP caller) {
+	public NoSSLDialog(Context context,final ConnectionHTTP caller) {
 		super(context);
-		setTitle(context.getString(R.string.CertWindowTitle));
-		setContentView(R.layout.certificatedialog);
-		confirmer = (Button)findViewById(R.id.CertificateWindOK);
+		setTitle(context.getString(R.string.noSSLWindTitle));
+		setContentView(R.layout.nossldialog);
+		confirmer = (Button)findViewById(R.id.noSSLDialogBTN);
 		loadChecker();
-		TextView hash = (TextView) findViewById(R.id.CertificateWindowFingerprint);	
-		hash.setText(fingerprint);
 		confirmer.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -39,9 +37,9 @@ public class SecurityExceptionDialogue extends Dialog {
 	}
 	
 	void loadChecker(){
-		check = (CheckBox) findViewById(R.id.CertificateWindCheckbox);
+		check = (CheckBox) findViewById(R.id.noSSLDialogCheck);
 	}
-	
+
 	
 
 }

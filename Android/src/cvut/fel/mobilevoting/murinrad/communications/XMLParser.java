@@ -32,7 +32,7 @@ public class XMLParser {
 	private XMLParser() {
 	}
 
-	protected void parseXML(String XML, final QuestionsView surface,
+	protected void parseServerXML(String XML, final QuestionsView surface,
 			ConnectionHTTP server) throws SAXException, IOException,
 			ParserConfigurationException {
 		Document doc = preprocess(XML);

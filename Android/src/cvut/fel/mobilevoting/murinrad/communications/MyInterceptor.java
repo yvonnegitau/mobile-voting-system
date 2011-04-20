@@ -38,7 +38,7 @@ public MyInterceptor(ConnectionInterface ci) {
 			Log.d("Android mobile voting", "You shouldnt have + " + new String(buffer) );
 			
 			try {
-				XMLParser.XMLParser.parseXML(new String(buffer)	,server.getParent(),(ConnectionHTTP) server);
+				XMLParser.XMLParser.parseServerXML(new String(buffer)	,server.getParent(),(ConnectionHTTP) server);
 			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

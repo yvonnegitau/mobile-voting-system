@@ -18,6 +18,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.concurrent.TimeoutException;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -63,6 +64,7 @@ import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
 
 import android.content.Context;
 
+import android.os.Looper;
 import android.util.Log;
 
 public class ConnectionHTTP extends Thread implements Runnable,
@@ -88,12 +90,9 @@ public class ConnectionHTTP extends Thread implements Runnable,
 
 	@Override
 	public void run() {
-	}
 
-	public ConnectionHTTP(ServerData server, QuestionsView parent) {
 		try {
-			this.parent = parent;
-			this.server = server;
+
 			port = server.getPort();
 			HttpParams params = new BasicHttpParams();
 			HttpConnectionParams.setConnectionTimeout(params, 3000);
@@ -112,7 +111,9 @@ public class ConnectionHTTP extends Thread implements Runnable,
 
 			connection = new DefaultHttpClient(cm, params);
 			this.connection.addResponseInterceptor(new MyInterceptor(this));
+			notifyOfProggress();
 			postAndRecieve("OPTIONS", "/", null, null, true);
+			// notifyOfProggress(false);
 			instance = this;
 
 		} catch (IllegalStateException ex) {
@@ -122,6 +123,13 @@ public class ConnectionHTTP extends Thread implements Runnable,
 			parent.showToast(ex.toString());
 			parent.finish();
 		}
+	}
+
+	public ConnectionHTTP(ServerData server, QuestionsView parent) {
+		this.parent = parent;
+		this.server = server;
+		this.instance = this;
+		start();
 
 	}
 
@@ -129,6 +137,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 		if (sslPort != -1) {
 			port = sslPort;
 			try {
+				// notifyOfProggress(false);
 				KeyStore trusted = KeyStore.getInstance(KeyStore
 						.getDefaultType());
 				trusted.load(null, null);
@@ -146,12 +155,15 @@ public class ConnectionHTTP extends Thread implements Runnable,
 					try {
 						sslf = new MySSLSocketFactory(trusted);
 						sslf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+						BasicHttpParams params = new BasicHttpParams();
+						HttpConnectionParams
+								.setConnectionTimeout(params, 15000);
 						s = (SSLSocket) sslf.connectSocket(sslf.createSocket(),
-								server.getAddress(), sslPort, null, 0,
-								new BasicHttpParams());
+								server.getAddress(), sslPort, null, 0, params);
 					} catch (SSLException e) {
 						Log.w("Android mobile voing CERT CHECK", e.toString());
 					}
+
 					s.startHandshake();
 					ssls = s.getSession();
 					final javax.security.cert.X509Certificate[] x = ssls
@@ -194,6 +206,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 
 				}
 				Scheme https = new Scheme("https", sslf, sslPort);
+
 				schemeRegistry.register(https);
 				usingScheme = "https";
 				port = sslPort;
@@ -211,6 +224,16 @@ public class ConnectionHTTP extends Thread implements Runnable,
 				parent.finish();
 
 			}
+		} else {
+			parent.mHandler.post(new Runnable() {
+
+				@Override
+				public void run() {					
+						parent.noSSL(instance);
+					
+					}
+				
+			});
 		}
 
 	}
@@ -312,6 +335,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 	 */
 	@Override
 	public void closeConnection() {
+
 		parent.finish();
 	}
 
@@ -464,7 +488,29 @@ public class ConnectionHTTP extends Thread implements Runnable,
 	}
 
 	public void permitException() {
-		postAndRecieve("GET", "/", null, null, true);
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				Looper.prepare();
+				postAndRecieve("GET", "/", null, null, true);
+				Looper.loop();
+			}
+		};
+		t.start();
+
+		// notifyOfProggress();
+
+	}
+
+	private void notifyOfProggress() {
+		parent.mHandler.post(new Runnable() {
+
+			@Override
+			public void run() {
+				parent.showNextProgres();
+			}
+
+		});
 
 	}
 
