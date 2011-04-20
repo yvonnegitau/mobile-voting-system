@@ -33,6 +33,7 @@ import javax.swing.DefaultListSelectionModel
 import javax.swing.ScrollPaneConstants
 import javax.swing.SpinnerNumberModel
 import javax.swing.JTable
+import javax.swing.JFrame
 import javax.swing.JOptionPane
 import javax.swing.DefaultComboBoxModel
 import javax.swing.WindowConstants
@@ -45,6 +46,7 @@ import cz.cvut.fel.mvod.common.*
 import cz.cvut.fel.mvod.export.*
 import cz.cvut.fel.mvod.persistence.*
 import cz.cvut.fel.mvod.gui.table.*
+import cz.cvut.fel.mvod.gui.settings.MainSettingsWindow
 import java.io.IOException
 import javax.swing.JFileChooser
 import javax.swing.filechooser.FileFilter
@@ -197,6 +199,13 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 		votersWindow.show()
 	}
 
+        def showSettings = {
+            def MainSettingsWindow f = new MainSettingsWindow();
+            f.setVisible(true)
+        }
+
+
+
 	def exportVotingToFile = {
 		def voting = dao.currentVoting
 		if(voting) {
@@ -335,6 +344,16 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 			}
 			menuItem(text: 'Export do souboru', actionPerformed: exportVotersToFile)
 		}
+
+                def settingsMenu = menu(text: 'Možnosti') {
+                        menuItem(text: 'Nastavenia', actionPerformed: showSettings)
+                        menuItem(text: 'Stav registrácie')
+			menuItem(text: 'Nastavenia informačného servera', actionPerformed: exportVotersToFile)
+
+
+
+                }
+
 		//def helpMenu = menu(text: 'Nápověda')
 	}
 

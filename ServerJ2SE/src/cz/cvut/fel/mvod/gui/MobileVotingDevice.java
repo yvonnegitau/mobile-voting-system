@@ -58,22 +58,7 @@ public class MobileVotingDevice {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                try {
-                    PrologueServer prologueServer = new PrologueServer();
-                    RegistrantAuthorisationWindow r = new RegistrantAuthorisationWindow(prologueServer);
-                } catch (IOException ex) {
-                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (KeyStoreException ex) {
-                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (CertificateException ex) {
-                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (UnrecoverableKeyException ex) {
-                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (KeyManagementException ex) {
-                    Logger.getLogger(MobileVotingDevice.class.getName()).log(Level.SEVERE, null, ex);
-                }
+               
                 mainWindow = new MainWindow();
                 mainWindow.start();
             }

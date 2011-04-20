@@ -56,11 +56,10 @@ import javax.net.ssl.*;
  */
 class Server {
 
-    private static final int DEFAULT_PORT = 10666;
-    private static final int DEFAULT_SSH_PORT = 11109;
+   
     private static final int CLIENT_COUNT = 100;
     private static final Server instance = new Server();
-    private int port;
+  
     private int client_count;
     private HttpServer server;
     HttpsServer secureServer;
@@ -72,9 +71,8 @@ class Server {
     }
 
     private Server() {
-        port = DEFAULT_PORT;
-        GlobalSettingsAndNotifier.singleton.modifySettings("HTTP_PORT", DEFAULT_PORT + "", false);
-        GlobalSettingsAndNotifier.singleton.modifySettings("SSL_PORT", DEFAULT_SSH_PORT + "", false);
+      
+     
         client_count = CLIENT_COUNT;
         connected = false;
         this.provider = NetworkAccessManager.getDataProvider();
@@ -88,11 +86,11 @@ class Server {
     public void connect() throws IOException, KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException, KeyManagementException, CertificateException {
         if (!connected) {
             server = HttpServer.create(new InetSocketAddress(Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT"))), client_count);
-            BeaconBroadcaster b = new BeaconBroadcaster("Temporary Value", Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT")));
+            BeaconBroadcaster b = new BeaconBroadcaster(GlobalSettingsAndNotifier.singleton.getSetting("Server_NAME"), Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT")));
             b.start();
             server.createContext("/", new Handler());
             server.start();
-            secureServer = HttpsServer.create(new InetSocketAddress(DEFAULT_SSH_PORT), -1);
+            secureServer = HttpsServer.create(new InetSocketAddress(Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("SSL_PORT"))), -1);
             secureServer.createContext("/", new Handler());
             secureServer.setExecutor(null);
 
@@ -107,14 +105,14 @@ class Server {
             ssl.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
             secureServer.setHttpsConfigurator(new HttpsConfigurator(ssl) {
 
-            @Override
-            public void configure(HttpsParameters params) {
-            InetSocketAddress remote = params.getClientAddress();
-            SSLContext c = getSSLContext();
-            SSLParameters sslparams = c.getDefaultSSLParameters();
-            params.setSSLParameters(sslparams);
+                @Override
+                public void configure(HttpsParameters params) {
+                    InetSocketAddress remote = params.getClientAddress();
+                    SSLContext c = getSSLContext();
+                    SSLParameters sslparams = c.getDefaultSSLParameters();
+                    params.setSSLParameters(sslparams);
 
-            }
+                }
             });
             secureServer.start();
             connected = true;
@@ -157,8 +155,9 @@ class Server {
         @Override
         public void handle(HttpExchange request) throws IOException {
             try {
-                if(!checkOrigin(request.getRemoteAddress())){
-                     System.out.println("BAD REQ");
+                System.out.println("PROTOCOL = " + request.getProtocol());
+                if (!checkOrigin(request.getRemoteAddress(), true)) {
+                    System.out.println("BAD REQ");
                     sendResponse(request, FORBIDDEN);
 
                 }
@@ -250,25 +249,40 @@ class Server {
             return userName;
         }
 
-        private boolean checkOrigin(InetSocketAddress remoteAddress) {
-            try{
-           String add = remoteAddress.getAddress().toString().replace("/", "");
-         //  String add = "147.2.5.4";
-           String[] parts = add.split("\\.");
+        private boolean checkOrigin(InetSocketAddress remoteAddress, boolean isSecured) {
+            try {
+                if(GlobalSettingsAndNotifier.singleton.getSetting("RESTRICT_SECURE").equals("true") && !isSecured) return false;
+                String mode = GlobalSettingsAndNotifier.singleton.getSetting("NET_ORIGIN");
+                if(mode.equals("NO_RESTRICTIONS")) return true;                
+                String add = remoteAddress.getAddress().toString().replace("/", "");
+
+                //add = "147.2.5.4";
+                String[] parts = add.split("\\.");
                 System.out.println(parts);
                 System.out.println(parts.length);
-           int[] remote = new int[] {Integer.parseInt(parts[0]),Integer.parseInt(parts[1]),Integer.parseInt(parts[2]),Integer.parseInt(parts[3])};
-           Iterator<networkAddressRange> inar = GlobalSettingsAndNotifier.singleton.permited.iterator();
-           while(inar.hasNext()) {
-               networkAddressRange n = inar.next();
-               if(!n.isOnNetwork(remote)) return false;
-           }
-            }catch(Exception ex){
+                int[] remote = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])};
+                if(mode.equals("RESTRICT_LAN")) return networkAddressRange.isOnLAN(remote);
+                Iterator<networkAddressRange> inar = GlobalSettingsAndNotifier.singleton.permited.iterator();
+                while (inar.hasNext()) {
+                    networkAddressRange n = inar.next();
+                    switch (n.isAllowed(remote, isSecured)) {
+                        case 1:
+                            return true;
+                        case -1:
+                            return false;
+
+                    }
+                }
+            } catch (Exception ex) {
                 System.out.println(ex.toString());
             }
-           return true;
+
+            if (GlobalSettingsAndNotifier.singleton.getSetting("IMPLICIT_ALLOW").equalsIgnoreCase("true")) {
+
+                return true;
+            }
+
+            return false;
         }
     }
-
-   
 }

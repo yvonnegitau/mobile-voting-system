@@ -30,11 +30,11 @@ public class BeaconBroadcaster extends Thread implements Notifiable {
     private ActionListener sender = null;
     private int ID;
     private InfoXMLGenerator payload;
-    private String state = GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon");
+   // private String state = GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon");
 
     public BeaconBroadcaster(String FriendlyName, int listenPort) throws UnknownHostException {
-       GlobalSettingsAndNotifier.singleton.modifySettings("allowBeacon", "true",false);
         payload = new InfoXMLGenerator(FriendlyName, listenPort);
+        GlobalSettingsAndNotifier.singleton.addListener(this);
         try {
             s = new DatagramSocket();
         } catch (Exception ex) {
@@ -68,7 +68,7 @@ public class BeaconBroadcaster extends Thread implements Notifiable {
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < beaconPacket.size(); i++) {
                     try {
-                        s.send(beaconPacket.get(i));
+                       if(GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon").equals("true")) s.send(beaconPacket.get(i));
                         
                           //System.out.println("BEACONING");
 
@@ -90,7 +90,7 @@ public class BeaconBroadcaster extends Thread implements Notifiable {
 
     @Override
     public void notifyOfChange() {
-        String b = GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon");
-        state = b;
+       // String b = GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon");
+        //state = b;
     }
 }
