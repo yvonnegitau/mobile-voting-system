@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:orientation="vertical">
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:textSize="24sp"
 		android:text="@string/hello" />
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:textSize="24sp"
 		android:text="@string/passwordChallenge" />
-	<EditText android:layout_width="200sp" android:layout_height="wrap_content"
-		android:editable="true" android:password="true" android:text=""
-		android:id="@string/passwordField" />
-	<Button android:layout_width="50sp" android:layout_height="wrap_content"
-		android:id="@string/loginConfirmBTN" android:text="@string/Confirm" />
+	<LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:id="@+id/linearLayout1" android:layout_width="fill_parent" android:layout_marginTop="20px">
+		<EditText android:layout_height="wrap_content" android:editable="true" android:layout_width="200sp" android:text="EditText" android:id="@string/passwordField" android:password="true"></EditText>
+		<Button android:layout_height="wrap_content" android:id="@string/loginConfirmBTN" android:layout_width="50sp" android:text="@string/Confirm"></Button>
+	</LinearLayout>
 </LinearLayout>

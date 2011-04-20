@@ -56,4 +56,14 @@
 	<string name="CertificateWindNotTrusted">This certificate is issued by an untrusted authority, the authenticity of the server cannot be verified. Consult the voting administrator.</string>
 	<string name="CertificateWindDisclaimer">I understand the risks of untrusted certificates and wish to continue</string>
 	<string name="CertificateWindFingerprint">The fingerprint of the certificate is: </string>
+	<string name="conStatDial">Attempting a connection</string>
+	<string name="conStatDialHTTPS">Attempting a secure connection</string>
+	<string name="networkErrorMessage">A network error has occured</string>
+	<string name="tryAgainString">Try again</string>
+	<string name="conStatDialSucc">Success</string>
+	<string name="noSSLWindTitle">Secure connection not available</string>
+	<string name="noSSLDialDiscl">There was no possible secure connection found on this server. If you are not absolutely sure about connecting to this server you should not proceed and contact your administrator</string>
+	<string name="noSSLWindChckBoxt">I understand the risk and wish to continue</string>
+	<string name="noSSLWindToProc">To proceed with the connection, the checkbox has to be checked.</string>
+	
 </resources>

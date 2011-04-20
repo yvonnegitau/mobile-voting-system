@@ -1,18 +1,22 @@
 package cvut.fel.mobilevoting.murinrad.views;
 
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Iterator;
 
 import cvut.fel.mobilevoting.murinrad.R;
 import cvut.fel.mobilevoting.murinrad.R.string;
 import cvut.fel.mobilevoting.murinrad.communications.ConnectionHTTP;
 import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
+import cvut.fel.mobilevoting.murinrad.gui.NoSSLDialog;
 import cvut.fel.mobilevoting.murinrad.gui.QuestionButton;
 import cvut.fel.mobilevoting.murinrad.gui.QuestionButtonLayout;
 import cvut.fel.mobilevoting.murinrad.gui.SecurityExceptionDialogue;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -33,10 +37,21 @@ public class QuestionsView extends Activity {
 	public Handler mHandler;
 	ArrayList<QuestionButtonLayout> buttons = new ArrayList<QuestionButtonLayout>();
 	boolean showingCheckers = false;
+	// ConnectionProgressDialog cpg;
+	ArrayList<String> statuses;
+	Iterator<String> statIterate;
+	ProgressDialog curentP;
+	boolean showStatus = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		statuses = new ArrayList<String>();
+		statuses.add(getString(R.string.conStatDial));
+		statuses.add(getString(R.string.conStatDialHTTPS));
+
+		statuses.add(getString(R.string.conStatDialSucc));
+		statIterate = statuses.iterator();
 		server = (ServerData) getIntent().getSerializableExtra("ServerData");
 		mHandler = new Handler();
 		this.setTitle(getString(R.string.connectedTo) + " : "
@@ -47,14 +62,14 @@ public class QuestionsView extends Activity {
 	protected void onResume() {
 		super.onResume();
 		con = new ConnectionHTTP(server, this);
-		con.start();
+		// con.start();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		con.closeConnection();
-		con = null;
+		// con.closeConnection();
+		// con = null;
 	}
 
 	public void showToast(String message) {
@@ -62,6 +77,7 @@ public class QuestionsView extends Activity {
 	}
 
 	public void drawQuestions(ArrayList<QuestionData> questions) {
+		showNextProgres();
 		Log.v("Android Mobile Voting", "questions size : "
 				+ questions.get(0).getText());
 		layout = new LinearLayout(this);
@@ -85,11 +101,11 @@ public class QuestionsView extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inf = getMenuInflater();
-		//if (showingCheckers) {
-			inf.inflate(R.menu.questionlistmenualt, menu);
-		//} else {
-			inf.inflate(R.menu.questionlistmenu, menu);
-		//}
+		// if (showingCheckers) {
+		inf.inflate(R.menu.questionlistmenualt, menu);
+		// } else {
+		inf.inflate(R.menu.questionlistmenu, menu);
+		// }
 		return true;
 	}
 
@@ -116,13 +132,13 @@ public class QuestionsView extends Activity {
 
 	private void sendChecked() {
 		ArrayList<QuestionData> q = new ArrayList<QuestionData>();
-		for (int i = 0;i<buttons.size();i++) {
-			if(buttons.get(i).isChecked()){
+		for (int i = 0; i < buttons.size(); i++) {
+			if (buttons.get(i).isChecked()) {
 				q.add(buttons.get(i).extractQData());
 			}
 		}
 		sendToServer(q);
-		
+
 	}
 
 	private void showPickers(boolean b) {
@@ -137,9 +153,29 @@ public class QuestionsView extends Activity {
 		showingCheckers = b;
 
 	}
-	
+
 	public void askForTrust(String thumbPrint, ConnectionHTTP instance) {
 		Dialog d = new SecurityExceptionDialogue(this, thumbPrint, instance);
+		d.show();
+
+	}
+
+	/**
+	 * 
+	 * @param state
+	 */
+	public void showNextProgres() {
+		if (curentP == null) {
+			curentP = ProgressDialog.show(this, "",
+					getString(R.string.conStatDial));
+		} else {
+			curentP.dismiss();
+		}
+
+	}
+
+	public void noSSL(ConnectionHTTP instance) {
+		Dialog d = new NoSSLDialog(this, instance);
 		d.show();
 		
 	}
