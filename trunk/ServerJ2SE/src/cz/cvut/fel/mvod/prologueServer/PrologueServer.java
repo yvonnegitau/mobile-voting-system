@@ -33,7 +33,7 @@ public class PrologueServer implements Notifiable {
 
         GlobalSettingsAndNotifier.singleton.addListener(this);
 
-        server = HttpsServer.create(new InetSocketAddress(10443), -1);
+        server = HttpsServer.create(new InetSocketAddress(Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("PROLOGUE_PORT"))), -1);
         server.createContext("/", new registeringHandler());
         server.setExecutor(null);
 
@@ -57,7 +57,7 @@ public class PrologueServer implements Notifiable {
             }
         });
         server.start();
-        GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_REGISTERING + "",false);
+        GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_REGISTERING + "",true);
 
 
 
@@ -73,6 +73,9 @@ public class PrologueServer implements Notifiable {
     private void stopServer() {
 
         server.stop(1);
+        
+
+
 
     }
 
