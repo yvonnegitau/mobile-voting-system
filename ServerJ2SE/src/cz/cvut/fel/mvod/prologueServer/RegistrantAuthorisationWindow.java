@@ -4,8 +4,6 @@ package cz.cvut.fel.mvod.prologueServer;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import cz.cvut.fel.mvod.common.Voter;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import java.awt.BorderLayout;
@@ -33,53 +31,33 @@ public class RegistrantAuthorisationWindow extends JFrame {
     JTable table = null;
     private RowFilter<Object, Object> RowFilter;
     JTextField finder = new JTextField();
-     TableRowSorter<TableModel> sorter;
-     PrologueServer server;
+    TableRowSorter<TableModel> sorter;
 
-    public RegistrantAuthorisationWindow(PrologueServer serv) {
-        
+    public RegistrantAuthorisationWindow() {
         super("Overovanie volicov");
-        this.server = serv;
-        status = new JLabel("Server práve zaznamenáva registrácie");
-        final JButton deactivator = new JButton("Ukončiť registráciu");
-        deactivator.addMouseListener(new SimpleMouseListener() {
+        constructVerificationWindow();
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", PrologueServer.STATE_PROVIDING+"");
-                status.setVisible(false);
-                deactivator.setVisible(false);
-                constructVerificationWindow();
-            }
-        });
         instance = this;
 
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLayout(new FlowLayout());
+       
         setBounds(200, 300, 50, 50);
         setSize(300, 200);
-        if (server.getState() == PrologueServer.STATE_REGISTERING) {
-            add(status);
-            add(deactivator);
-        }
+
         setVisible(true);
-
-    }
-
-    public RegistrantAuthorisationWindow() {
     }
 
     public void constructVerificationWindow() {
         setLayout(new BorderLayout());
         status = new JLabel("Overovanie totožnosti");
         add(status, BorderLayout.NORTH);
-        
+
         XMLParser p = new XMLParser();
-       finder = new JTextField();
-        add(finder,BorderLayout.SOUTH);
+        finder = new JTextField();
+        add(finder, BorderLayout.SOUTH);
         try {
-            RegistrantTable model =new RegistrantTable(p.getRegistrants());
+            RegistrantTable model = new RegistrantTable(p.getRegistrants());
             table = new JTable(model);
             sorter = new TableRowSorter<TableModel>(model);
             table.setRowSorter(sorter);
@@ -98,13 +76,13 @@ public class RegistrantAuthorisationWindow extends JFrame {
                                 null,
                                 options,
                                 options[1]);
-                       if(n==0) {
-                           RegistrantTable   rt = (RegistrantTable) table.getModel();
-                           Voter v = rt.getVoterAt(table.getSelectedRow());
-                           FileOperator fo = new FileOperator();
-                           fo.appendObjectToFile(v, "approved.vot");
-                           
-                       }
+                        if (n == 0) {
+                            RegistrantTable rt = (RegistrantTable) table.getModel();
+                            Voter v = rt.getVoterAt(table.getSelectedRow());
+                            FileOperator fo = new FileOperator();
+                            fo.appendObjectToFile(v, "approved.vot");
+
+                        }
 
                     }
                 }
@@ -128,20 +106,21 @@ public class RegistrantAuthorisationWindow extends JFrame {
         finder.addKeyListener(new KeyListener() {
 
             public void keyTyped(KeyEvent e) {
-               // throw new UnsupportedOperationException("Not supported yet.");
+                // throw new UnsupportedOperationException("Not supported yet.");
             }
 
             public void keyPressed(KeyEvent e) {
-                
-              if(e.getKeyCode()==10){
-                String text =  finder.getText();
-                if(text.length()==0) {sorter.setRowFilter(null);
 
-                  }else {
-                    sorter.setRowFilter(RowFilter.regexFilter(text, 3));
-                  }
+                if (e.getKeyCode() == 10) {
+                    String text = finder.getText();
+                    if (text.length() == 0) {
+                        sorter.setRowFilter(null);
 
-              }
+                    } else {
+                        sorter.setRowFilter(RowFilter.regexFilter(text, 3));
+                    }
+
+                }
             }
 
             public void keyReleased(KeyEvent e) {
@@ -169,8 +148,7 @@ public class RegistrantAuthorisationWindow extends JFrame {
         public void mouseExited(MouseEvent e) {
         }
     }
-
-    RowFilter<Object,Object> filter = new RowFilter<Object,Object>() {
+    RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
 
         @Override
         public boolean include(Entry entry) {

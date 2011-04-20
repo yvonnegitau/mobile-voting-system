@@ -47,6 +47,7 @@ import cz.cvut.fel.mvod.export.*
 import cz.cvut.fel.mvod.persistence.*
 import cz.cvut.fel.mvod.gui.table.*
 import cz.cvut.fel.mvod.gui.settings.MainSettingsWindow
+import cz.cvut.fel.mvod.prologueServer.RegistrantAuthorisationWindow
 import java.io.IOException
 import javax.swing.JFileChooser
 import javax.swing.filechooser.FileFilter
@@ -204,6 +205,11 @@ class MainWindow implements ListSelectionListener, DAOObserver {
             f.setVisible(true)
         }
 
+        def showRegistrants = {
+            def RegistrantAuthorisationWindow REG = new RegistrantAuthorisationWindow();
+            REG.setVisible(true)
+        }
+
 
 
 	def exportVotingToFile = {
@@ -347,8 +353,8 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 
                 def settingsMenu = menu(text: 'Možnosti') {
                         menuItem(text: 'Nastavenia', actionPerformed: showSettings)
-                        menuItem(text: 'Stav registrácie')
-			menuItem(text: 'Nastavenia informačného servera', actionPerformed: exportVotersToFile)
+                        menuItem(text: 'Overovanie registrantov', actionPerformed: showRegistrants)
+			//menuItem(text: 'Nastavenia informačného servera', actionPerformed: exportVotersToFile)
 
 
 
