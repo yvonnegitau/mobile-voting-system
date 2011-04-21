@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -151,7 +152,7 @@ public class NetworkAccessManager implements NetworkConnection, DataProvider {
     public List<Question> getQuestions(String userName) {
         synchronized (sendQueue) {
             //Altered .remove to get
-            return sendQueue.remove(userName);
+            return sendQueue.get(userName);
         }
     }
 
@@ -159,7 +160,8 @@ public class NetworkAccessManager implements NetworkConnection, DataProvider {
      * {@inheritDoc }
      */
     public void setResponses(String userName, List<Vote> votes) {
-         sendQueue.remove(userName);
+        List<Question> qL = sendQueue.get(userName);
+
         DAOFacade dao = DAOFacadeImpl.getInstance();
 
         Voter voter = null;
@@ -177,7 +179,13 @@ public class NetworkAccessManager implements NetworkConnection, DataProvider {
                     vote.setVoter(voter);
                     try {
                         dao.saveVote(vote);
-                       
+                        qL.remove(vote.getQuestion());
+                        if (qL.isEmpty()) {
+                            sendQueue.remove(userName);
+                        } else {
+                            sendQueue.put(userName, qL);
+                        }
+
                     } catch (DAOException ex) {
 //FIXME some reaction?
                         return;
