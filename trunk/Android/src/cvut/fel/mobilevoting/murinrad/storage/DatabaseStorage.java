@@ -86,7 +86,7 @@ public class DatabaseStorage {
 			BadPaddingException {
 		boolean outcome = false;
 		String cmd;
-		if (s.getId() != -1) {
+		if (s.getId() > -1) {
 
 			cmd = "UPDATE "
 					+ dbTableName

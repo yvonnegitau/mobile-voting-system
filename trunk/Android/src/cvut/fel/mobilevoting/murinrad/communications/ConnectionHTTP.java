@@ -64,13 +64,14 @@ import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
 
 import android.content.Context;
 
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
 public class ConnectionHTTP extends Thread implements Runnable,
 		ConnectionInterface {
 	DefaultHttpClient connection;
-
+	Handler conThread;
 	Socket MyClient;
 	Context context;
 	boolean connected = false;
@@ -80,6 +81,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 	SchemeRegistry schemeRegistry = null;
 	String usingScheme = "http";
 	ConnectionHTTP instance;
+	boolean run = true;
 
 	/*
 	 * (non-Javadoc)
@@ -90,9 +92,24 @@ public class ConnectionHTTP extends Thread implements Runnable,
 
 	@Override
 	public void run() {
+		while(true) {
+			if(run)InitializeUnsecure();
+		}
+
+	}
+
+	public ConnectionHTTP(ServerData server, QuestionsView parent) {
+		this.parent = parent;
+		this.server = server;
+		this.instance = this;
+		start();
+
+	}
+
+	public void InitializeUnsecure() {
 
 		try {
-
+			run =false;
 			port = server.getPort();
 			HttpParams params = new BasicHttpParams();
 			HttpConnectionParams.setConnectionTimeout(params, 3000);
@@ -117,20 +134,20 @@ public class ConnectionHTTP extends Thread implements Runnable,
 			instance = this;
 
 		} catch (IllegalStateException ex) {
+			
 
 		} catch (Exception ex) {
-			Log.e("Android Mobile Voting", ex.toString());
-			parent.showToast(ex.toString());
-			parent.finish();
+			Log.e("Android mobile voting" , "INIT HTTP error "+ ex.toString());
+			showNoConError();
+			
+			
 		}
+		
 	}
-
-	public ConnectionHTTP(ServerData server, QuestionsView parent) {
-		this.parent = parent;
-		this.server = server;
-		this.instance = this;
-		start();
-
+	
+	public void forceInit(){
+		run = true;
+		
 	}
 
 	public void InitializeSecure(int sslPort) {
@@ -228,11 +245,11 @@ public class ConnectionHTTP extends Thread implements Runnable,
 			parent.mHandler.post(new Runnable() {
 
 				@Override
-				public void run() {					
-						parent.noSSL(instance);
-					
-					}
-				
+				public void run() {
+					parent.showNoSSLDialog(instance);
+
+				}
+
 			});
 		}
 
@@ -349,11 +366,19 @@ public class ConnectionHTTP extends Thread implements Runnable,
 	public void postAnswers(ArrayList<QuestionData> answers) {
 		Log.i("Android Mobile Voting", "in posting method");
 		String xml = XMLMaker.XMLMaker.buildAnswer(answers);
+		try{
 		postAndRecieve("POST", "/", null, xml, true);
+		postAndRecieve("GET", "/", null, null, true);
+		}catch(IOException ex ) {
+			
+			parent.finish();
+			
+		}
 	}
 
 	public void postAndRecieve(String method, String URL,
-			ArrayList<BasicHeader> headers, String body, boolean authenticate) {
+			ArrayList<BasicHeader> headers, String body, boolean authenticate)
+			throws IOException {
 		BasicHttpEntityEnclosingRequest request = new BasicHttpEntityEnclosingRequest(
 				method, URL);
 
@@ -382,25 +407,11 @@ public class ConnectionHTTP extends Thread implements Runnable,
 		if (headers != null) {
 		}
 
-		try {
-			HttpHost g = new HttpHost(server.getAddress(), port, usingScheme);
-			connection.execute(g, request);
+		HttpHost g = new HttpHost(server.getAddress(), port, usingScheme);
+		connection.execute(g, request);
 
-			Log.e("Android Mobile Voting", "sending");
-		} catch (final IOException e) {
-			parent.mHandler.post(new Runnable() {
+		Log.e("Android Mobile Voting", "sending");
 
-				@Override
-				public void run() {
-					parent.showToast(e.toString());
-
-				}
-
-			});
-			Log.w("Android Mobile Voting", "400 Error");
-			parent.finish();
-			// Log.e("Android Mobile VotingError", e.toString());
-		}
 	}
 
 	@Override
@@ -492,7 +503,11 @@ public class ConnectionHTTP extends Thread implements Runnable,
 			@Override
 			public void run() {
 				Looper.prepare();
+				try {
 				postAndRecieve("GET", "/", null, null, true);
+				} catch (Exception ex){
+					
+				}
 				Looper.loop();
 			}
 		};
@@ -500,6 +515,22 @@ public class ConnectionHTTP extends Thread implements Runnable,
 
 		// notifyOfProggress();
 
+	}
+	
+	public void showNoConError() {
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				Looper.prepare();
+				try {
+				parent.showConnectionError();
+				} catch (Exception ex){
+					
+				}
+				Looper.loop();
+			}
+		};
+		t.start();
 	}
 
 	private void notifyOfProggress() {

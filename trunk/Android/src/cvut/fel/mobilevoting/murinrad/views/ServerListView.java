@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,9 +46,35 @@ public class ServerListView extends Activity {
 		super.onCreate(savedInstanceState);
 		// beaconingServers = new ArrayList<ServerData>();
 		bl = new BeaconListener(this);
+		Thread t = new Thread() {
+			@Override
+			public void run(){
+				mUpdateTimeTask.run();
+				
+			}
+		};
+		//t.start();
+		
 		onResume();
 
 	}
+	
+	private Runnable mUpdateTimeTask = new Runnable() {
+		   public void run() {
+		       final long start = 5000;
+		       long millis = SystemClock.uptimeMillis() - start;
+		       int seconds = (int) (millis / 1000);
+		       int minutes = seconds / 60;
+		       seconds     = seconds % 15;
+
+		       if (seconds == 0) {
+		    	   printServers(); 
+		          Log.d("Android mobile voting","seconds < 10");
+		       } 	     
+		       handler.postAtTime(this,
+		               start + (((minutes * 60) + seconds + 1) * 1000));
+		   }
+		};
 
 	@Override
 	public void onPause() {
@@ -66,9 +94,16 @@ public class ServerListView extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		printServers();
+
+		// bl.start();
+	}
+	
+	
+	public void printServers() {
 		bl.resetFilter();
+		
 		storage = new DatabaseStorage(this);
-		// storage.dropDatabase();
 		servers = storage.getServers();
 		// servers.addAll(beaconingServers);
 		layout = new LinearLayout(this);
@@ -85,14 +120,13 @@ public class ServerListView extends Activity {
 		delimiter.setTextSize(15);
 		layout.addView(delimiter,layout.getChildCount());
 		setContentView(layout);
-
-		// bl.start();
+		
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		storage.closeDB();
+		
 	}
 
 	public void deleteServer(int id) {
