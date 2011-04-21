@@ -65,5 +65,9 @@
 	<string name="noSSLDialDiscl">There was no possible secure connection found on this server. If you are not absolutely sure about connecting to this server you should not proceed and contact your administrator</string>
 	<string name="noSSLWindChckBoxt">I understand the risk and wish to continue</string>
 	<string name="noSSLWindToProc">To proceed with the connection, the checkbox has to be checked.</string>
+	<string name="networkErrorDialogTitle">Network Error</string>
+	<string name="networkErrorDialogueText">A network error has occured, verify that you are connected to a network and try again. If all fails contact the administrator.</string>
+	<string name="connectAgain">Try again</string>
+	<string name="passwordReq">Password must be exactly 8 characters long.</string>
 	
 </resources>

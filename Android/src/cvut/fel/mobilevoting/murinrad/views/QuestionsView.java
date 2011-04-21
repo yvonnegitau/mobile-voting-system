@@ -15,8 +15,10 @@ import cvut.fel.mobilevoting.murinrad.gui.QuestionButtonLayout;
 import cvut.fel.mobilevoting.murinrad.gui.SecurityExceptionDialogue;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -35,18 +37,20 @@ public class QuestionsView extends Activity {
 	ConnectionHTTP con;
 	LinearLayout layout;
 	public Handler mHandler;
-	ArrayList<QuestionButtonLayout> buttons = new ArrayList<QuestionButtonLayout>();
+	ArrayList<QuestionButtonLayout> buttons;
 	boolean showingCheckers = false;
 	// ConnectionProgressDialog cpg;
 	ArrayList<String> statuses;
 	Iterator<String> statIterate;
 	ProgressDialog curentP;
 	boolean showStatus = true;
+	QuestionsView instance;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		statuses = new ArrayList<String>();
+		instance = this;
 		statuses.add(getString(R.string.conStatDial));
 		statuses.add(getString(R.string.conStatDialHTTPS));
 
@@ -78,6 +82,7 @@ public class QuestionsView extends Activity {
 
 	public void drawQuestions(ArrayList<QuestionData> questions) {
 		showNextProgres();
+		buttons = new ArrayList<QuestionButtonLayout>();
 		Log.v("Android Mobile Voting", "questions size : "
 				+ questions.get(0).getText());
 		layout = new LinearLayout(this);
@@ -167,16 +172,42 @@ public class QuestionsView extends Activity {
 	public void showNextProgres() {
 		if (curentP == null) {
 			curentP = ProgressDialog.show(this, "",
-					getString(R.string.conStatDial));
+					getString(R.string.conStatDial),true,true);
 		} else {
 			curentP.dismiss();
 		}
 
 	}
 
-	public void noSSL(ConnectionHTTP instance) {
+	public void showNoSSLDialog(ConnectionHTTP instance) {
 		Dialog d = new NoSSLDialog(this, instance);
 		d.show();
+		
+	}
+	
+	public void showConnectionError() {
+		if (curentP != null) {
+			curentP.dismiss();
+			curentP = null;
+		}
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(getString(R.string.networkErrorDialogueText))
+		       .setCancelable(false)
+		       .setPositiveButton(getString(R.string.connectAgain), new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	   
+		        	   con.forceInit();
+		                
+		           }
+		       })
+		       .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+		           public void onClick(DialogInterface dialog, int id) {
+		        	   instance.finish();
+		                
+		           }
+		       });
+		AlertDialog alert = builder.create();
+		alert.show();
 		
 	}
 

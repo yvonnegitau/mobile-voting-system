@@ -31,16 +31,20 @@ public class PasswordSetterDialogue extends Dialog {
 		final TextView newPass2 = (TextView) findViewById(R.id.newPass2);
 		Button okBTN = (Button) findViewById(R.id.passwordDialogOK);
 		Button cancelBTN = (Button) findViewById(R.id.passwordDialogCancel);
-		if(Cryptography.crypto.verifyPass("")==-1) {
-				
+		if (Cryptography.crypto.verifyPass("") == -1) {
+
 			TextView oldPassLabel = (TextView) findViewById(R.id.oldPassLabel);
 			oldPassLabel.setVisibility(TextView.GONE);
 			oldPass.setVisibility(TextView.GONE);
 		}
 		okBTN.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
+				if (!verifyLength((newPass1.getText().toString()))) {
+					Toast.makeText(context, context.getString(R.string.passwordReq), Toast.LENGTH_LONG).show();
+					return;
+				}
 				if (Cryptography.crypto
 						.verifyPass(oldPass.getText().toString()) == 0) {
 					Toast.makeText(context,
@@ -55,7 +59,6 @@ public class PasswordSetterDialogue extends Dialog {
 							Toast.LENGTH_LONG).show();
 					dismiss();
 				}
-				
 
 			}
 		});
@@ -67,6 +70,12 @@ public class PasswordSetterDialogue extends Dialog {
 			}
 		});
 
+	}
+
+	private boolean verifyLength(String s) {
+		if (s.length() == 8)
+			return true;
+		return false;
 	}
 
 }

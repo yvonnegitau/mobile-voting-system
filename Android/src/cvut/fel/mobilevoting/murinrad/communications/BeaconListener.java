@@ -77,8 +77,9 @@ public class BeaconListener extends Thread {
 
 						@Override
 						public void run() {
-							observer.addServer(s);
 							
+							observer.printServers();
+							observer.addServer(s);
 
 						}
 
