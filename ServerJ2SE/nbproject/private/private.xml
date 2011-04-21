@@ -6,5 +6,9 @@
             <url>src/cz/cvut/fel/mvod/gui/settings/panels/ConnectivityPanel.java</url>
             <line>128</line>
         </file>
+        <file>
+            <url>src/cz/cvut/fel/mvod/gui/settings/panels/PrologueSettingsPanel.java</url>
+            <line>379</line>
+        </file>
     </editor-bookmarks>
 </project-private>

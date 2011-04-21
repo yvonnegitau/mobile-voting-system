@@ -90,7 +90,12 @@ public class BeaconBroadcaster extends Thread implements Notifiable {
 
     @Override
     public void notifyOfChange() {
-       // String b = GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon");
-        //state = b;
+        payload = new InfoXMLGenerator(GlobalSettingsAndNotifier.singleton.getSetting("SERVER_NAME"),Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT")));
+       final String buf = payload.getBeaconMSG();
+        for (int i = 0; i < broadcasts.size(); i++) {
+            DatagramPacket bp = new DatagramPacket(buf.getBytes(), buf.getBytes().length, broadcasts.get(i), BROADCAST_PORT);
+
+            beaconPacket.add(bp);
+        }
     }
 }
