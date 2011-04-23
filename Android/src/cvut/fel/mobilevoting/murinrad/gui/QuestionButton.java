@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Handler;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,12 +28,17 @@ public class QuestionButton extends DefaultButton {
 	final QuestionsView parent;
 	private boolean checked = false;
 	int picked = 0;
+	AlertDialog alert;
+	QuestionButton instance;
 
 	public QuestionButton(final Context context, final QuestionData qData,
 			final QuestionsView parent) {
 		super(context, qData.getText());
 		this.qData = qData;
 		this.parent = parent;
+		instance = this;
+		
+		
 		// setBackgroundColor(Color.RED);
 	}
 
@@ -40,36 +46,51 @@ public class QuestionButton extends DefaultButton {
 		final CharSequence[] cs = qData.getAnswers().toArray(
 				new CharSequence[qData.getAnswers().size()]);
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		
 		builder.setTitle(context.getString(R.string.answerPick));
+		//builder.set
 		builder.setMultiChoiceItems(cs, null,
 				new DialogInterface.OnMultiChoiceClickListener() {
 					public void onClick(DialogInterface dialog,
 							int whichButton, boolean isChecked) {
-						Log.e("Android Mobile Voting", whichButton + "");
 						if (isChecked) {
 							if(picked+1<=qData.getMax()){
 							qData.setAnswer(whichButton, 1);
+							alert.getButton(alert.BUTTON_POSITIVE).setEnabled(true);
 							picked++;
 						} else {
+							alert.getButton(alert.BUTTON_POSITIVE).setEnabled(false);
 							Toast.makeText(getContext(), parent.getString(R.string.TooMuchAnswers), Toast.LENGTH_LONG).show(); 
 						}
 						}
 						if (!isChecked) {
 							if(picked-1>=qData.getMin()){
 							qData.setAnswer(whichButton, -1);
+							alert.getButton(alert.BUTTON_POSITIVE).setEnabled(true);
 							picked--;
 							} else {
+								//long [] ids = alert.getListView().getCheckItemIds();
+								alert.getButton(alert.BUTTON_POSITIVE).setEnabled(false);
+								Log.e("Android Mobile Voting", whichButton + " is null" );
 								Toast.makeText(getContext(), parent.getString(R.string.notEnoughAnswers), Toast.LENGTH_LONG).show();
 									
 							}
+						}	
+						
+						if(picked<=qData.getMax() && picked>=qData.getMin()) {
+							alert.setCancelable(false);
+							
+							
+						} else {
+							alert.setCancelable(true);
 						}
 						
 					}
 					
-				}).setPositiveButton(R.string.Confirm,
+				}).setPositiveButton(R.string.Confirm,	
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-
+							
 					}
 				
 				});
@@ -80,7 +101,8 @@ public class QuestionButton extends DefaultButton {
 		 * qData.getAnswers().get(item), Toast.LENGTH_SHORT) .show();
 		 * qData.setAnswer(item); } });
 		 */
-		AlertDialog alert = builder.create();
+		alert = builder.create();
+		
 		alert.show();
 
 	}
@@ -114,8 +136,14 @@ public class QuestionButton extends DefaultButton {
 	void passToSend() throws ParserConfigurationException,
 			FactoryConfigurationError {
 		ArrayList<QuestionData> list = new ArrayList<QuestionData>();
-		list.add(qData);
+		if(picked<=qData.getMax() && picked>=qData.getMin()) {
+			list.add(qData);
 		parent.sendToServer(list);
+			
+		} else {
+			alert.setCancelable(true);
+		}
+		
 
 	}
 
