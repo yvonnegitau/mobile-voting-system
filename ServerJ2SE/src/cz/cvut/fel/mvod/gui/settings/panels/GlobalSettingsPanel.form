@@ -22,11 +22,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="securityPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jSeparator1" alignment="0" min="-2" pref="288" max="-2" attributes="0"/>
                   <Component id="connectionInfo1" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
+                  <Component id="securityPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -39,8 +39,9 @@
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
               <Component id="connectionInfo1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="securityPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="29" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

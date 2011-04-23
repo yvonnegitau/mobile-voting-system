@@ -8,9 +8,12 @@ package cz.cvut.fel.mvod.prologueServer;
 import com.sun.net.httpserver.*;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
+import java.net.URL;
 import java.security.*;
 import java.security.cert.*;
 import javax.net.ssl.*;
@@ -30,7 +33,7 @@ public class PrologueServer implements Notifiable {
 
     public PrologueServer() throws IOException, NoSuchAlgorithmException, KeyStoreException, CertificateException, UnrecoverableKeyException, KeyManagementException {
 
-
+        getMyPublicIP();
         GlobalSettingsAndNotifier.singleton.addListener(this);
 
         server = HttpsServer.create(new InetSocketAddress(Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("PROLOGUE_PORT"))), -1);
@@ -58,6 +61,8 @@ public class PrologueServer implements Notifiable {
         });
         server.start();
         GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_REGISTERING + "",true);
+       // GlobalSettingsAndNotifier.singleton.modifySettings("PUBLIC_IP", getMyPublicIP());
+
 
 
 
@@ -104,6 +109,25 @@ public class PrologueServer implements Notifiable {
     @Override
     public void notifyOfChange() {
         changeState(Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("prologueState")));
+    }
+
+/**
+ * Snippet from http://www.daniweb.com/software-development/java/threads/62812
+ * @return
+ */
+    public void getMyPublicIP(){
+        try {
+            URL autoIP = new URL("http://www.whatismyip.com/automation/n09230945.asp");
+            BufferedReader in = new BufferedReader( new InputStreamReader(autoIP.openStream()));
+            String ip_address = (in.readLine()).trim();
+
+            GlobalSettingsAndNotifier.singleton.modifySettings("PUBLIC_IP", ip_address);
+
+         }catch (Exception e){
+             GlobalSettingsAndNotifier.singleton.modifySettings("PUBLIC_IP", "ERROR");
+	    	e.printStackTrace();
+
+            	    }
     }
     
 }
