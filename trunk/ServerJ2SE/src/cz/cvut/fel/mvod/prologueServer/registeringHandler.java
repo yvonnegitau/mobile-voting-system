@@ -4,8 +4,6 @@ package cz.cvut.fel.mvod.prologueServer;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -25,25 +23,30 @@ import java.util.HashMap;
 public class registeringHandler implements HttpHandler {
 
     XMLFactory wpb = new XMLFactory();
+    webPageLocalizer introPage = new webPageLocalizer("index");
 
     public void handle(HttpExchange he) throws IOException {
         if (he.getRequestMethod().equalsIgnoreCase("GET")) {
             InputStream is = he.getRequestBody();
             String URI = he.getRequestURI().toString();
-            System.out.println(URI);
-            System.out.println(he.getRequestHeaders().values());
+            String msg = null;
+            String aLang = he.getRequestHeaders().getFirst("Accept-language");
+            String[] langs = aLang.split(",");
             String responce = "";
-            try {
-                if (URI.equals("/")) {
-                    responce = generateMainWebPage();
-                } else if (URI.equals("/registration")) {
-                    responce = generateRegWebPage();
-                } else {
-                    responce = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
-                }
-            } catch (XmlPullParserException ex) {
-                Logger.getLogger(registeringHandler.class.getName()).log(Level.SEVERE, null, ex);
+
+            if (URI.equals("/")) {
+                Headers heads = he.getResponseHeaders();
+                heads.add("Content-Type", "text/html");
+
+                responce = introPage.getWP(langs);
+            } else if (URI.equals("/registration")) {
+                Headers heads = he.getResponseHeaders();
+                heads.add("Content-Type", "text/html");
+                responce = generateRegWebPage();
+            } else {
+                responce = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
             }
+
             OutputStream s = he.getResponseBody();
             is.close();
             he.sendResponseHeaders(200, responce.getBytes().length);
@@ -85,9 +88,9 @@ public class registeringHandler implements HttpHandler {
         return p1.equals(p2);
     }
 
-    protected String generateMainWebPage() throws XmlPullParserException, IOException {
+    protected String generateMainWebPage(String[] sa) throws XmlPullParserException, IOException {
         wpb = new XMLFactory();
-        return wpb.makeIntroPage("147.32.89.127", 10666);
+        return wpb.makeIntroPage(GlobalSettingsAndNotifier.singleton.getSetting("PUBLIC_IP"), Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT")));
     }
 
     protected String generateRegWebPage() {
@@ -107,19 +110,18 @@ public class registeringHandler implements HttpHandler {
                 pairs.put(pair[0], pair[1]);
             }
         } catch (Exception ex) {
-            return "<p>"+GlobalSettingsAndNotifier.singleton.messages.getString("fillAllMSG")+"</p>";
+            return "<p>" + GlobalSettingsAndNotifier.singleton.messages.getString("fillAllMSG") + "</p>";
 
 
         }
         if (!passCheck(pairs.get("pass1"), pairs.get("pass2"))) {
-            return "<p>"+GlobalSettingsAndNotifier.singleton.messages.getString("passMismatchErr")+"</p>";
+            return "<p>" + GlobalSettingsAndNotifier.singleton.messages.getString("passMismatchErr") + "</p>";
         }
         wpb = new XMLFactory();
         if (!wpb.addRegistrationEntry(pairs)) {
-            return "<p>"+GlobalSettingsAndNotifier.singleton.messages.getString("usernameExistsErr")+"</p>";
+            return "<p>" + GlobalSettingsAndNotifier.singleton.messages.getString("usernameExistsErr") + "</p>";
         }
         return "OK";
 
     }
-
 }

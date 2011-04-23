@@ -95,8 +95,6 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         jTextField2.setEditable(false);
         jTextField2.setText("N/A");
 
-        prologueControlBTN.setText(bundle.getString("turnOnPrologue")); // NOI18N
-
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, usePrologue, org.jdesktop.beansbinding.ELProperty.create("${selected}"), prologueControlBTN, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
@@ -210,8 +208,8 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
                                         .addComponent(jLabel2))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))))
+                                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))))
                             .addComponent(useEmbeded))
                         .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
@@ -255,7 +253,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11))
         );
@@ -367,7 +365,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         String pStat = GlobalSettingsAndNotifier.singleton.getSetting("prologuestate");
         if (pStat.equals(PrologueServer.STATE_INACTIVE + "")) {
             prologuePort.setEditable(true);
-            prologueControlBTN.setText( GlobalSettingsAndNotifier.singleton.messages.getString("turnOnProglogue"));
+            prologueControlBTN.setText( GlobalSettingsAndNotifier.singleton.messages.getString("turnOnPrologue"));
              boolean b = usePrologue.isSelected();
             usePrologue.setEnabled(true);
             useEmbeded.setEnabled(true);

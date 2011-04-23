@@ -21,9 +21,8 @@ import java.util.logging.Logger;
  */
 public final class GlobalSettingsAndNotifier {
     public static GlobalSettingsAndNotifier singleton  = new GlobalSettingsAndNotifier();
-    static Locale  defaultLoc = new Locale("cs", "CZ");
-    public  ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle",
-                                           defaultLoc);
+    Locale  defaultLoc = new Locale("cs", "CZ");
+    public  ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle",defaultLoc);
     private ArrayList<Notifiable> listeners;
     private HashMap<String,String> settings;
     public ArrayList<networkAddressRange> permited;
