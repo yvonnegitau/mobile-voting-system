@@ -37,7 +37,17 @@ public class XMLFactory {
     public boolean addRegistrationEntry(HashMap<String, String> values) {
         try {
             File file = new File("registrations.xml");
-            file.createNewFile();
+            if(file.createNewFile()) {
+                OutputStream f0;
+            byte buf[] = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><registrations></registrations>".getBytes();
+            f0 = new FileOutputStream("registrations.xml");
+            for (int i = 0; i < buf.length; i++) {
+                f0.write(buf[i]);
+            }
+            f0.flush();
+            f0.close();
+                
+            }
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
             Document doc = docBuilder.parse(file);

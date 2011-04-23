@@ -26,6 +26,7 @@
 package cz.cvut.fel.mvod.gui.table;
 
 import cz.cvut.fel.mvod.common.Question;
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import java.util.ArrayList;
 import javax.swing.event.TableModelEvent;
 
@@ -35,11 +36,11 @@ import javax.swing.event.TableModelEvent;
  */
 public class TestTableModel extends QuestionsTableModel {
 
-	private final static TableColumnInformation SELECTED = new TableColumnInformation(0, "Výběr", Boolean.class, true);
-	private final static TableColumnInformation TEXT = new TableColumnInformation(1, "Text otázky", String.class, true);
-	private final static TableColumnInformation EVALUATION = new TableColumnInformation(2, "Počet bodů", Integer.class, true);
-	private final static TableColumnInformation MAX_SELECTED = new TableColumnInformation(3, "Maximum zaškrtnutých", Integer.class, true);
-	private final static TableColumnInformation MIN_SELECTED = new TableColumnInformation(4, "Minimum zaškrtnutých", Integer.class, true);
+	private final static TableColumnInformation SELECTED = new TableColumnInformation(0, GlobalSettingsAndNotifier.singleton.messages.getString("selectionLabel"), Boolean.class, true);
+	private final static TableColumnInformation TEXT = new TableColumnInformation(1, GlobalSettingsAndNotifier.singleton.messages.getString("qTextLabel"), String.class, true);
+	private final static TableColumnInformation EVALUATION = new TableColumnInformation(2, GlobalSettingsAndNotifier.singleton.messages.getString("nOfPointsLabel"), Integer.class, true);
+	private final static TableColumnInformation MAX_SELECTED = new TableColumnInformation(3, GlobalSettingsAndNotifier.singleton.messages.getString("maxSelectedLabel"), Integer.class, true);
+	private final static TableColumnInformation MIN_SELECTED = new TableColumnInformation(4, GlobalSettingsAndNotifier.singleton.messages.getString("minSelectedLabel"), Integer.class, true);
 	private final static int COLLUMN_COUNT = 5;
 
 	public TestTableModel() {

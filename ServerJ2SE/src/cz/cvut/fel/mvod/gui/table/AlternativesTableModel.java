@@ -27,6 +27,7 @@ package cz.cvut.fel.mvod.gui.table;
 
 import cz.cvut.fel.mvod.common.Alternative;
 import cz.cvut.fel.mvod.common.Question;
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 
 /**
  * Modle tabulky zobrazující seznam odpovědí
@@ -34,9 +35,9 @@ import cz.cvut.fel.mvod.common.Question;
  */
 public class AlternativesTableModel extends AbstractTableModel<Alternative> {
 
-	private final static TableColumnInformation NUMBER = new TableColumnInformation(0, "Číslo", Integer.class, false);
-	private final static TableColumnInformation TEXT = new TableColumnInformation(1, "Text odpovědi", String.class, true);
-	private final static TableColumnInformation CORRECT = new TableColumnInformation(2, "Správná", Boolean.class, true);
+	private final static TableColumnInformation NUMBER = new TableColumnInformation(0, GlobalSettingsAndNotifier.singleton.messages.getString("numberLabel"), Integer.class, false);
+	private final static TableColumnInformation TEXT = new TableColumnInformation(1, GlobalSettingsAndNotifier.singleton.messages.getString("answerTextLabel"), String.class, true);
+	private final static TableColumnInformation CORRECT = new TableColumnInformation(2, GlobalSettingsAndNotifier.singleton.messages.getString("correctLabel"), Boolean.class, true);
 
 	private Question question = null;
 

@@ -67,11 +67,12 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
-        jLabel1.setText("Nastavenia servera Prologue");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
+        jLabel1.setText(bundle.getString("prologueSettingsLabel")); // NOI18N
 
         usePrologue.setSelected(true);
-        usePrologue.setText("Používať server Prologue");
+        usePrologue.setText(bundle.getString("usePrologueLabel")); // NOI18N
         usePrologue.setToolTipText("Prologue je server, ktorý beží pred započatím volieb. Prezentuje základné údaje nutné pre pripojenie a umožnuje registráciu uchádzačov");
         usePrologue.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -84,17 +85,17 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
             }
         });
 
-        jLabel2.setText("Meno certifikátu [CN] : ");
+        jLabel2.setText(bundle.getString("CNLabel")); // NOI18N
 
         jTextField1.setEditable(false);
         jTextField1.setText("N/A");
 
-        jLabel3.setText("Fingerprint certifikátu : ");
+        jLabel3.setText(bundle.getString("certFingerPLabel")); // NOI18N
 
         jTextField2.setEditable(false);
         jTextField2.setText("N/A");
 
-        prologueControlBTN.setText("Zapnúť server Prologue");
+        prologueControlBTN.setText(bundle.getString("turnOnPrologue")); // NOI18N
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, usePrologue, org.jdesktop.beansbinding.ELProperty.create("${selected}"), prologueControlBTN, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -111,7 +112,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         });
 
         enableRegistration.setSelected(true);
-        enableRegistration.setText("Povoliť nové registrácie");
+        enableRegistration.setText(bundle.getString("enableRegsLabel")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, usePrologue, org.jdesktop.beansbinding.ELProperty.create("${selected}"), enableRegistration, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -127,7 +128,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
             }
         });
 
-        jLabel4.setText("Port: ");
+        jLabel4.setText(bundle.getString("portNumberLabel")); // NOI18N
 
         prologuePort.setText(GlobalSettingsAndNotifier.singleton.getSetting("PROLOGUE_PORT"));
 
@@ -141,7 +142,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         });
 
         useEmbeded.setSelected(true);
-        useEmbeded.setText("Použiť vstavaný certifikát");
+        useEmbeded.setText(bundle.getString("useEmbeddedLabel")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, usePrologue, org.jdesktop.beansbinding.ELProperty.create("${selected}"), useEmbeded, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -152,12 +153,12 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
             }
         });
 
-        jLabel5.setText("Stav:");
+        jLabel5.setText(bundle.getString("stateLabel")); // NOI18N
 
         jLabel6.setForeground(new java.awt.Color(255, 0, 0));
         jLabel6.setText(GlobalSettingsAndNotifier.singleton.getSetting("prologuestate").equals("1")?"OFFLINE":"ONLINE");
 
-        jButton1.setText("Načítať certifikát");
+        jButton1.setText(bundle.getString("loadCertLabel")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, useEmbeded, org.jdesktop.beansbinding.ELProperty.create("${!selected}"), jButton1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -209,13 +210,13 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
                                         .addComponent(jLabel2))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))))
+                                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))))
                             .addComponent(useEmbeded))
                         .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addContainerGap(104, Short.MAX_VALUE))))
+                        .addContainerGap(110, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,8 +286,8 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this,
-                    "Prosim zadajte cislo od 0 do 65555",
-                    "Error",
+                   GlobalSettingsAndNotifier.singleton.messages.getString("portErrorTXT"),
+                     GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"),
                     JOptionPane.ERROR_MESSAGE);
 
         }
@@ -366,7 +367,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         String pStat = GlobalSettingsAndNotifier.singleton.getSetting("prologuestate");
         if (pStat.equals(PrologueServer.STATE_INACTIVE + "")) {
             prologuePort.setEditable(true);
-            prologueControlBTN.setText("Zapnúť Prologue");
+            prologueControlBTN.setText( GlobalSettingsAndNotifier.singleton.messages.getString("turnOnProglogue"));
              boolean b = usePrologue.isSelected();
             usePrologue.setEnabled(true);
             useEmbeded.setEnabled(true);
@@ -379,7 +380,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         } else {
             prologuePort.setEditable(false);
 
-            prologueControlBTN.setText("Vypnúť Registráciu");
+            prologueControlBTN.setText( GlobalSettingsAndNotifier.singleton.messages.getString("turnOffPrologue"));
             jLabel6.setForeground(new java.awt.Color(0, 255, 0));
             usePrologue.setSelected(true);
             usePrologue.setEnabled(false);

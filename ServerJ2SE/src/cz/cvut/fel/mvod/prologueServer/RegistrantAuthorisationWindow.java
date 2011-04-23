@@ -34,7 +34,7 @@ public class RegistrantAuthorisationWindow extends JFrame {
     TableRowSorter<TableModel> sorter;
 
     public RegistrantAuthorisationWindow() {
-        super("Overovanie volicov");
+        super(GlobalSettingsAndNotifier.singleton.messages.getString("voterVerifTitle"));
         constructVerificationWindow();
 
         instance = this;
@@ -50,7 +50,7 @@ public class RegistrantAuthorisationWindow extends JFrame {
 
     public void constructVerificationWindow() {
         setLayout(new BorderLayout());
-        status = new JLabel("Overovanie totožnosti");
+        status = new JLabel(GlobalSettingsAndNotifier.singleton.messages.getString("identityCheckLabel"));
         add(status, BorderLayout.NORTH);
 
         XMLParser p = new XMLParser();
@@ -66,11 +66,11 @@ public class RegistrantAuthorisationWindow extends JFrame {
                 public void mouseClicked(MouseEvent e) {
                     if (e.getClickCount() == 2) {
                         RegistrantTable r = (RegistrantTable) table.getModel();
-                        Object[] options = {"Potvrdzujem",
-                            "Storno"};
+                        Object[] options = {GlobalSettingsAndNotifier.singleton.messages.getString("confirmLabel"),
+                            GlobalSettingsAndNotifier.singleton.messages.getString("cancelLabel")};
                         int n = JOptionPane.showOptionDialog(instance,
-                                "Potvrdťe akciu",
-                                "Potvrdenie",
+                                GlobalSettingsAndNotifier.singleton.messages.getString("confirmActionLabel"),
+                                GlobalSettingsAndNotifier.singleton.messages.getString("confirmLabel"),
                                 JOptionPane.YES_NO_OPTION,
                                 JOptionPane.QUESTION_MESSAGE,
                                 null,
@@ -80,7 +80,7 @@ public class RegistrantAuthorisationWindow extends JFrame {
                             RegistrantTable rt = (RegistrantTable) table.getModel();
                             Voter v = rt.getVoterAt(table.getSelectedRow());
                             FileOperator fo = new FileOperator();
-                            fo.appendObjectToFile(v, "approved.vot");
+                            fo.appendObjectToFile(v, "approved.voter");
 
                         }
 

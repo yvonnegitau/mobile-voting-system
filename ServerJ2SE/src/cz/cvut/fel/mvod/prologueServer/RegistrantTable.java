@@ -7,6 +7,7 @@ package cz.cvut.fel.mvod.prologueServer;
 
 
 import cz.cvut.fel.mvod.common.Voter;
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,11 +21,11 @@ import javax.swing.table.AbstractTableModel;
  */
 public class RegistrantTable extends AbstractTableModel {
 
-    String[] columnNames = {"Meno",
-        "Priezvisko",
-        "Login",
-        "ID",
-        "Checker"};
+    String[] columnNames = {GlobalSettingsAndNotifier.singleton.messages.getString("nameFormInput"),
+        GlobalSettingsAndNotifier.singleton.messages.getString("surnameFormInput"),
+        GlobalSettingsAndNotifier.singleton.messages.getString("usernameFormInput"),
+       GlobalSettingsAndNotifier.singleton.messages.getString("IDLabel"),
+        ""};
     Object[][] data = null;
     HashMap<String, List<Voter>> regs;
     HashMap<Object[],byte[]> passwords = new HashMap<Object[], byte[]>();

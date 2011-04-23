@@ -24,19 +24,10 @@
  */
 package cz.cvut.fel.mvod.gui;
 
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.persistence.DAOException;
 import cz.cvut.fel.mvod.persistence.DAOFacadeImpl;
 import cz.cvut.fel.mvod.persistence.DAOFactoryImpl;
-import cz.cvut.fel.mvod.prologueServer.PrologueServer;
-import cz.cvut.fel.mvod.prologueServer.RegistrantAuthorisationWindow;
-import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -51,8 +42,7 @@ public class MobileVotingDevice {
             DAOFactoryImpl.initInstance();
             DAOFacadeImpl.initInstance();
         } catch (DAOException ex) {
-            System.out.println("Nepodařilo se inicializovat databázi."
-                    + "Zřejmě je spuštěná jiná instance programu.");
+            System.out.println(GlobalSettingsAndNotifier.singleton.messages.getString("databaseInitFail"));
             System.exit(1);
         }
         java.awt.EventQueue.invokeLater(new Runnable() {

@@ -29,6 +29,7 @@ import javax.swing.JPanel
 import java.awt.BorderLayout
 import cz.cvut.fel.mvod.evaluation.VotingQuestionResult
 import groovy.model.ValueModel
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier
 
 /**
  * Panel zobrazující výsledky otázky.
@@ -68,11 +69,12 @@ class QuestionResultPanel {
 	 * @param result výsledky k zobrazení
 	 */
 	void setQuestionResult(VotingQuestionResult result) {
+
 		text.text = """<html>\n
-		<b>Text otázky:</b>	${result.question.text}<br>
-		<b>Počet platných hlasů:</b> ${result.votesCount}<br>
-		<b>Počet platných hlasů v %:</b> ${result.votesPercent}%<br>
-		<b>Platný výsledek:</b> ${result.valid ? 'ano' : 'ne'}<br>
+		<b>${GlobalSettingsAndNotifier.singleton.messages.getString("HTMLQText")}</b>	${result.question.text}<br>
+		<b>${GlobalSettingsAndNotifier.singleton.messages.getString("HTMLValidVotes")}</b> ${result.votesCount}<br>
+		<b>${GlobalSettingsAndNotifier.singleton.messages.getString("HTMLValidVotesP")}</b> ${result.votesPercent}%<br>
+		<b>${GlobalSettingsAndNotifier.singleton.messages.getString("HTMLValidResuld")}</b> ${result.valid ? GlobalSettingsAndNotifier.singleton.messages.getString("yesLabel") : GlobalSettingsAndNotifier.singleton.messages.getString("noLabel")}<br>
 		"""
 		def data = []
 		for(def alternative in result.question.alternatives) {
@@ -80,9 +82,9 @@ class QuestionResultPanel {
 				percent: result.getAlternativePercent(alternative)]
 		}
 		table.model = builder.tableModel(list: data) {
-				propertyColumn(header:'Odpověď', propertyName:'alt')
-				propertyColumn(header:'Počet hlasů', propertyName:'count')
-				propertyColumn(header:'Počet hlasů v %', propertyName:'percent')
+				propertyColumn(header:GlobalSettingsAndNotifier.singleton.messages.getString("answerLabel"), propertyName:'alt')
+				propertyColumn(header:GlobalSettingsAndNotifier.singleton.messages.getString("nOfVotesLabel"), propertyName:'count')
+				propertyColumn(header:GlobalSettingsAndNotifier.singleton.messages.getString("nOfVotesPLabel"), propertyName:'percent')
 			}
 		panel.revalidate()
 	}

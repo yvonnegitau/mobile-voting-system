@@ -19,9 +19,9 @@ import javax.swing.table.TableColumnModel;
  */
 public class NetworkSettingsTable extends AbstractTableModel {
 
-    String[] columnNames = {"IP adresa",
-        "Maska siete",
-        "Správanie"};
+    String[] columnNames = {GlobalSettingsAndNotifier.singleton.messages.getString("IPAddressLabel"),
+        GlobalSettingsAndNotifier.singleton.messages.getString("maskLabel"),
+        GlobalSettingsAndNotifier.singleton.messages.getString("ruleLabel")};
     networkAddressRange[] data = null;
   //  JTableHeader head;
 
@@ -59,13 +59,13 @@ public class NetworkSettingsTable extends AbstractTableModel {
             String action = data[rowIndex].getAction();
             
               if(action.equals(networkAddressRange.ALLOW_ANY)){
-                  return "Povoliť všetky spojenia";
+                  return GlobalSettingsAndNotifier.singleton.messages.getString("optionEnableAll");
               }
               if(action.equals(networkAddressRange.ALLOW_SSL)){
-                  return "Povoliť SSL spojenie";
+                  return GlobalSettingsAndNotifier.singleton.messages.getString("optionRestrictSSL");
               }
               if(action.equals(networkAddressRange.DENY_ACCESS)) {
-                  return "Zakázané spojenie";
+                  return GlobalSettingsAndNotifier.singleton.messages.getString("optionDenyAll");
               }
             
         }
