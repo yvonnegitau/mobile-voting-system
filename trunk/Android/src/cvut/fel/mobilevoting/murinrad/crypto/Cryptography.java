@@ -25,7 +25,7 @@ public class Cryptography {
 	public static String masterKey = null;
 	private DESKeySpec keySpec = null;
 	private static SecretKey key = null;
-	boolean initialized = false;
+	static boolean  initialized = false;
 	private String pHash = null;
 
 	public Cryptography() {

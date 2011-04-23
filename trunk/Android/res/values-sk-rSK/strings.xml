@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="hello">Vitajte v mobilnom hlasovaní pre android.</string>
+	<string name="app_name">Mobilné hlasovanie pre Android</string>
+	<string name="passwordChallenge">Prosím, vložte hlavné heslo a stlačte OK.</string>
+	<string name="Confirm">OK</string>
+
+	<string name="loginConfirmBTN">loginConfirmBTN</string>
+	<string name="passwordField">passwordField</string>
+	<string name="wrongPass">Heslá nesúhlasia, skúste to znova prosím.</string>
+	<string name="HeaderServerList">Vyberte si volebný bod ku ktorému sa chcete pripojiť.</string>
+	<string name="ErrorMsg400">Druhá strana nepochopila Vašu požiadavku.</string>
+	<string name="ErrorMsg401">Zlé meno alebo heslo.</string>
+	<string name="ErrorMsg403">Tento volebný bod vyžaduje overenie.</string>
+	<string name="ErrorMsg404">Volebný bod nemá pre Vás žiadne otázky.</string>
+	<string name="connectedTo">Pripojený k</string>
+	<string name="answerPick">Vyberte odpoveď/e</string>
+	<string name="confirmSendDialog">Potvrdením sa hlas odošle, pokračovať?</string>
+	<string name="YES">Áno</string>
+	<string name="NO">Nie</string>
+	<string name="FriendlyNameTag">Meno volebného bodu:</string>
+	<string name="IPAddressTag">IP adresa</string>
+	<string name="portNumberTag">Číslo portu</string>
+	<string name="usernameTag">Login</string>
+	<string name="passwordTag">Heslo</string>
+	<string name="serverMenuChangeSave">Uložiť</string>
+	<string name="serverMenuBack">Späť</string>
+	<string name="serverMenuJustConnect">Iba pripojiť</string>
+	<string name="temporaryserverTag">dočasný server</string>
+	<string name="badPortFormatError">Zlé číslo portu, prosím použite port v rozmedzí &lt;1,
+65535&gt;</string>
+	<string name="databaseSuccess">Úspech</string>
+	<string name="pickChallenge">Vyberte činnosť</string>
+	<string name="EditServerTag">Editovať volebný bod</string>
+	<string name="deleteServerTag">Vymazať bod</string>
+	<string name="newServerTag">Nový volebný bod</string>
+	<string name="exitTag">Ukončiť</string>
+	<string name="defaultPort">10666</string>
+	<string name="passwordDialogTitle">Editácia hesla</string>
+	<string name="enterOldPass">Vložte staré heslo: </string>
+	<string name="enterNewPass">Vložte nové heslo:</string>
+	<string name="enterNewPass2">Znova, vložte nové heslo:</string>
+	<string name="cancel">Zrušiť</string>
+	<string name="passwordChangeSuccess">Heslo bolo zmenene.</string>
+	<string name="more">Viac</string>
+	<string name="sendAnswers">Poslať odpovede</string>
+	<string name="notEnoughAnswers">Vyberte viac odpovedí.</string>
+	<string name="TooMuchAnswers">Vyberte menej odpovedí</string>
+	<string name="dismissLabel">Zrušiť</string>
+	<string name="QDDTitle">Podrobnosti otázky</string>
+	<string name="LANServersDelimiter">Nájdené miestne volebné body:</string>
+	<string name="CertWindowTitle">Informácie o certifikáte</string>
+	<string name="CertificateWindNotTrusted">Tento certifikát je vydaný neoverenou certifikačnou autoritou. Bez toho nemáte istotu, že vzdialená strana ku ktorej ste pripojený je tá ku ktorej ste sa chceli pripojiť.  Pre ďalší postup skontaktujte volebného komisára. Ak chcete pokračovať, potvrďte výzvu.</string>
+	<string name="CertificateWindDisclaimer">Rozumiem rizikám neoverených certifikátov a chcem pokračovať.</string>
+	<string name="CertificateWindFingerprint">Odtlačok certifikátu je:</string>
+	<string name="conStatDial">Pokúšam sa o spojenie...</string>
+	<string name="conStatDialHTTPS">Pokúšam sa o bezpečné spojenie...</string>
+	<string name="networkErrorMessage">Chyba siete</string>
+	<string name="tryAgainString">Skúsiť znova.</string>
+	<string name="conStatDialSucc">Úspech</string>
+	<string name="noSSLWindTitle">Zabezpečené spojenie nie je dostupné</string>
+	<string name="noSSLDialDiscl">Tento volebný bod nepodporuje zabezpečené pripojenie. Pripojenie sa k nemu je vysoko neodporúčané. Kontaktujte volebného komisára.</string>
+	<string name="noSSLWindChckBoxt">Rozumiem rizikám a chcem pokračovať.</string>
+	<string name="noSSLWindToProc">Pre pokračovanie zaškrtniťe políčko.</string>
+	<string name="networkErrorDialogTitle">Sieťová chyba.</string>
+	<string name="networkErrorDialogueText">Vyskytla sa chyba a nie je možné Vás spojiť s volebným bodom. Overte si pripojenie k sieti. Ak všetko zlyhá kontaktujte volebného komisára.</string>
+	<string name="connectAgain">Skúsiť znova.</string>
+	<string name="passwordReq">Heslo musí mať presne 8 znakov.</string>
+	
+</resources>
