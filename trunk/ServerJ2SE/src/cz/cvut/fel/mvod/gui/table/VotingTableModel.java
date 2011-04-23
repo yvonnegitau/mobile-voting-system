@@ -26,6 +26,7 @@
 package cz.cvut.fel.mvod.gui.table;
 
 import cz.cvut.fel.mvod.common.Question;
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 
 /**
  * Model tabulky hlasovacích otázek.
@@ -33,13 +34,13 @@ import cz.cvut.fel.mvod.common.Question;
  */
 public class VotingTableModel extends QuestionsTableModel {
 
-	private final static TableColumnInformation SELECTED = new TableColumnInformation(0, "Výběr", Boolean.class, true);
-	private final static TableColumnInformation TEXT = new TableColumnInformation(1, "Text otázky", String.class, true);
-        private final static TableColumnInformation DETAILS = new TableColumnInformation(2, "Popis otázky",String.class,true);
-	private final static TableColumnInformation MIN_PERCENT = new TableColumnInformation(3, "Minimum % pro vítězství", Integer.class, true);
-	private final static TableColumnInformation WINNERS = new TableColumnInformation(4, "Počet vítězů", Integer.class, true);
-	private final static TableColumnInformation MAX_SELECTED = new TableColumnInformation(5, "Maximum zaškrtnutých", Integer.class, true);
-	private final static TableColumnInformation MIN_SELECTED = new TableColumnInformation(6, "Minimum zaškrtnutých", Integer.class, true);
+	private final static TableColumnInformation SELECTED = new TableColumnInformation(0, GlobalSettingsAndNotifier.singleton.messages.getString("selectionLabel"), Boolean.class, true);
+	private final static TableColumnInformation TEXT = new TableColumnInformation(1, GlobalSettingsAndNotifier.singleton.messages.getString("qTextLabel"), String.class, true);
+        private final static TableColumnInformation DETAILS = new TableColumnInformation(2,GlobalSettingsAndNotifier.singleton.messages.getString("qDescriptionLabel") ,String.class,true);
+	private final static TableColumnInformation MIN_PERCENT = new TableColumnInformation(3, GlobalSettingsAndNotifier.singleton.messages.getString("minPForWinLabel"), Integer.class, true);
+	private final static TableColumnInformation WINNERS = new TableColumnInformation(4, GlobalSettingsAndNotifier.singleton.messages.getString("nOfVictorsLabel"), Integer.class, true);
+	private final static TableColumnInformation MAX_SELECTED = new TableColumnInformation(5, GlobalSettingsAndNotifier.singleton.messages.getString("maxSelectedLabel"), Integer.class, true);
+	private final static TableColumnInformation MIN_SELECTED = new TableColumnInformation(6, GlobalSettingsAndNotifier.singleton.messages.getString("minSelectedLabel"), Integer.class, true);
 	private final static int COLLUMN_COUNT = 7;
 
 	public VotingTableModel() {

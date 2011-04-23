@@ -36,13 +36,13 @@ public class IPAdderDialogue extends JDialog {
     public IPAdderDialogue() {
         super();
         IP = new JTextField(16);
-        IPLabel = new JLabel("IP adresa");
+        IPLabel = new JLabel(GlobalSettingsAndNotifier.singleton.messages.getString("IPAddressLabel"));
         mask = new JTextField(16);
-        maskLabel = new JLabel("Maska siete");
-        options = new String[]{"Povoliť všetky spojenia", "Povoliť SSL spojenie", "Zakázané spojenie"};
+        maskLabel = new JLabel(GlobalSettingsAndNotifier.singleton.messages.getString("maskLAbel"));
+        options = new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("optionEnableAll"), GlobalSettingsAndNotifier.singleton.messages.getString("optionRestrictSSL"), GlobalSettingsAndNotifier.singleton.messages.getString("OptionDenyAll")};
         combo = new JComboBox(options);
-        okBTN = new JButton("Potvrdiť");
-        cancelBTN = new JButton("Zatvoriť okno");
+        okBTN = new JButton(GlobalSettingsAndNotifier.singleton.messages.getString("addLabel"));
+        cancelBTN = new JButton(GlobalSettingsAndNotifier.singleton.messages.getString("closeLabel"));
         instance = this;
         cancelBTN.addMouseListener(new MouseAdapter() {
 
@@ -109,7 +109,7 @@ public class IPAdderDialogue extends JDialog {
     private void showError(String toString) {
         JOptionPane.showMessageDialog(instance,
                 toString,
-                "Error",
+                GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"),
                 JOptionPane.ERROR_MESSAGE);
     }
 }

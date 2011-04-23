@@ -54,15 +54,16 @@ public class MainSettingsWindow extends javax.swing.JFrame implements Notifiable
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTabbedPane1.addTab("Hlavné", globalSettingsPanel1);
-        jTabbedPane1.addTab("IP Filtracia", iPFilterPanel1);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("mainSetLabel"), globalSettingsPanel1); // NOI18N
+        jTabbedPane1.addTab(bundle.getString("IPFiltrationLabel"), iPFilterPanel1); // NOI18N
 
         prologueSettingsPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 prologueSettingsPanel1MouseClicked(evt);
             }
         });
-        jTabbedPane1.addTab("Prologue Server", prologueSettingsPanel1);
+        jTabbedPane1.addTab(bundle.getString("prologueLabel"), prologueSettingsPanel1); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,6 +81,8 @@ public class MainSettingsWindow extends javax.swing.JFrame implements Notifiable
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jTabbedPane1.getAccessibleContext().setAccessibleName(bundle.getString("mainSetLabel")); // NOI18N
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

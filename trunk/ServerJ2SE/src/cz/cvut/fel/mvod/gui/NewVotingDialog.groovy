@@ -34,12 +34,17 @@ import javax.swing.JFrame
 import javax.swing.WindowConstants
 import cz.cvut.fel.mvod.common.EvaluationType
 import cz.cvut.fel.mvod.persistence.DAOFacadeImpl
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier
+
 
 /**
  * Dialog pro vytvoření nového hlasování.
  * @author jakub
  */
 class NewVotingDialog implements Showable {
+
+
+        
 
 	/**
 	 * SwingBuilder pro vytvoření dialogu.
@@ -77,8 +82,8 @@ class NewVotingDialog implements Showable {
 	 * JTextArea zobrazující nápovědu.
 	 */
 	def helpArea
-	def final TYPES = ["Hlasování", "Test"]
-	def final VOTING_SETTINGS = ["Veřejné", "Tajné"]
+	def final TYPES = [GlobalSettingsAndNotifier.singleton.messages.getString("votingMenuLabel"), GlobalSettingsAndNotifier.singleton.messages.getString("testingLabel")]
+	def final VOTING_SETTINGS = [GlobalSettingsAndNotifier.singleton.messages.getString("publicLabel"), GlobalSettingsAndNotifier.singleton.messages.getString("secretLabel")]
 	def final TEST_SETTINGS = ["Částečné", "Absolutní", "S odčítáním"]
 	def final HELP = ["Za částečně správnou odpověď je přidělena část bodů.",
 				"Body jsou přidělené pouze za správně zodpovězené otázky.",
@@ -150,7 +155,7 @@ class NewVotingDialog implements Showable {
 	 * Dialog pro vytvoření nového hlasování.
 	 */
 	def newVotingDialog = builder.dialog(
-			title: "Nové hlasování",
+			title: GlobalSettingsAndNotifier.singleton.messages.getString("newVotingLabel"),
 			maximumSize: [200, 200],
 			resizable: false,
 			owner: owner,
@@ -160,18 +165,18 @@ class NewVotingDialog implements Showable {
 			defaultCloseOperation: WindowConstants.DISPOSE_ON_CLOSE) {
 		panel(constraints: BorderLayout.NORTH,
 				layout: new GridLayout(1, 2)) {
-			label(text: "Typ události:")
+			label(text: GlobalSettingsAndNotifier.singleton.messages.getString("eventTypeLabel"))
 			votingType = comboBox(
 				model: new DefaultComboBoxModel(TYPES.toArray()),
 				selectedIndex: 0, actionPerformed: votingTypeSelect)
 		}
 		panel(constraints: BorderLayout.CENTER) {
 			votingSettingsPanel = panel(layout: new GridLayout(2, 2)) {
-				label(text: "Typ hlasování:")
+				label(text: GlobalSettingsAndNotifier.singleton.messages.getString("votingTypeLabel"))
 				votingSettings = comboBox(
 						model: new DefaultComboBoxModel(VOTING_SETTINGS.toArray()),
 						selectedIndex: 0)
-				label(text: "Hranice platnosti v %:")
+				label(text: GlobalSettingsAndNotifier.singleton.messages.getString("validThreshHoldLabel"))
 				votingMinParticipation = spinner(
 						model: spinnerNumberModel(maximum: 100, minimum: 0, stepSize: 1))
 			}
@@ -182,7 +187,7 @@ class NewVotingDialog implements Showable {
 				panel(
 						layout: new GridLayout(1, 2),
 						constraints: BorderLayout.NORTH) {
-					label(text: "Způsob vyhodnocení:")
+					label(text: GlobalSettingsAndNotifier.singleton.messages.getString("evalTypeLabel"))
 					testSettings = comboBox(
 						model: new DefaultComboBoxModel(TEST_SETTINGS.toArray()),
 						selectedIndex: 0, actionPerformed: testSettingsSelect)
@@ -197,8 +202,8 @@ class NewVotingDialog implements Showable {
 			}
 		}
 		panel(constraints: BorderLayout.SOUTH, layout: new FlowLayout(FlowLayout.RIGHT)) {
-			button(text: "Uložit", actionPerformed: createAction)
-			button(text: "Zrušit", actionPerformed: {hide()})
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("saveLabel"), actionPerformed: createAction)
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("cancelLabel"), actionPerformed: {hide()})
 		}
 	}
 

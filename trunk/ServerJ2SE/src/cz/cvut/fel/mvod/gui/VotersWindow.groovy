@@ -38,6 +38,7 @@ import javax.swing.JOptionPane
 import cz.cvut.fel.mvod.persistence.DAOFactoryImpl
 import cz.cvut.fel.mvod.persistence.DAOObserver
 import cz.cvut.fel.mvod.persistence.DAOObserverEvent
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier
 
 /**
  * Okno pro editaci seznamu účastníků.
@@ -97,7 +98,7 @@ class VotersWindow implements Showable, DAOObserver {
 	 * @param msg chybová hláška
 	 */
 	def void showError(String msg) {
-		JOptionPane.showMessageDialog(votersWindow, msg, "Chyba", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(votersWindow, msg, GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"), JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**
@@ -138,7 +139,7 @@ class VotersWindow implements Showable, DAOObserver {
 	/**
 	 * Okno editace účastníků (JFrame).
 	 */
-	def votersWindow = builder.frame(title: "Účastníci hlasování",
+	def votersWindow = builder.frame(title: GlobalSettingsAndNotifier.singleton.messages.getString("votingAttenLabel"),
 			layout: new BorderLayout(),
 			defaultCloseOperation: WindowConstants.HIDE_ON_CLOSE) {
 		scrollPane(verticalScrollBarPolicy: ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
@@ -148,9 +149,9 @@ class VotersWindow implements Showable, DAOObserver {
 		}
 		panel(constraints: BorderLayout.SOUTH,
 				layout: new FlowLayout(FlowLayout.RIGHT)) {
-			button(text: "Přidat", actionPerformed: addVoter)
-			button(text: "Editovat", actionPerformed: editVoter)
-			button(text: "Smazat", actionPerformed: deleteVoter)
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("addLabel"), actionPerformed: addVoter)
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("editLabel"), actionPerformed: editVoter)
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("deleteLabel"), actionPerformed: deleteVoter)
 		}
 	}
 }

@@ -27,6 +27,7 @@ package cz.cvut.fel.mvod.gui.table;
 
 import cz.cvut.fel.mvod.common.Question;
 import cz.cvut.fel.mvod.common.Voting;
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +41,7 @@ import javax.swing.event.TableModelEvent;
 public class QuestionsTableModel extends AbstractTableModel<Question> {
 
 	private final TableColumnInformation SELECTED;
-	private final TableColumnInformation TEXT = new TableColumnInformation(1, "Text otázky", String.class, false);
+	private final TableColumnInformation TEXT = new TableColumnInformation(1, GlobalSettingsAndNotifier.singleton.messages.getString("qTextLabel"), String.class, false);
 
 	protected List<Item> rows = null;
 	protected Map<Question, Item> questions = null;
@@ -49,7 +50,7 @@ public class QuestionsTableModel extends AbstractTableModel<Question> {
 
 	public QuestionsTableModel(boolean selectable, Question.State state) {
 		super(new TableColumnInformation[2]);
-		SELECTED = new TableColumnInformation(0, "Výběr", Boolean.class, selectable);
+		SELECTED = new TableColumnInformation(0, GlobalSettingsAndNotifier.singleton.messages.getString("selectionLabel"), Boolean.class, selectable);
 		COLUMNS[0] = SELECTED;
 		COLUMNS[1] = TEXT;
 		this.state = state;
@@ -76,7 +77,7 @@ public class QuestionsTableModel extends AbstractTableModel<Question> {
 			throw new IllegalArgumentException();
 		}
 		this.state = state;
-		SELECTED = new TableColumnInformation(0, "Výběr", Boolean.class, !defaultSelection);
+		SELECTED = new TableColumnInformation(0, GlobalSettingsAndNotifier.singleton.messages.getString("selectionLabel"), Boolean.class, !defaultSelection);
 	}
 
 	/**

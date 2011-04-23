@@ -9,6 +9,7 @@ package cz.cvut.fel.mvod.prologueServer;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import java.io.*;
 import java.net.InetAddress;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class registeringHandler implements HttpHandler {
                 } else if (URI.equals("/registration")) {
                     responce = generateRegWebPage();
                 } else {
-                    responce = "chevron seven, will not lock";
+                    responce = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
                 }
             } catch (XmlPullParserException ex) {
                 Logger.getLogger(registeringHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,16 +107,16 @@ public class registeringHandler implements HttpHandler {
                 pairs.put(pair[0], pair[1]);
             }
         } catch (Exception ex) {
-            return "<p>Prosim vyplnte vsetky udaje</p>";
+            return "<p>"+GlobalSettingsAndNotifier.singleton.messages.getString("fillAllMSG")+"</p>";
 
 
         }
         if (!passCheck(pairs.get("pass1"), pairs.get("pass2"))) {
-            return "<p>Hesla sa nezhoduju, prosim zadajte rovnake hesla</p>";
+            return "<p>"+GlobalSettingsAndNotifier.singleton.messages.getString("passMismatchErr")+"</p>";
         }
         wpb = new XMLFactory();
         if (!wpb.addRegistrationEntry(pairs)) {
-            return "<p>Username in use, please use another</p>";
+            return "<p>"+GlobalSettingsAndNotifier.singleton.messages.getString("usernameExistsErr")+"</p>";
         }
         return "OK";
 

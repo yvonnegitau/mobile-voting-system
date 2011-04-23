@@ -10,6 +10,8 @@ import cz.cvut.fel.mvod.prologueServer.PrologueServer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,13 +21,17 @@ import java.util.logging.Logger;
  */
 public final class GlobalSettingsAndNotifier {
     public static GlobalSettingsAndNotifier singleton  = new GlobalSettingsAndNotifier();
-
+    static Locale  defaultLoc = new Locale("cs", "CZ");
+    public  ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle",
+                                           defaultLoc);
     private ArrayList<Notifiable> listeners;
     private HashMap<String,String> settings;
     public ArrayList<networkAddressRange> permited;
 
 
-
+/**
+ * Constructs the singleton and Inserts the default settings
+ */
     private GlobalSettingsAndNotifier() {
         listeners = new ArrayList<Notifiable>();
         settings = new HashMap<String, String>();
@@ -54,16 +60,26 @@ public final class GlobalSettingsAndNotifier {
 
         
     }
-
+/**
+ * Adds a settings change listener that will be alerted everytime a change in settings has occured
+ * @param n
+ */
     public void addListener(Notifiable n ){
         listeners.add(n);
     }
 
+    /**
+     * Modifies settings
+     * @param name the setting name, see documentation for possible names
+     * @param value the setting value
+     */
     public void modifySettings(String name,String value) {
         settings.put(name.toUpperCase(), value);
         notifyListeners();
     }
-
+/**
+ * Notifies the listeners of change
+ */
     public void notifyListeners() {
         Iterator<Notifiable> iN = listeners.iterator();
         while(iN.hasNext()) {
@@ -71,7 +87,11 @@ public final class GlobalSettingsAndNotifier {
         }
         
     }
-
+/**
+ * Returns the setting
+ * @param name the setting nam, see documentation for possible names
+ * @return the setting value
+ */
     public String getSetting(String name) {
         String n = name.toUpperCase();
         String out = null;
@@ -80,9 +100,14 @@ public final class GlobalSettingsAndNotifier {
         return out;
     }
 
-
+/**
+     * Modifies settings - this one can prevent looping
+     * @param name the setting name, see documentation for possible names
+     * @param value the setting value
+     * @param flagNotify if true the change will provoke a notification to all listeners
+ */
     public void modifySettings(String name, String value, boolean flagNotify) {
-        System.out.println("SETTING "+name +" modified to "+value);
+        //System.out.println("SETTING "+name +" modified to "+value);
          if(!flagNotify){
             settings.put(name.toUpperCase(), value);
         } else {

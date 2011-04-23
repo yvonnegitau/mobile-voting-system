@@ -1,5 +1,7 @@
 package cz.cvut.fel.mvod.prologueServer;
 
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -15,7 +17,7 @@ public class ProvidingHandler extends registeringHandler {
 
     @Override
     public String parsePost(String body){
-        return "Registrations are closed, please contact the administrator for more help";
+        return GlobalSettingsAndNotifier.singleton.messages.getString("regsAreClosedTXT");
     }
 
 }

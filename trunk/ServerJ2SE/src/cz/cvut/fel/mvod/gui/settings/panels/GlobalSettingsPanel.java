@@ -38,8 +38,9 @@ public class GlobalSettingsPanel extends javax.swing.JPanel implements Notifiabl
         securityPanel1 = new cz.cvut.fel.mvod.gui.settings.panels.SecurityPanel();
         connectionInfo1 = new cz.cvut.fel.mvod.gui.settings.panels.ConnectionInfo();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18));
-        jLabel1.setText("Hlavné nastavenia");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
+        jLabel1.setText(bundle.getString("mainSettingsLabel")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

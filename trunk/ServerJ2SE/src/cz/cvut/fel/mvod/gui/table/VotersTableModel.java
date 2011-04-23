@@ -26,6 +26,7 @@
 package cz.cvut.fel.mvod.gui.table;
 
 import cz.cvut.fel.mvod.common.Voter;
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,9 +38,9 @@ import java.util.List;
  */
 public class VotersTableModel extends AbstractTableModel<Voter> {
 
-	private final static TableColumnInformation NAME = new TableColumnInformation(0, "Jméno", String.class, false);
-	private final static TableColumnInformation SURNAME = new TableColumnInformation(1, "Příjmení", String.class, false);
-	private final static TableColumnInformation USERNAME = new TableColumnInformation(2, "Uživatelské jméno", String.class, false);
+	private final static TableColumnInformation NAME = new TableColumnInformation(0, GlobalSettingsAndNotifier.singleton.messages.getString("nameFormInput"), String.class, false);
+	private final static TableColumnInformation SURNAME = new TableColumnInformation(1, GlobalSettingsAndNotifier.singleton.messages.getString("surnameFormInput"), String.class, false);
+	private final static TableColumnInformation USERNAME = new TableColumnInformation(2, GlobalSettingsAndNotifier.singleton.messages.getString("usernameFormInput"), String.class, false);
 
 	private List<Voter> rows = new ArrayList<Voter>();
 

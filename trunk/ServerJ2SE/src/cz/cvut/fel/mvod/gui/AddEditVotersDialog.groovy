@@ -32,12 +32,15 @@ import cz.cvut.fel.mvod.crypto.CryptoUtils
 import cz.cvut.fel.mvod.common.Voter
 import cz.cvut.fel.mvod.persistence.DAOException
 import cz.cvut.fel.mvod.persistence.DAOFactoryImpl
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier
 
 /**
  * Dialog pro editaci nebo přidání uživatele.
  * @author jakub
  */
 class AddEditVotersDialog implements Showable {
+
+        
 
 	/**
 	 * Instance třídy SwingBuilder. Vytváří dialog.
@@ -76,23 +79,24 @@ class AddEditVotersDialog implements Showable {
 	 * @param voter editovaný uživtel
 	 */
 	AddEditVotersDialog(SwingBuilder builder, boolean create, Voter voter) {
+   
 		this.builder = builder
-		editVoterDialog = builder.dialog(title: "Registrační formulář",
+		editVoterDialog = builder.dialog(title: GlobalSettingsAndNotifier.singleton.messages.getString("regFormTitle"),
 				modal: true,
 				defaultCloseOperation: WindowConstants.DISPOSE_ON_CLOSE,
 				layout: new GridLayout(6, 2)) {
-			label(text: "Jméno:")
+			label(text: GlobalSettingsAndNotifier.singleton.messages.getString("nameFormInput"))
 			name = textField(text: voter.firstName)
-			label(text: "Příjmení:")
+			label(text: GlobalSettingsAndNotifier.singleton.messages.getString("surnameFormInput"))
 			surname = textField(text: voter.lastName)
-			label(text: "Uživatelské jméno:")
+			label(text: GlobalSettingsAndNotifier.singleton.messages.getString("usernameFormInput"))
 			username = textField(text: voter.userName)
-			label(text: "Heslo:")
+			label(text: GlobalSettingsAndNotifier.singleton.messages.getString("passwordFormInput"))
 			password1 = passwordField(text: "")
-			label(text: "Heslo znovu:")
+			label(text:GlobalSettingsAndNotifier.singleton.messages.getString("password2FormInput"))
 			password2 = passwordField(text: "")
-			button(text: "Uložit", actionPerformed: {saveAction(voter, create)})
-			button(text: "Zrušit", actionPerformed: cancelAction)
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("saveLabel"), actionPerformed: {saveAction(voter, create)})
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("cancelLabel"), actionPerformed: cancelAction)
 		}
 	}
 
@@ -116,7 +120,7 @@ class AddEditVotersDialog implements Showable {
 	 * @param msg chybová hláška
 	 */
 	void showError(String msg) {
-		JOptionPane.showMessageDialog(editVoterDialog, msg, "Chyba", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(editVoterDialog, msg, GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"), JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**
@@ -132,11 +136,11 @@ class AddEditVotersDialog implements Showable {
 	 */
 	def saveAction = {def voter, def create ->
 		if(password1.text != password2.text) {
-			showError("Heslo a jeho potvrzení se neshodují.")
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("passMismatchErr"))
 			return
 		}
 		if(name.text == "" || surname.text == "" || username.text == "" || password1.text == "") {
-			showError("Nejsou vyplněná všechna pole.")
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("passMismatchErr"))
 			return
 		}
 		def tmp = ['firstName': voter.firstName, 'lastName': voter.lastName, 'userName': voter.userName, 'password': voter.password]
@@ -151,7 +155,7 @@ class AddEditVotersDialog implements Showable {
 				voterDAO.updateVoter(voter)
 			}
 		} catch(DAOException ex) {
-			showError("Zvolte jiné uživatelské jméno.")
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("usernameExistsErr"))
 			voter.firstName = tmp['firstName']
 			voter.lastName = tmp['lastName']
 			voter.userName = tmp['userName']

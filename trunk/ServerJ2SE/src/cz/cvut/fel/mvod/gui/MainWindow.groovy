@@ -53,6 +53,7 @@ import javax.swing.JFileChooser
 import javax.swing.filechooser.FileFilter
 import cz.cvut.fel.mvod.evaluation.VotingResult
 import cz.cvut.fel.mvod.evaluation.VotingQuestionResult
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier
 
 /**
  * Hlavní okno programu.
@@ -111,13 +112,13 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 			def q = new Question()
 			dao.currentVoting.addQuestion(q)
 			if(!dao.currentVoting.test) {
-				q.addAlternative(new Alternative(text: 'Ano'))
-				q.addAlternative(new Alternative(text: 'Ne'))
-				q.addAlternative(new Alternative(text: 'Zdržet se hlasování'))
+				q.addAlternative(new Alternative(text: GlobalSettingsAndNotifier.singleton.messages.getString("yesLabel")))
+				q.addAlternative(new Alternative(text: GlobalSettingsAndNotifier.singleton.messages.getString("noLabel")))
+				q.addAlternative(new Alternative(text: GlobalSettingsAndNotifier.singleton.messages.getString("abstainLabel")))
 			}
 			votingTableModel.addQuestion(q)
 		} else {
-			showError('Není vytvořeno hlasování.')
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("noVotingCreatedErr"))
 		}
 	}
 
@@ -126,7 +127,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 	 */
 	def deleteQuestion = {
 		if(!dao.currentVoting) {
-			showError('Není vytvořeno hlasování.')
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("noVotingCreatedErr"))
 			return
 		}
 		def index = votingTable.getSelectedRow()
@@ -141,24 +142,24 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 	 */
 	def startVoting = {
 		if(!dao.currentVoting) {
-			showError('Není vytvořeno hlasování.')
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("noVotingCreatedErr"))
 			return
 		}
 		def questions = votingTableModel.getSelected()
 		def voters = voterDAO.retrieveVoters()
 		if(questions.size() == 0) {
-			showError('Nejsou vybrané žádné otázky.')
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("noQuestSelErr"))
 			return
 		}
 		if(voters.size() == 0) {
-			showError('Nejsou registrovaní žádní účastníci')
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("noPPLSelErr"))
 			return
 		}
 		def network = NetworkAccessManager.getInstance()
 		try {
 			network.startServer()
 		} catch(IOException ex) {
-			showError('Nepodařilo se otevřít síťové spojení.')
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("netErr"))
 			return
 		}
 		questions.each({it.state = Question.State.RUNNING})
@@ -171,8 +172,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 	 */
 	def stopVoting = {def forced = false ->
 		if(!dao.currentVoting) {
-			showError('Není vytvořeno hlasování.')
-			return
+			
 		}
 		def questions
 		if(forced) {
@@ -189,7 +189,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 			dao.notifyVotingChanged();
 		}
 		else {
-			showError('Nejsou vybrané probíhající otázky.')
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("noCurQueSelErr"))
 		}
 	}
 
@@ -228,12 +228,12 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 	def exportVotingToHTML = {
 		def voting = dao.currentVoting
 		if(voting && !voting.test) {
-			def fc = builder.fileChooser(dialogTitle: 'Uložit',
+			def fc = builder.fileChooser(dialogTitle: GlobalSettingsAndNotifier.singleton.messages.getString("saveLabel"),
 				dialogType: JFileChooser.SAVE_DIALOG,
 				fileSelectionMode : JFileChooser.DIRECTORIES_ONLY,
 				fileFilter: [getDescription: {return ''}, accept:{def file-> file.isDirectory() }] as FileFilter
 			)
-			if(fc.showDialog(mainWindow, 'Uložit') != JFileChooser.APPROVE_OPTION) {
+			if(fc.showDialog(mainWindow, GlobalSettingsAndNotifier.singleton.messages.getString("saveLabel")) != JFileChooser.APPROVE_OPTION) {
 				return
 			}
 			def generator = new VotingHTMLGenerator(
@@ -242,7 +242,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 			try {
 				generator.generate()
 			} catch(IOException ex) {
-				showError('Vyvtoření HTML reportu selhalo.')
+				showError(GlobalSettingsAndNotifier.singleton.messages.getString("repFailErr"))
 			}
 		}
 	}
@@ -255,10 +255,10 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 				if(voting) {
 					dao.currentVoting = voting
 				} else {
-					showError('Soubor neobsahuje žádné hlasování.')
+					GlobalSettingsAndNotifier.singleton.messages.getString("loadVotingNoFindErr")
 				}
 			} catch(IOException ex) {
-				showError('Soubor se nepodařilo načíst.')
+				showError(GlobalSettingsAndNotifier.singleton.messages.getString("fileReadErr"))
 			}
 		}
 	}
@@ -278,7 +278,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 			dao.retrieveVotersFromDatabase()
 			registerVoters()
 		} catch(DAOException ex) {
-			showError('Načtení dat z databáze selhalo.');
+			showError(GlobalSettingsAndNotifier.singleton.messages.getString("databaseFailErr"));
 		}
 	}
 
@@ -294,10 +294,10 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 					}
 					registerVoters()
 				} else {
-					showError('Soubor neobsahuje žádné účastníky.')
+					showError(GlobalSettingsAndNotifier.singleton.messages.getString("loadVotersNoFindErr"))
 				}
 			} catch(IOException ex) {
-				showError('Soubor se nepodařilo načíst.')
+				showError(GlobalSettingsAndNotifier.singleton.messages.getString(fileReadErr))
 			}
 		}
 	}
@@ -306,7 +306,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 		if(dao.currentVoting) {
 			if(runningQuestionsTableModel.getRowCount()) {
 				if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(mainWindow,
-						'Právě probíhá hlasování. Mám hlasování ukončit?', 'Probíhá hlasování!',
+						GlobalSettingsAndNotifier.singleton.messages.getString("loadVotersNoFindErr"), GlobalSettingsAndNotifier.singleton.messages.getString("voteInProgressErrTitle"),
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
 					stopVoting(true)
 				} else {
@@ -314,8 +314,8 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 				}
 			}
 			switch(JOptionPane.showConfirmDialog(mainWindow,
-					'Tato akce způsobí ztrátu neuložených dat. Checete uložit právě otevřená data?',
-					'Neuložené hlasování!', JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE)) {
+					GlobalSettingsAndNotifier.singleton.messages.getString("unsavedDataTXT"),
+					GlobalSettingsAndNotifier.singleton.messages.getString("unsavedDataTitle"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE)) {
 				case JOptionPane.YES_OPTION: exportVotingToFile(); break;
 				case JOptionPane.CANCEL_OPTION: return;
 			}
@@ -327,33 +327,33 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 	 * Hlavní menu programu (JMenuBar).
 	 */
 	def appMenu = builder.menuBar {
-		def votingMenu = menu(text: 'Hlasování') {
-			menuItem(text: 'Nové', actionPerformed: newVoting)
-			menuItem(text: 'Start', actionPerformed: startVoting)
-			menuItem(text: 'Stop', actionPerformed: stopVoting)
+		def votingMenu = menu(text: GlobalSettingsAndNotifier.singleton.messages.getString("votingMenuLabel")) {
+			menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("newLabel"), actionPerformed: newVoting)
+			menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("startLabel"), actionPerformed: startVoting)
+			menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("stopLabel"), actionPerformed: stopVoting)
 			//menuItem(text: 'Nastavení', actionPerformed: {})//TODO voting settings?
-			menu(text: 'Export') {
-				menuItem(text: 'Export do souboru', actionPerformed: exportVotingToFile)
-				menuItem(text: 'Export do HTML', actionPerformed: exportVotingToHTML)
+			menu(text: GlobalSettingsAndNotifier.singleton.messages.getString("exportLabel")) {
+				menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("exportToFileLabel"), actionPerformed: exportVotingToFile)
+				menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("exportToHTMLLabel"), actionPerformed: exportVotingToHTML)
 			}
-			menuItem(text: 'Import ze souboru', actionPerformed: importVotingFromFile)
+			menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("importFromFileLabel"), actionPerformed: importVotingFromFile)
 		}
-		def questionMenu = menu(text: 'Otázka') {
-			menuItem(text: 'Přidat', actionPerformed: createQuestion)
-			menuItem(text: 'Vymazat', actionPerformed: deleteQuestion)
+		def questionMenu = menu(text: GlobalSettingsAndNotifier.singleton.messages.getString("questionLabel")) {
+			menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("addLabel"), actionPerformed: createQuestion)
+			menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("deleteLabel"), actionPerformed: deleteQuestion)
 		}
-		def participantMenu = menu(text: 'Účastníci') {
-			menuItem(text: 'Registrovat', actionPerformed: registerVoters)
-			menu(text: 'Import') {
-				menuItem(text: 'Import ze souboru', actionPerformed: importVotersFromFile)
-				menuItem(text: 'Import z databáze', actionPerformed: importVotersFromDatabase)
+		def participantMenu = menu(text: GlobalSettingsAndNotifier.singleton.messages.getString("votersLabel")) {
+			menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("registerLabel"), actionPerformed: registerVoters)
+			menu(text: GlobalSettingsAndNotifier.singleton.messages.getString("importLabel")) {
+				menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("importFromFileLabel"), actionPerformed: importVotersFromFile)
+				menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("importFromDatabaseLabel"), actionPerformed: importVotersFromDatabase)
 			}
-			menuItem(text: 'Export do souboru', actionPerformed: exportVotersToFile)
+			menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("exportToFileLabel"), actionPerformed: exportVotersToFile)
 		}
 
-                def settingsMenu = menu(text: 'Možnosti') {
-                        menuItem(text: 'Nastavenia', actionPerformed: showSettings)
-                        menuItem(text: 'Overovanie registrantov', actionPerformed: showRegistrants)
+                def settingsMenu = menu(text: GlobalSettingsAndNotifier.singleton.messages.getString("optionsLabel")) {
+                        menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("settingsLabel"), actionPerformed: showSettings)
+                        menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("registrantVerLabel"), actionPerformed: showRegistrants)
 			//menuItem(text: 'Nastavenia informačného servera', actionPerformed: exportVotersToFile)
 
 
@@ -372,8 +372,8 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 			votingTable = table(selectionMode: DefaultListSelectionModel.SINGLE_SELECTION)
 		}
 		panel(layout: new FlowLayout(alignment: FlowLayout.RIGHT), constraints: BorderLayout.SOUTH){
-			button(text: 'Přidat', actionPerformed: createQuestion)
-			button(text: 'Vymazat', actionPerformed: deleteQuestion)
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("addLabel"), actionPerformed: createQuestion)
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("deleteLabel"), actionPerformed: deleteQuestion)
 		}
 	}
 
@@ -386,13 +386,13 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 			questionTable = table()
 		}
 		panel(layout: new FlowLayout(alignment: FlowLayout.RIGHT), constraints: BorderLayout.SOUTH){
-			button(text: 'Přidat',
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("addLabel"),
 				actionPerformed: {
 					questionTableModel.question?.addAlternative(new Alternative())
 					questionTableModel.fireTableDataChanged()
 				}
 			)
-			button(text: 'Smazat',
+			button(text: GlobalSettingsAndNotifier.singleton.messages.getString("deleteLabel"),
 				actionPerformed: {
 					def indexes = questionTable.getSelectedRows()
 					if(indexes.length > 0) {
@@ -408,18 +408,18 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 	public MainWindow() {
 		builder.lookAndFeel('system')
 		dao.votings.registerObserver(this)
-		mainWindow = builder.frame(title: 'Mobilní hlasování', JMenuBar: appMenu, locationRelativeTo: null,
+		mainWindow = builder.frame(title: GlobalSettingsAndNotifier.singleton.messages.getString("mainWindowTitle"), JMenuBar: appMenu, locationRelativeTo: null,
 					size: [800, 600], defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE) {
 				tabbedPane {
-					splitPane(name: 'Nové otázky', orientation: JSplitPane.VERTICAL_SPLIT, dividerLocation: 280,
+					splitPane(name: GlobalSettingsAndNotifier.singleton.messages.getString("newQLabel"), orientation: JSplitPane.VERTICAL_SPLIT, dividerLocation: 280,
 						topComponent: votingPanel, bottomComponent: questionPanel)
-					panel(name: 'Probíhající otázky', layout: new BorderLayout()) {
+					panel(name: GlobalSettingsAndNotifier.singleton.messages.getString("activeQuestionsLabel"), layout: new BorderLayout()) {
 						scrollPane(verticalScrollBarPolicy: ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 								constraints: BorderLayout.CENTER) {
 							runningQuestionsTable = table()
 						}
 					}
-					splitPane(name: 'Ukončené otázky', dividerLocation: 280,
+					splitPane(name: GlobalSettingsAndNotifier.singleton.messages.getString("finishedQLabel"), dividerLocation: 280,
 						orientation: JSplitPane.VERTICAL_SPLIT,
 						bottomComponent: questionResultPanel.panel,
 						topComponent: scrollPane(verticalScrollBarPolicy: ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED){
@@ -489,7 +489,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 	 * @param msg chybová hláška
 	 */
 	private void showError(String msg) {
-		JOptionPane.showMessageDialog(mainWindow, msg, 'Chyba', JOptionPane.ERROR_MESSAGE)
+		JOptionPane.showMessageDialog(mainWindow, msg, GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"), JOptionPane.ERROR_MESSAGE)
 	}
 
 	/**
@@ -497,7 +497,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 	 * @param extension přípona souboru
 	 */
 	private File showSaveDialog(String extension) {
-		def fc = builder.fileChooser(dialogTitle: 'Uložit',
+		def fc = builder.fileChooser(dialogTitle: GlobalSettingsAndNotifier.singleton.messages.getString("saveLabel"),
 			dialogType: JFileChooser.SAVE_DIALOG,
 			fileSelectionMode : JFileChooser.FILES_ONLY,
 			fileFilter: [getDescription: {return "*.${extension}"}, accept:{def file-> file ==~ /.*?\.${extension}/ || file.isDirectory() }] as FileFilter
@@ -505,7 +505,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 		def file
 		def flag = true
 		while (flag){
-			if(fc.showDialog(mainWindow, 'Uložit') != JFileChooser.APPROVE_OPTION) {
+			if(fc.showDialog(mainWindow, GlobalSettingsAndNotifier.singleton.messages.getString("saveLabel")) != JFileChooser.APPROVE_OPTION) {
 				return null
 			}
 			file = fc.selectedFile
@@ -514,7 +514,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 			}
 			if(file.exists()) {
 				flag = JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(mainWindow,
-							'Soubor již existuje. Opravdu ho chcete přepsat?', 'Soubor existuje!',
+							GlobalSettingsAndNotifier.singleton.messages.getString("fileExistsRewriteTXT"), GlobalSettingsAndNotifier.singleton.messages.getString("fileExistsRewriteTitle"),
 							JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)
 			} else {
 				flag = false
@@ -528,18 +528,18 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 	 * @param extension přípona souboru
 	 */
 	private File showOpenDialog(String extension) {
-		def fc = builder.fileChooser(dialogTitle: 'Otevřít',
+		def fc = builder.fileChooser(dialogTitle: GlobalSettingsAndNotifier.singleton.messages.getString("openLabel"),
 			dialogType: JFileChooser.OPEN_DIALOG,
 			fileSelectionMode : JFileChooser.FILES_ONLY,
 			fileFilter: [getDescription: {return "*.${extension}"}, accept:{def file-> file ==~ /.*?\.${extension}/ || file.isDirectory() }] as FileFilter
 		)
 		def flag = true
 		while (flag){
-			if(fc.showDialog(mainWindow, 'Otevřít') != JFileChooser.APPROVE_OPTION) {
+			if(fc.showDialog(mainWindow, GlobalSettingsAndNotifier.singleton.messages.getString("openLabel")) != JFileChooser.APPROVE_OPTION) {
 				return null
 			}
 			if(!fc.selectedFile.exists()) {
-				showError('Soubor neexistuje!')
+				showError(GlobalSettingsAndNotifier.singleton.messages.getString("fileNotExistsErr"))
 			} else {
 				flag = false
 			}

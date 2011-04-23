@@ -44,10 +44,11 @@ public class SecurityPanel extends javax.swing.JPanel {
         buttonGroup1.add(jRadioButton1);
         buttonGroup1.add(jRadioButton2);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
-        jLabel1.setText("Nastavenia bezpečnosti");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
+        jLabel1.setText(bundle.getString("secSettingsLabel")); // NOI18N
 
-        jCheckBox1.setText("Použiť iba bezpečné spojenie");
+        jCheckBox1.setText(bundle.getString("useOnlySSLLabel")); // NOI18N
         jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox1MouseClicked(evt);
@@ -59,7 +60,7 @@ public class SecurityPanel extends javax.swing.JPanel {
             }
         });
 
-        jCheckBox4.setText("Kontrola pôvodu");
+        jCheckBox4.setText(bundle.getString("originCheckLabel")); // NOI18N
         jCheckBox4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox4MouseClicked(evt);
@@ -71,7 +72,7 @@ public class SecurityPanel extends javax.swing.JPanel {
             }
         });
 
-        jRadioButton1.setText("Povoliť pripojenie len z LAN");
+        jRadioButton1.setText(bundle.getString("onlyLANLabel")); // NOI18N
         jRadioButton1.setEnabled(false);
         jRadioButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -84,7 +85,7 @@ public class SecurityPanel extends javax.swing.JPanel {
             }
         });
 
-        jRadioButton2.setText("Použiť pravidlá z pokročilých nastavení");
+        jRadioButton2.setText(bundle.getString("useAdvancedLabel")); // NOI18N
         jRadioButton2.setEnabled(false);
         jRadioButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

@@ -46,14 +46,15 @@ public class ConnectionInfo extends javax.swing.JPanel implements Notifiable {
         serverName = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
-        jLabel1.setText("Nastavenia pripojenia");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
+        jLabel1.setText(bundle.getString("conSettingsLabel")); // NOI18N
 
-        jLabel2.setText("Cislo portu");
+        jLabel2.setText(bundle.getString("portNumberLabel")); // NOI18N
 
-        jLabel3.setText("Cispo zabezpeceneho portu");
+        jLabel3.setText(bundle.getString("SSLPortLabel")); // NOI18N
 
-        jLabel4.setText("Meno servera");
+        jLabel4.setText(bundle.getString("serverNameLabel")); // NOI18N
 
         portNumber.setText(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT"));
         portNumber.addActionListener(new java.awt.event.ActionListener() {
@@ -89,7 +90,7 @@ public class ConnectionInfo extends javax.swing.JPanel implements Notifiable {
             }
         });
 
-        jCheckBox1.setText("Povoliť automatické objavovanie");
+        jCheckBox1.setText(bundle.getString("enableBeaconsLabel")); // NOI18N
         jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox1MouseClicked(evt);
@@ -114,14 +115,14 @@ public class ConnectionInfo extends javax.swing.JPanel implements Notifiable {
                             .addComponent(serverName, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                             .addComponent(SSLPortNumber)
                             .addComponent(portNumber))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCheckBox1)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

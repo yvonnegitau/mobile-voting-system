@@ -53,10 +53,11 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
         jButton3 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
-        jLabel1.setText("Nastavenie IP filtrov");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
+        jLabel1.setText(bundle.getString("IPFilterSettingsLabel")); // NOI18N
 
-        jButton1.setText("Načítať filter zo súboru");
+        jButton1.setText(bundle.getString("loadIPFilterFromFileLabel")); // NOI18N
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -71,7 +72,7 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
         jTable1.setModel(new NetworkSettingsTable());
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setText("Zmazať všetko");
+        jButton2.setText(bundle.getString("deleteAllLabel")); // NOI18N
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -83,7 +84,7 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
             }
         });
 
-        jButton3.setText("Pridať pravidlo");
+        jButton3.setText(bundle.getString("addRuleLabel")); // NOI18N
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
@@ -95,7 +96,7 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
             }
         });
 
-        jCheckBox1.setText("Povoliť pripojenie z tu nezahrnutých adries");
+        jCheckBox1.setText(bundle.getString("implicitOverrideLabel")); // NOI18N
         jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox1MouseClicked(evt);
@@ -126,7 +127,7 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
                         .addContainerGap()
                         .addComponent(jButton1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(121, Short.MAX_VALUE)
+                        .addContainerGap(139, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2))
@@ -203,8 +204,8 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
                 //This is where a real application would open the file.
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this,
-                        "Subor sa nepodarilo nacitat",
-                        "Error",
+                        GlobalSettingsAndNotifier.singleton.messages.getString("fileReadErr"),
+                        GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"),
                         JOptionPane.ERROR_MESSAGE);
             }
         }
