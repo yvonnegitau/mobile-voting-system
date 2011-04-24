@@ -156,11 +156,11 @@ class Server {
         public void handle(HttpExchange request) throws IOException {
             try {
                 System.out.println("PROTOCOL = " + request.getProtocol());
-                if (!checkOrigin(request.getRemoteAddress(), true)) {
+              /*  if (!checkOrigin(request.getRemoteAddress(), true)) {
                     System.out.println("BAD REQ");
                     sendResponse(request, FORBIDDEN);
 
-                }
+                }*/
                 String method = request.getRequestMethod();
                 System.out.println(method);
                 if (method.equalsIgnoreCase(OPTIONS)) {
@@ -171,10 +171,17 @@ class Server {
                     request.close();
                     return;
                 }
+                System.out.println("Going to check username");
                 String userName = checkHeaders(request);
                 if (userName == null) {
+                    System.out.println("USERNAME BAD");
+                    sendResponse(request, UNAUTHORIZED);
+                    request.close();
+                    
                     return;
                 }
+                System.out.println("Username checked");
+
                 if (method.equalsIgnoreCase(GET)) {
                     List<Question> questions = provider.getQuestions(userName);
                     if (questions != null) {
@@ -236,16 +243,33 @@ class Server {
         private String checkHeaders(HttpExchange request) throws IOException {
 //FIXME házet výjimky místo vracení null, přejemenovat/rozdělit (dělá i něco jiného než je název metody)
             Headers headers = request.getRequestHeaders();
+            String userName = null;
+            System.out.println("Checking");
             if (!headers.containsKey(USER_NAME)) {
                 sendResponse(request, FORBIDDEN);
+                System.out.println("problem with no u name");
                 return null;
             }
-            String userName = headers.getFirst(USER_NAME);
+            System.out.println("here");
+            userName = headers.getFirst(USER_NAME);
+            System.out.println("bleh");
             String password = headers.getFirst(PASSWORD);
+            System.out.println("ooh");
+            try{
             if (password == null || !provider.checkPassword(userName, password)) {
+                System.out.println("Bad names");
                 sendResponse(request, UNAUTHORIZED);
+                System.out.println("dasdasd");
                 return null;
             }
+            }catch(Exception ex){
+                sendResponse(request, FORBIDDEN);
+                ex.printStackTrace();
+                return null;
+            }
+            System.out.println("sadsa");
+            if(userName==null) sendResponse(request, FORBIDDEN);
+            System.out.println("returned");
             return userName;
         }
 
@@ -255,9 +279,10 @@ class Server {
                 String mode = GlobalSettingsAndNotifier.singleton.getSetting("NET_ORIGIN");
                 if(mode.equals("NO_RESTRICTIONS")) return true;                
                 String add = remoteAddress.getAddress().toString().replace("/", "");
-
+                String[] parts = null;
                 //add = "147.2.5.4";
-                String[] parts = add.split("\\.");
+                if(add.contains("-")) parts = add.split("-");
+                if(add.contains("\\.")) parts = add.split("\\.");
                 System.out.println(parts);
                 System.out.println(parts.length);
                 int[] remote = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])};

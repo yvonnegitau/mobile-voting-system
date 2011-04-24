@@ -74,7 +74,7 @@ public class NetworkSettingsTable extends AbstractTableModel {
     
     public void removeRow(int rowIndex) {
         GlobalSettingsAndNotifier.singleton.permited.remove(rowIndex);
-        GlobalSettingsAndNotifier.singleton.permited.notifyAll();
+        GlobalSettingsAndNotifier.singleton.notifyListeners();
         
     }
 }

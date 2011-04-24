@@ -74,7 +74,7 @@ class QuestionResultPanel {
 		<b>${GlobalSettingsAndNotifier.singleton.messages.getString("HTMLQText")}</b>	${result.question.text}<br>
 		<b>${GlobalSettingsAndNotifier.singleton.messages.getString("HTMLValidVotes")}</b> ${result.votesCount}<br>
 		<b>${GlobalSettingsAndNotifier.singleton.messages.getString("HTMLValidVotesP")}</b> ${result.votesPercent}%<br>
-		<b>${GlobalSettingsAndNotifier.singleton.messages.getString("HTMLValidResuld")}</b> ${result.valid ? GlobalSettingsAndNotifier.singleton.messages.getString("yesLabel") : GlobalSettingsAndNotifier.singleton.messages.getString("noLabel")}<br>
+		<b>${GlobalSettingsAndNotifier.singleton.messages.getString("HTMLValidResult")}</b> ${result.valid ? GlobalSettingsAndNotifier.singleton.messages.getString("yesLabel") : GlobalSettingsAndNotifier.singleton.messages.getString("noLabel")}<br>
 		"""
 		def data = []
 		for(def alternative in result.question.alternatives) {

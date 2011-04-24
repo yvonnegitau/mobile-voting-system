@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author Murko
  */
-public class ConnectionInfo extends javax.swing.JPanel implements Notifiable {
+public final class ConnectionInfo extends javax.swing.JPanel implements Notifiable {
 
     /** Creates new form ConnectionInfo */
     public ConnectionInfo() {
@@ -47,14 +47,13 @@ public class ConnectionInfo extends javax.swing.JPanel implements Notifiable {
         jCheckBox1 = new javax.swing.JCheckBox();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
-        jLabel1.setText(bundle.getString("conSettingsLabel")); // NOI18N
+        jLabel1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("conSettingsLabel")); // NOI18N
 
-        jLabel2.setText(bundle.getString("portNumberLabel")); // NOI18N
+        jLabel2.setText(GlobalSettingsAndNotifier.singleton.messages.getString("portNumberLabel")); // NOI18N
 
-        jLabel3.setText(bundle.getString("SSLPortLabel")); // NOI18N
+        jLabel3.setText(GlobalSettingsAndNotifier.singleton.messages.getString("SSLPortLabel")); // NOI18N
 
-        jLabel4.setText(bundle.getString("serverNameLabel")); // NOI18N
+        jLabel4.setText(GlobalSettingsAndNotifier.singleton.messages.getString("serverNameLabel")); // NOI18N
 
         portNumber.setText(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT"));
         portNumber.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +89,8 @@ public class ConnectionInfo extends javax.swing.JPanel implements Notifiable {
             }
         });
 
-        jCheckBox1.setText(bundle.getString("enableBeaconsLabel")); // NOI18N
+        jCheckBox1.setSelected(GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon").equals("TRUE")?true:false);
+        jCheckBox1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("enableBeaconsLabel")); // NOI18N
         jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox1MouseClicked(evt);
@@ -115,7 +115,7 @@ public class ConnectionInfo extends javax.swing.JPanel implements Notifiable {
                             .addComponent(serverName, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                             .addComponent(SSLPortNumber)
                             .addComponent(portNumber))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90))

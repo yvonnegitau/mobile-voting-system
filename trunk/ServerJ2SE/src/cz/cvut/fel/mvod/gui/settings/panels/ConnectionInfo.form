@@ -34,7 +34,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <EmptySpace pref="57" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <Component id="jSeparator1" min="-2" pref="139" max="-2" attributes="0"/>
@@ -83,7 +83,7 @@
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="MessagesBundle.properties" key="conSettingsLabel" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="MessagesBundle.properties" key="conSettingsLabel" replaceFormat="GlobalSettingsAndNotifier.singleton.messages.getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -92,21 +92,21 @@
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="MessagesBundle.properties" key="portNumberLabel" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="MessagesBundle.properties" key="portNumberLabel" replaceFormat="GlobalSettingsAndNotifier.singleton.messages.getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="MessagesBundle.properties" key="SSLPortLabel" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="MessagesBundle.properties" key="SSLPortLabel" replaceFormat="GlobalSettingsAndNotifier.singleton.messages.getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="MessagesBundle.properties" key="serverNameLabel" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="MessagesBundle.properties" key="serverNameLabel" replaceFormat="GlobalSettingsAndNotifier.singleton.messages.getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -145,8 +145,11 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox1">
       <Properties>
+        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="GlobalSettingsAndNotifier.singleton.getSetting(&quot;allowBeacon&quot;).equals(&quot;TRUE&quot;)?true:false" type="code"/>
+        </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="MessagesBundle.properties" key="enableBeaconsLabel" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="MessagesBundle.properties" key="enableBeaconsLabel" replaceFormat="GlobalSettingsAndNotifier.singleton.messages.getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>

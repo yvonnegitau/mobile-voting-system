@@ -92,32 +92,47 @@ public class webPageLocalizer {
 
     }
 
-    public synchronized String getWP(String[] langs) {
+    public String getWP(String[] langs) {
 
         String page = null;
+
         if (webPages.isEmpty()) {
             return "Error";
         }
+        try {
+            for (int i = 0; i < langs.length; i++) {
 
-        for (int i = 0; i < langs.length; i++) {
-            String simple = langs[i].split("-")[0];
-            page = webPages.get(simple);
-            if (page != null) {
-                return page;
+                String simple = langs[i].split("-")[0];
+
+                page = webPages.get(simple.replace(" ", ""));
+                if (page != null) {
+                    if (!page.equals("")) {
+
+                        return page;
+                    }
+                }
             }
-        }
-        if (page == null) {
-            System.out.println("returned default");
+            if (page == null) {
 
-            page = webPages.get("default");
-            return page;
+
+                page = webPages.get("default");
+                if (page != null) {
+
+                    return page;
+                }
+            }
+            if (page == null) {
+                // System.out.println("LAST RESORT");
+                page = webPages.values().iterator().next();
+                if (!page.equals("")) {
+
+                    return page;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        if (page == null) {
-            System.out.println("LAST RESORT");
-            page = webPages.values().iterator().next();
-            return page;
-        }
-        return page;
+        return "Error";
 
     }
 }

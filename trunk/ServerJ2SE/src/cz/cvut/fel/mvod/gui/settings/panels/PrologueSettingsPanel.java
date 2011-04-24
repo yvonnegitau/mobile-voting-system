@@ -67,12 +67,11 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
-        jLabel1.setText(bundle.getString("prologueSettingsLabel")); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
+        jLabel1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("prologueSettingsLabel")); // NOI18N
 
         usePrologue.setSelected(true);
-        usePrologue.setText(bundle.getString("usePrologueLabel")); // NOI18N
+        usePrologue.setText(GlobalSettingsAndNotifier.singleton.messages.getString("usePrologueLabel")); // NOI18N
         usePrologue.setToolTipText("Prologue je server, ktorý beží pred započatím volieb. Prezentuje základné údaje nutné pre pripojenie a umožnuje registráciu uchádzačov");
         usePrologue.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -85,15 +84,17 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
             }
         });
 
-        jLabel2.setText(bundle.getString("CNLabel")); // NOI18N
+        jLabel2.setText(GlobalSettingsAndNotifier.singleton.messages.getString("CNLabel")); // NOI18N
 
         jTextField1.setEditable(false);
         jTextField1.setText("N/A");
 
-        jLabel3.setText(bundle.getString("certFingerPLabel")); // NOI18N
+        jLabel3.setText(GlobalSettingsAndNotifier.singleton.messages.getString("certFingerPLabel")); // NOI18N
 
         jTextField2.setEditable(false);
         jTextField2.setText("N/A");
+
+        prologueControlBTN.setText(GlobalSettingsAndNotifier.singleton.messages.getString("turnOnPrologue")); // NOI18N
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, usePrologue, org.jdesktop.beansbinding.ELProperty.create("${selected}"), prologueControlBTN, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -110,7 +111,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         });
 
         enableRegistration.setSelected(true);
-        enableRegistration.setText(bundle.getString("enableRegsLabel")); // NOI18N
+        enableRegistration.setText(GlobalSettingsAndNotifier.singleton.messages.getString("enableRegsLabel")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, usePrologue, org.jdesktop.beansbinding.ELProperty.create("${selected}"), enableRegistration, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -126,7 +127,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
             }
         });
 
-        jLabel4.setText(bundle.getString("portNumberLabel")); // NOI18N
+        jLabel4.setText(GlobalSettingsAndNotifier.singleton.messages.getString("portNumberLabel")); // NOI18N
 
         prologuePort.setText(GlobalSettingsAndNotifier.singleton.getSetting("PROLOGUE_PORT"));
 
@@ -139,8 +140,8 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
             }
         });
 
-        useEmbeded.setSelected(true);
-        useEmbeded.setText(bundle.getString("useEmbeddedLabel")); // NOI18N
+        useEmbeded.setSelected(GlobalSettingsAndNotifier.singleton.getSetting("Prologue_USEDEFAULTCERT").equals("TRUE")?true:false);
+        useEmbeded.setText(GlobalSettingsAndNotifier.singleton.messages.getString("useEmbeddedLabel")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, usePrologue, org.jdesktop.beansbinding.ELProperty.create("${selected}"), useEmbeded, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -151,12 +152,12 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
             }
         });
 
-        jLabel5.setText(bundle.getString("stateLabel")); // NOI18N
+        jLabel5.setText(GlobalSettingsAndNotifier.singleton.messages.getString("stateLabel")); // NOI18N
 
         jLabel6.setForeground(new java.awt.Color(255, 0, 0));
         jLabel6.setText(GlobalSettingsAndNotifier.singleton.getSetting("prologuestate").equals("1")?"OFFLINE":"ONLINE");
 
-        jButton1.setText(bundle.getString("loadCertLabel")); // NOI18N
+        jButton1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("loadCertLabel")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, useEmbeded, org.jdesktop.beansbinding.ELProperty.create("${!selected}"), jButton1, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
@@ -253,7 +254,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11))
         );
@@ -334,7 +335,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
 
     private void useEmbededMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_useEmbededMouseClicked
 
-      GlobalSettingsAndNotifier.singleton.modifySettings("Prologue_USEDEFAULTCERT", enableRegistration.isSelected() ? "true" : "false", true);
+      GlobalSettingsAndNotifier.singleton.modifySettings("Prologue_USEDEFAULTCERT", enableRegistration.isSelected() ? "TRUE" : "FALSE", true);
     }//GEN-LAST:event_useEmbededMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
