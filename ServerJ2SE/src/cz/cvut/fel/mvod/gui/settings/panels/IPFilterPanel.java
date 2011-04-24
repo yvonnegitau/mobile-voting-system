@@ -30,7 +30,9 @@ import javax.swing.table.DefaultTableColumnModel;
 public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
 
     /** Creates new form IPFilterPanel */
+    NetworkSettingsTable nst;
     public IPFilterPanel() {
+        nst = new NetworkSettingsTable();
         initComponents();
         GlobalSettingsAndNotifier.singleton.addListener(this);
     }
@@ -44,6 +46,9 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
@@ -53,11 +58,18 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
         jButton3 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
-        jLabel1.setText(bundle.getString("IPFilterSettingsLabel")); // NOI18N
+        jMenuItem1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("deleteLabel")); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem1);
 
-        jButton1.setText(bundle.getString("loadIPFilterFromFileLabel")); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14));
+        jLabel1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("IPFilterSettingsLabel")); // NOI18N
+
+        jButton1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("loadIPFilterFromFileLabel")); // NOI18N
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -69,10 +81,24 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
             }
         });
 
-        jTable1.setModel(new NetworkSettingsTable());
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
+
+        jTable1.setModel(nst);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setText(bundle.getString("deleteAllLabel")); // NOI18N
+        jButton2.setText(GlobalSettingsAndNotifier.singleton.messages.getString("deleteAllLabel")); // NOI18N
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -84,6 +110,7 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
             }
         });
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
         jButton3.setText(bundle.getString("addRuleLabel")); // NOI18N
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -96,7 +123,8 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
             }
         });
 
-        jCheckBox1.setText(bundle.getString("implicitOverrideLabel")); // NOI18N
+        jCheckBox1.setSelected(GlobalSettingsAndNotifier.singleton.getSetting("IMPLICIT_ALLOW").equalsIgnoreCase("TRUE")?true:false);
+        jCheckBox1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("implicitOverrideLabel")); // NOI18N
         jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox1MouseClicked(evt);
@@ -127,7 +155,7 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
                         .addContainerGap()
                         .addComponent(jButton1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(139, Short.MAX_VALUE)
+                        .addContainerGap(177, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2))
@@ -216,12 +244,37 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
         GlobalSettingsAndNotifier.singleton.modifySettings("IMPLICIT_ALLOW", jCheckBox1.isSelected() ? "true" : "false",true);
     }//GEN-LAST:event_jCheckBox1MouseClicked
 
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    nst.removeRow(jTable1.getSelectedRow());
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+
+        if(evt.isPopupTrigger()){
+
+            
+            jPopupMenu1.show(jTable1, evt.getX(), evt.getY());
+
+        }        
+    }//GEN-LAST:event_jTable1MouseReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;

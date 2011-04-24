@@ -10,10 +10,14 @@
  */
 package cz.cvut.fel.mvod.gui.settings;
 
+import cz.cvut.fel.mvod.common.ObjectReadWriter;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
 import cz.cvut.fel.mvod.prologueServer.PrologueServer;
 import cz.cvut.fel.mvod.prologueServer.RegistrantAuthorisationWindow;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -34,6 +38,20 @@ public class MainSettingsWindow extends javax.swing.JFrame implements Notifiable
         initComponents();
         notifyOfChange();
         GlobalSettingsAndNotifier.singleton.addListener(this);
+        addWindowListener(new WindowAdapter()
+{
+      public void windowClosing(WindowEvent e)
+      {
+                try {
+                    ObjectReadWriter.saveSettings();
+                } catch (IOException ex) {
+                    Logger.getLogger(MainSettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                dispose();
+      }
+});
+
+
         
 
     }
@@ -51,19 +69,20 @@ public class MainSettingsWindow extends javax.swing.JFrame implements Notifiable
         globalSettingsPanel1 = new cz.cvut.fel.mvod.gui.settings.panels.GlobalSettingsPanel();
         iPFilterPanel1 = new cz.cvut.fel.mvod.gui.settings.panels.IPFilterPanel();
         prologueSettingsPanel1 = new cz.cvut.fel.mvod.gui.settings.panels.PrologueSettingsPanel();
+        languagePanel1 = new cz.cvut.fel.mvod.gui.settings.panels.LanguagePanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
-        jTabbedPane1.addTab(bundle.getString("mainSetLabel"), globalSettingsPanel1); // NOI18N
-        jTabbedPane1.addTab(bundle.getString("IPFiltrationLabel"), iPFilterPanel1); // NOI18N
+        jTabbedPane1.addTab(GlobalSettingsAndNotifier.singleton.messages.getString("mainSetLabel"), globalSettingsPanel1); // NOI18N
+        jTabbedPane1.addTab(GlobalSettingsAndNotifier.singleton.messages.getString("IPFiltrationLabel"), iPFilterPanel1); // NOI18N
 
         prologueSettingsPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 prologueSettingsPanel1MouseClicked(evt);
             }
         });
-        jTabbedPane1.addTab(bundle.getString("prologueLabel"), prologueSettingsPanel1); // NOI18N
+        jTabbedPane1.addTab(GlobalSettingsAndNotifier.singleton.messages.getString("prologueLabel"), prologueSettingsPanel1); // NOI18N
+        jTabbedPane1.addTab(GlobalSettingsAndNotifier.singleton.messages.getString("languageSettingsLabel"), languagePanel1); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,6 +101,7 @@ public class MainSettingsWindow extends javax.swing.JFrame implements Notifiable
                 .addContainerGap())
         );
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
         jTabbedPane1.getAccessibleContext().setAccessibleName(bundle.getString("mainSetLabel")); // NOI18N
 
         pack();
@@ -122,6 +142,7 @@ public class MainSettingsWindow extends javax.swing.JFrame implements Notifiable
     private cz.cvut.fel.mvod.gui.settings.panels.GlobalSettingsPanel globalSettingsPanel1;
     private cz.cvut.fel.mvod.gui.settings.panels.IPFilterPanel iPFilterPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private cz.cvut.fel.mvod.gui.settings.panels.LanguagePanel languagePanel1;
     private cz.cvut.fel.mvod.gui.settings.panels.PrologueSettingsPanel prologueSettingsPanel1;
     // End of variables declaration//GEN-END:variables
 

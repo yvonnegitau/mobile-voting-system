@@ -95,6 +95,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 	def finishedQuestionsTable
 	def finishedQuestionsTableModel = new QuestionsTableModel(false, Question.State.FINISHED)
 	def builder = new SwingBuilder()
+
 	def votersWindow = new VotersWindow(builder)
 	/**
 	 * JDialog pro vytvoření nového hlasování.
@@ -546,6 +547,9 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 		}
 		return fc.selectedFile
 	}
+
+
+
 
 	/**
 	 * Nastaví nové hlasování do všech tabulek.

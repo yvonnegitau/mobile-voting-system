@@ -38,8 +38,8 @@ public class IPAdderDialogue extends JDialog {
         IP = new JTextField(16);
         IPLabel = new JLabel(GlobalSettingsAndNotifier.singleton.messages.getString("IPAddressLabel"));
         mask = new JTextField(16);
-        maskLabel = new JLabel(GlobalSettingsAndNotifier.singleton.messages.getString("maskLAbel"));
-        options = new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("optionEnableAll"), GlobalSettingsAndNotifier.singleton.messages.getString("optionRestrictSSL"), GlobalSettingsAndNotifier.singleton.messages.getString("OptionDenyAll")};
+        maskLabel = new JLabel(GlobalSettingsAndNotifier.singleton.messages.getString("maskLabel"));
+        options = new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("optionEnableAll"), GlobalSettingsAndNotifier.singleton.messages.getString("optionRestrictSSL"), GlobalSettingsAndNotifier.singleton.messages.getString("optionDenyAll")};
         combo = new JComboBox(options);
         okBTN = new JButton(GlobalSettingsAndNotifier.singleton.messages.getString("addLabel"));
         cancelBTN = new JButton(GlobalSettingsAndNotifier.singleton.messages.getString("closeLabel"));

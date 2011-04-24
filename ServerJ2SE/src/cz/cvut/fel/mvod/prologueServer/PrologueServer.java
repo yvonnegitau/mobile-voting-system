@@ -76,7 +76,7 @@ public class PrologueServer implements Notifiable {
     }
 
     private void stopServer() {
-
+        GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_INACTIVE+"",false);
         server.stop(1);
         
 

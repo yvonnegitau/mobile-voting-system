@@ -8,7 +8,11 @@
         </file>
         <file>
             <url>src/cz/cvut/fel/mvod/gui/settings/panels/PrologueSettingsPanel.java</url>
-            <line>379</line>
+            <line>380</line>
+        </file>
+        <file>
+            <url>src/cz/cvut/fel/mvod/gui/MobileVotingDevice.java</url>
+            <line>46</line>
         </file>
     </editor-bookmarks>
 </project-private>

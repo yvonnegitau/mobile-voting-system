@@ -199,7 +199,9 @@ public class NetworkAccessManager implements NetworkConnection, DataProvider {
      * {@inheritDoc }
      */
     public boolean checkPassword(String userName, String password) {
+       try{
         byte[] expected = voters.get(userName).getPassword();
+
         byte[] received = CryptoUtils.passwordDigest(password, userName);
         if (expected.length != received.length) {
             return false;
@@ -210,6 +212,9 @@ public class NetworkAccessManager implements NetworkConnection, DataProvider {
             }
         }
         return true;
+        }catch (Exception ex) {
+            return false;
+        }
     }
 
     /**

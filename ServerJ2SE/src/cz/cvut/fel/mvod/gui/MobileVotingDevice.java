@@ -38,6 +38,8 @@ public class MobileVotingDevice {
     private static MainWindow mainWindow;
 
     public static void main(String[] args) {
+
+
         try {
             DAOFactoryImpl.initInstance();
             DAOFacadeImpl.initInstance();
@@ -47,10 +49,12 @@ public class MobileVotingDevice {
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
                
                 mainWindow = new MainWindow();
                 mainWindow.start();
+                
             }
         });
     }

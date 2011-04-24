@@ -77,7 +77,7 @@
           <Font name="Tahoma" size="14" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="MessagesBundle.properties" key="secSettingsLabel" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="MessagesBundle.properties" key="secSettingsLabel" replaceFormat="GlobalSettingsAndNotifier.singleton.messages.getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>
@@ -85,8 +85,11 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox1">
       <Properties>
+        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="GlobalSettingsAndNotifier.singleton.getSetting(&quot;RESTRICT_SECURE&quot;).equals(&quot;true&quot;)?true:false" type="code"/>
+        </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="MessagesBundle.properties" key="useOnlySSLLabel" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="MessagesBundle.properties" key="useOnlySSLLabel" replaceFormat="GlobalSettingsAndNotifier.singleton.messages.getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -96,8 +99,11 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox4">
       <Properties>
+        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="GlobalSettingsAndNotifier.singleton.getSetting(&quot;NET_ORIGIN&quot;).equals(&quot;NO_RESTRICTIONS&quot;)?false:true" type="code"/>
+        </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="MessagesBundle.properties" key="originCheckLabel" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="MessagesBundle.properties" key="originCheckLabel" replaceFormat="GlobalSettingsAndNotifier.singleton.messages.getString(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -107,8 +113,11 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="jRadioButton1">
       <Properties>
+        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="GlobalSettingsAndNotifier.singleton.getSetting(&quot;NET_ORIGIN&quot;).equals(&quot;RESTRICT_LAN&quot;)?false:true" type="code"/>
+        </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="MessagesBundle.properties" key="onlyLANLabel" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="MessagesBundle.properties" key="onlyLANLabel" replaceFormat="GlobalSettingsAndNotifier.singleton.messages.getString(&quot;{key}&quot;)"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
@@ -119,8 +128,11 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="jRadioButton2">
       <Properties>
+        <Property name="selected" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="GlobalSettingsAndNotifier.singleton.getSetting(&quot;NET_ORIGIN&quot;).equals(&quot;USE_ADVANCED&quot;)?true:false" type="code"/>
+        </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="MessagesBundle.properties" key="useAdvancedLabel" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="MessagesBundle.properties" key="useAdvancedLabel" replaceFormat="GlobalSettingsAndNotifier.singleton.messages.getString(&quot;{key}&quot;)"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>

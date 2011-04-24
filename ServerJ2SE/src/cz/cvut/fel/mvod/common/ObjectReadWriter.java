@@ -25,6 +25,7 @@
 package cz.cvut.fel.mvod.common;
 
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
+import cz.cvut.fel.mvod.global.savedSettings;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +151,18 @@ public final class ObjectReadWriter {
 
     }
 
+    public static void saveSettings() throws IOException {
+        File f = new File("settings.conf");
+        f.delete();
+        f.createNewFile();
+        saveToFile(GlobalSettingsAndNotifier.singleton.getSavable(), f);
+    }
+
+    public static savedSettings loadSettings() throws IOException, FileNotFoundException, ClassNotFoundException{
+        File f = new File("settings.conf");
+        return (savedSettings) loadFromFile(f);
+
+    }
     private ObjectReadWriter() {
         //library class
     }

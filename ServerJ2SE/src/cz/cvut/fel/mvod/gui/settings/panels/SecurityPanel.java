@@ -20,7 +20,7 @@ import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 public class SecurityPanel extends javax.swing.JPanel {
 
     /** Creates new form SecurityPanel */
-    public SecurityPanel() {
+    public SecurityPanel() {    
         initComponents();
     }
 
@@ -45,10 +45,10 @@ public class SecurityPanel extends javax.swing.JPanel {
         buttonGroup1.add(jRadioButton2);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
-        jLabel1.setText(bundle.getString("secSettingsLabel")); // NOI18N
+        jLabel1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("secSettingsLabel")); // NOI18N
 
-        jCheckBox1.setText(bundle.getString("useOnlySSLLabel")); // NOI18N
+        jCheckBox1.setSelected(GlobalSettingsAndNotifier.singleton.getSetting("RESTRICT_SECURE").equals("true")?true:false);
+        jCheckBox1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("useOnlySSLLabel")); // NOI18N
         jCheckBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox1MouseClicked(evt);
@@ -60,7 +60,8 @@ public class SecurityPanel extends javax.swing.JPanel {
             }
         });
 
-        jCheckBox4.setText(bundle.getString("originCheckLabel")); // NOI18N
+        jCheckBox4.setSelected(GlobalSettingsAndNotifier.singleton.getSetting("NET_ORIGIN").equals("NO_RESTRICTIONS")?false:true);
+        jCheckBox4.setText(GlobalSettingsAndNotifier.singleton.messages.getString("originCheckLabel")); // NOI18N
         jCheckBox4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBox4MouseClicked(evt);
@@ -72,7 +73,8 @@ public class SecurityPanel extends javax.swing.JPanel {
             }
         });
 
-        jRadioButton1.setText(bundle.getString("onlyLANLabel")); // NOI18N
+        jRadioButton1.setSelected(GlobalSettingsAndNotifier.singleton.getSetting("NET_ORIGIN").equals("RESTRICT_LAN")?false:true);
+        jRadioButton1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("onlyLANLabel")); // NOI18N
         jRadioButton1.setEnabled(false);
         jRadioButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -85,7 +87,8 @@ public class SecurityPanel extends javax.swing.JPanel {
             }
         });
 
-        jRadioButton2.setText(bundle.getString("useAdvancedLabel")); // NOI18N
+        jRadioButton2.setSelected(GlobalSettingsAndNotifier.singleton.getSetting("NET_ORIGIN").equals("USE_ADVANCED")?true:false);
+        jRadioButton2.setText(GlobalSettingsAndNotifier.singleton.messages.getString("useAdvancedLabel")); // NOI18N
         jRadioButton2.setEnabled(false);
         jRadioButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

@@ -46,10 +46,13 @@ public class registeringHandler implements HttpHandler {
             } else {
                 responce = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
             }
+            if(responce.equals("")) responce = "Error";
 
             OutputStream s = he.getResponseBody();
             is.close();
             he.sendResponseHeaders(200, responce.getBytes().length);
+            System.out.println("Sending a responce");
+            System.out.println(responce);
             s.write(responce.getBytes());
             s.close();
         } else if (he.getRequestMethod().equalsIgnoreCase("POST")) {
