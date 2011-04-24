@@ -42,10 +42,12 @@ public class DatabaseStorage {
 		this.context = context;
 		// dropDatabase();
 		DB.execSQL(dbCreationSQL);
+		DB.close();
 		// DB.execSQL(testData);
 	}
 
 	public ArrayList<ServerData> getServers() {
+		DB = context.openOrCreateDatabase(dbName, context.MODE_PRIVATE, null);
 		Cursor serverCursor = null;
 		ArrayList<ServerData> servers = new ArrayList<ServerData>();
 		try {
@@ -76,7 +78,7 @@ public class DatabaseStorage {
 		} catch (Exception ex) {
 			Log.w("Android Mobile Voting", ex.toString());
 		}
-
+		DB.close();
 		return servers;
 	}
 
@@ -84,6 +86,7 @@ public class DatabaseStorage {
 			UnsupportedEncodingException, NoSuchAlgorithmException,
 			NoSuchPaddingException, IllegalBlockSizeException,
 			BadPaddingException {
+		
 		boolean outcome = false;
 		String cmd;
 		if (s.getId() > -1) {
@@ -123,23 +126,30 @@ public class DatabaseStorage {
 		executeSQL(cmd);
 		Toast.makeText(context, context.getString(R.string.databaseSuccess),
 				Toast.LENGTH_LONG);
+		
 		return outcome;
 	}
 
 	public boolean delete(int id) {
+		
 		String cmd = "DELETE FROM " + dbTableName + " WHERE id=" + id + "";
 		executeSQL(cmd);
+		
 		return true;
 	}
 
 	public void dropDatabase() {
+		
 		String cmd = "drop table " + dbTableName;
 		executeSQL(cmd);
 		executeSQL(dbCreationSQL);
+		
 
 	}
 
 	private void executeSQL(String cmd) {
+		
+		DB = context.openOrCreateDatabase(dbName, context.MODE_PRIVATE, null);
 		Log.i("Android mobile voting", "Executing command: " + cmd);
 		try {
 			DB.execSQL("begin");
@@ -152,13 +162,14 @@ public class DatabaseStorage {
 		}
 		Toast.makeText(context, context.getString(R.string.databaseSuccess),
 				Toast.LENGTH_LONG).show();
-
+		DB.close();
 	}
 
 	public ServerData getServer(int id) throws InvalidKeyException,
 			NumberFormatException, NoSuchAlgorithmException,
 			NoSuchPaddingException, IllegalBlockSizeException,
 			BadPaddingException {
+		DB = context.openOrCreateDatabase(dbName, context.MODE_PRIVATE, null);
 		ServerData s = null;
 		Cursor serverCursor = null;
 		try {
@@ -180,6 +191,7 @@ public class DatabaseStorage {
 						.getString(IDpos)), serverCursor.getString(IPpos),
 				Integer.parseInt(serverCursor.getString(PNpos)),
 				serverCursor.getString(FNpos));
+		DB.close();
 		return s;
 	}
 

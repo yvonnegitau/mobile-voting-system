@@ -72,7 +72,6 @@ public class ConnectionHTTP extends Thread implements Runnable,
 		ConnectionInterface {
 	DefaultHttpClient connection;
 	Handler conThread;
-	Socket MyClient;
 	Context context;
 	boolean connected = false;
 	int port = 0;
@@ -159,26 +158,32 @@ public class ConnectionHTTP extends Thread implements Runnable,
 						.getDefaultType());
 				trusted.load(null, null);
 				SSLSocketFactory sslf = null;
+				SSLSocket s = null;
 				try {
 					sslf = new SSLSocketFactory(trusted);
 
-					sslf.connectSocket(sslf.createSocket(),
+					s =  (SSLSocket) sslf.connectSocket(sslf.createSocket(),
 							server.getAddress(), sslPort, null, 0,
-							new BasicHttpParams()).close();
+							new BasicHttpParams());
 					postAndRecieve("GET", "/", null, null, true);
+					
 				} catch (SSLException ex) {
+					if(s!=null)s.close();
+					sslf = null;
 					SSLSession ssls = null;
-					SSLSocket s = null;
+					s = null;
 					try {
 						sslf = new MySSLSocketFactory(trusted);
 						sslf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 						BasicHttpParams params = new BasicHttpParams();
 						HttpConnectionParams
-								.setConnectionTimeout(params, 15000);
+								.setConnectionTimeout(params, 500);
 						s = (SSLSocket) sslf.connectSocket(sslf.createSocket(),
-								server.getAddress(), sslPort, null, 0, params);
+								server.getAddress(), sslPort, null, 0,
+								params);
 					} catch (SSLException e) {
 						Log.w("Android mobile voing CERT CHECK", e.toString());
+						s.close();
 					}
 
 					s.startHandshake();
@@ -270,6 +275,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 	 * @return
 	 */
 	public boolean parseResponceCode(String data) {
+		Log.d("Android mobile voting",data);
 		if (data.contains("400")) {
 
 			parent.mHandler.post(new Runnable() {
@@ -352,7 +358,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 	 */
 	@Override
 	public void closeConnection() {
-
+		this.stop();
 		parent.finish();
 	}
 
@@ -531,6 +537,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 			}
 		};
 		t.start();
+		
 	}
 
 	private void notifyOfProggress() {

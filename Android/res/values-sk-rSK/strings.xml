@@ -29,7 +29,7 @@
 	<string name="temporaryserverTag">dočasný server</string>
 	<string name="badPortFormatError">Zlé číslo portu, prosím použite port v rozmedzí &lt;1,
 65535&gt;</string>
-	<string name="databaseSuccess">Úspech</string>
+	<string name="databaseSuccess">Bod pridaný</string>
 	<string name="pickChallenge">Vyberte činnosť</string>
 	<string name="EditServerTag">Editovať volebný bod</string>
 	<string name="deleteServerTag">Vymazať bod</string>
@@ -66,5 +66,6 @@
 	<string name="networkErrorDialogueText">Vyskytla sa chyba a nie je možné Vás spojiť s volebným bodom. Overte si pripojenie k sieti. Ak všetko zlyhá kontaktujte volebného komisára.</string>
 	<string name="connectAgain">Skúsiť znova.</string>
 	<string name="passwordReq">Heslo musí mať presne 8 znakov.</string>
+	<string name="pickAnswers">Vybrať odpovede k odoslaniu</string>
 	
 </resources>

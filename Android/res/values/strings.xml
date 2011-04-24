@@ -69,5 +69,6 @@
 	<string name="networkErrorDialogueText">A network error has occured, verify that you are connected to a network and try again. If all fails contact the administrator.</string>
 	<string name="connectAgain">Try again</string>
 	<string name="passwordReq">Password must be exactly 8 characters long.</string>
+	<string name="pickAnswers">Pick answers to send</string>
 	
 </resources>
