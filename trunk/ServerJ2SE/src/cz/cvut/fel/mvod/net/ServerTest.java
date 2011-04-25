@@ -48,7 +48,7 @@ import java.util.logging.Logger;
  */
 public class ServerTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         initDao();
         NetworkConnection instance = NetworkAccessManager.getInstance();
         Alternative alt1 = new Alternative(1, "Alternativa 1", false);

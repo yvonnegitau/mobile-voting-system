@@ -97,7 +97,7 @@ public class MainSettingsWindow extends javax.swing.JFrame implements Notifiable
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

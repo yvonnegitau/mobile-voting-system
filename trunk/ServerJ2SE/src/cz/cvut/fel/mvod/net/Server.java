@@ -35,6 +35,7 @@ import com.sun.net.httpserver.HttpsServer;
 import cz.cvut.fel.mvod.common.Vote;
 import cz.cvut.fel.mvod.common.networkAddressRange;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
+import cz.cvut.fel.mvod.gui.settings.CertManager;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -48,18 +49,22 @@ import java.security.cert.CertificateException;
 import java.util.Iterator;
 import java.util.List;
 import javax.net.ssl.*;
+import javax.swing.JOptionPane;
 
 /**
  * Implementace odlehčeného HTTP serveru. Zpracovává pouze požadavky
  * GET a POST.
  * @author jakub
  */
-class Server {
+public class Server {
 
-   
     private static final int CLIENT_COUNT = 100;
     private static final Server instance = new Server();
-  
+    private static char[] passphrase = null;
+
+    public static void setCertPass(String passphrase) {
+        Server.passphrase = passphrase.toCharArray();
+    }
     private int client_count;
     private HttpServer server;
     HttpsServer secureServer;
@@ -71,8 +76,8 @@ class Server {
     }
 
     private Server() {
-      
-     
+
+
         client_count = CLIENT_COUNT;
         connected = false;
         this.provider = NetworkAccessManager.getDataProvider();
@@ -83,7 +88,7 @@ class Server {
      * Otevře síťové spojení.
      * @throws IOException pokud selže otevření socketu
      */
-    public void connect() throws IOException, KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException, KeyManagementException, CertificateException {
+    public void connect() throws IOException, KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException, KeyManagementException, CertificateException, Exception {
         if (!connected) {
             server = HttpServer.create(new InetSocketAddress(Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT"))), client_count);
             BeaconBroadcaster b = new BeaconBroadcaster(GlobalSettingsAndNotifier.singleton.getSetting("Server_NAME"), Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT")));
@@ -93,10 +98,31 @@ class Server {
             secureServer = HttpsServer.create(new InetSocketAddress(Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("SSL_PORT"))), -1);
             secureServer.createContext("/", new Handler());
             secureServer.setExecutor(null);
+            KeyStore ks = KeyStore.getInstance("PKCS12");
+            if (GlobalSettingsAndNotifier.singleton.getSetting("Voting_useEmbedded").equalsIgnoreCase("FALSE")) {
+                while (true) {
 
-            char[] passphrase = "passphrase".toCharArray();
-            KeyStore ks = KeyStore.getInstance("JKS");
-            ks.load(new FileInputStream("testkeys"), passphrase);
+                    try {
+                        if (passphrase == null) {
+                            CertManager.changeCert(CertManager.VOTING);
+                        }
+                        System.out.println("USING EXTERNAL CERT");
+                        ks.load(new FileInputStream(GlobalSettingsAndNotifier.singleton.getSetting("Prologue_certpath")), passphrase);
+                        break;
+                    } catch (Exception ex) {
+                        passphrase = JOptionPane.showInputDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certPassChallLabel"), GlobalSettingsAndNotifier.singleton.messages.getString("certPassChallTitle"), JOptionPane.WARNING_MESSAGE).toCharArray();
+                    }
+                }
+
+            } else {
+                passphrase = "12345".toCharArray();
+                try {
+                    ks.load(new FileInputStream("server.p12"), passphrase);
+                } catch (Exception ex) {
+                    JOptionPane.showConfirmDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certFail"), GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"), JOptionPane.ERROR_MESSAGE);
+                    throw new Exception("CertFail");
+                }
+            }
             KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
             kmf.init(ks, passphrase);
             TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
@@ -156,9 +182,9 @@ class Server {
         public void handle(HttpExchange request) throws IOException {
             try {
                 System.out.println("PROTOCOL = " + request.getProtocol());
-              /*  if (!checkOrigin(request.getRemoteAddress(), true)) {
-                    System.out.println("BAD REQ");
-                    sendResponse(request, FORBIDDEN);
+                /*  if (!checkOrigin(request.getRemoteAddress(), true)) {
+                System.out.println("BAD REQ");
+                sendResponse(request, FORBIDDEN);
 
                 }*/
                 String method = request.getRequestMethod();
@@ -177,7 +203,7 @@ class Server {
                     System.out.println("USERNAME BAD");
                     sendResponse(request, UNAUTHORIZED);
                     request.close();
-                    
+
                     return;
                 }
                 System.out.println("Username checked");
@@ -255,38 +281,50 @@ class Server {
             System.out.println("bleh");
             String password = headers.getFirst(PASSWORD);
             System.out.println("ooh");
-            try{
-            if (password == null || !provider.checkPassword(userName, password)) {
-                System.out.println("Bad names");
-                sendResponse(request, UNAUTHORIZED);
-                System.out.println("dasdasd");
-                return null;
-            }
-            }catch(Exception ex){
+            try {
+                if (password == null || !provider.checkPassword(userName, password)) {
+                    System.out.println("Bad names");
+                    sendResponse(request, UNAUTHORIZED);
+                    System.out.println("dasdasd");
+                    return null;
+                }
+            } catch (Exception ex) {
                 sendResponse(request, FORBIDDEN);
                 ex.printStackTrace();
                 return null;
             }
             System.out.println("sadsa");
-            if(userName==null) sendResponse(request, FORBIDDEN);
+            if (userName == null) {
+                sendResponse(request, FORBIDDEN);
+            }
             System.out.println("returned");
             return userName;
         }
 
         private boolean checkOrigin(InetSocketAddress remoteAddress, boolean isSecured) {
             try {
-                if(GlobalSettingsAndNotifier.singleton.getSetting("RESTRICT_SECURE").equals("true") && !isSecured) return false;
+                if (GlobalSettingsAndNotifier.singleton.getSetting("RESTRICT_SECURE").equals("true") && !isSecured) {
+                    return false;
+                }
                 String mode = GlobalSettingsAndNotifier.singleton.getSetting("NET_ORIGIN");
-                if(mode.equals("NO_RESTRICTIONS")) return true;                
+                if (mode.equals("NO_RESTRICTIONS")) {
+                    return true;
+                }
                 String add = remoteAddress.getAddress().toString().replace("/", "");
                 String[] parts = null;
                 //add = "147.2.5.4";
-                if(add.contains("-")) parts = add.split("-");
-                if(add.contains("\\.")) parts = add.split("\\.");
+                if (add.contains("-")) {
+                    parts = add.split("-");
+                }
+                if (add.contains("\\.")) {
+                    parts = add.split("\\.");
+                }
                 System.out.println(parts);
                 System.out.println(parts.length);
                 int[] remote = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])};
-                if(mode.equals("RESTRICT_LAN")) return networkAddressRange.isOnLAN(remote);
+                if (mode.equals("RESTRICT_LAN")) {
+                    return networkAddressRange.isOnLAN(remote);
+                }
                 Iterator<networkAddressRange> inar = GlobalSettingsAndNotifier.singleton.permited.iterator();
                 while (inar.hasNext()) {
                     networkAddressRange n = inar.next();

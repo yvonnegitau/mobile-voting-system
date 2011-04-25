@@ -10,18 +10,24 @@
  */
 package cz.cvut.fel.mvod.gui.settings.panels;
 
+import com.sun.net.httpserver.*;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
+import cz.cvut.fel.mvod.gui.settings.CertManager;
 import cz.cvut.fel.mvod.prologueServer.PrologueServer;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
+import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
+import java.net.URL;
+import java.security.*;
+import java.security.cert.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.net.ssl.*;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -149,6 +155,11 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         useEmbeded.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 useEmbededMouseClicked(evt);
+            }
+        });
+        useEmbeded.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                useEmbededKeyPressed(evt);
             }
         });
 
@@ -285,8 +296,8 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this,
-                   GlobalSettingsAndNotifier.singleton.messages.getString("portErrorTXT"),
-                     GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"),
+                    GlobalSettingsAndNotifier.singleton.messages.getString("portErrorTXT"),
+                    GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"),
                     JOptionPane.ERROR_MESSAGE);
 
         }
@@ -312,12 +323,10 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
     }//GEN-LAST:event_prologueControlBTNMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        final JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showOpenDialog(this);
-        File file = null;
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            file = fc.getSelectedFile();
-            GlobalSettingsAndNotifier.singleton.modifySettings("Prologue_certpath", file.getAbsolutePath(), true);
+        try {
+            CertManager.changeCert(CertManager.PROLOGUE);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(PrologueSettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jButton1MouseClicked
@@ -335,8 +344,12 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
 
     private void useEmbededMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_useEmbededMouseClicked
 
-      GlobalSettingsAndNotifier.singleton.modifySettings("Prologue_USEDEFAULTCERT", enableRegistration.isSelected() ? "TRUE" : "FALSE", true);
+        GlobalSettingsAndNotifier.singleton.modifySettings("Prologue_USEDEFAULTCERT", useEmbeded.isSelected() ? "TRUE" : "FALSE", true);
     }//GEN-LAST:event_useEmbededMouseClicked
+
+    private void useEmbededKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_useEmbededKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_useEmbededKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox enableRegistration;
@@ -366,20 +379,20 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         String pStat = GlobalSettingsAndNotifier.singleton.getSetting("prologuestate");
         if (pStat.equals(PrologueServer.STATE_INACTIVE + "")) {
             prologuePort.setEditable(true);
-            prologueControlBTN.setText( GlobalSettingsAndNotifier.singleton.messages.getString("turnOnPrologue"));
-             boolean b = usePrologue.isSelected();
+            prologueControlBTN.setText(GlobalSettingsAndNotifier.singleton.messages.getString("turnOnPrologue"));
+            boolean b = usePrologue.isSelected();
             usePrologue.setEnabled(true);
             useEmbeded.setEnabled(true);
             jLabel6.setForeground(new java.awt.Color(255, 0, 0));
-             //jButton1.setEnabled(true);
-        usePrologue.setSelected(b);
+            //jButton1.setEnabled(true);
+            usePrologue.setSelected(b);
 
 
 
         } else {
             prologuePort.setEditable(false);
 
-            prologueControlBTN.setText( GlobalSettingsAndNotifier.singleton.messages.getString("turnOffPrologue"));
+            prologueControlBTN.setText(GlobalSettingsAndNotifier.singleton.messages.getString("turnOffPrologue"));
             jLabel6.setForeground(new java.awt.Color(0, 255, 0));
             usePrologue.setSelected(true);
             usePrologue.setEnabled(false);
