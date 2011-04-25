@@ -233,6 +233,8 @@ public class NetworkAccessManager implements NetworkConnection, DataProvider {
             Logger.getLogger(NetworkAccessManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (CertificateException ex) {
             Logger.getLogger(NetworkAccessManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 

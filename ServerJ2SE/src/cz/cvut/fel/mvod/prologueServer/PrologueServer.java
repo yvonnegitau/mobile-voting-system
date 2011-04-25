@@ -8,6 +8,7 @@ package cz.cvut.fel.mvod.prologueServer;
 import com.sun.net.httpserver.*;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
+import cz.cvut.fel.mvod.gui.settings.CertManager;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.security.*;
 import java.security.cert.*;
 import javax.net.ssl.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,6 +29,7 @@ public class PrologueServer implements Notifiable {
     public static final int STATE_REGISTERING = 1;
     public static final int STATE_PROVIDING = 2;
     public static final int STATE_INACTIVE = 3;
+    static char[] passphrase;
     HttpsServer s;
     SSLContext sslContext;
     HttpsServer server;
@@ -40,9 +43,41 @@ public class PrologueServer implements Notifiable {
         server.createContext("/", new registeringHandler());
         server.setExecutor(null);
 
-        char[] passphrase = "passphrase".toCharArray();
-        KeyStore ks = KeyStore.getInstance("JKS");
-        ks.load(new FileInputStream("testkeys"), passphrase);
+        KeyStore ks = KeyStore.getInstance("PKCS12");
+        if (GlobalSettingsAndNotifier.singleton.getSetting("Prologue_USEDEFAULTCERT").equalsIgnoreCase("FALSE")) {
+
+           
+
+
+            while (true) {
+
+                try {
+                    if (passphrase==null){
+                        CertManager.changeCert(CertManager.VOTING);
+                    }
+                    //passphrase = "qwerty".toCharArray();
+                    System.out.println("USING EXTERNAL CERT");
+                    ks.load(new FileInputStream(GlobalSettingsAndNotifier.singleton.getSetting("Prologue_certpath")), passphrase);
+                    break;
+                } catch (Exception ex) {
+                   passphrase = JOptionPane.showInputDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certPassChallLabel"), GlobalSettingsAndNotifier.singleton.messages.getString("certPassChallTitle"), JOptionPane.WARNING_MESSAGE).toCharArray();
+                }
+            }
+
+
+
+        } else {
+            
+            passphrase = "12345".toCharArray();
+            try{
+            ks.load(new FileInputStream("server.p12"), passphrase);
+            } catch (Exception ex) {
+                JOptionPane.showConfirmDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certFail"), GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+
+        }
         KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
         kmf.init(ks, passphrase);
         TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
@@ -51,6 +86,7 @@ public class PrologueServer implements Notifiable {
         ssl.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
         server.setHttpsConfigurator(new HttpsConfigurator(ssl) {
 
+            @Override
             public void configure(HttpsParameters params) {
                 InetSocketAddress remote = params.getClientAddress();
                 SSLContext c = getSSLContext();
@@ -60,8 +96,8 @@ public class PrologueServer implements Notifiable {
             }
         });
         server.start();
-        GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_REGISTERING + "",true);
-       // GlobalSettingsAndNotifier.singleton.modifySettings("PUBLIC_IP", getMyPublicIP());
+        GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_REGISTERING + "", true);
+        // GlobalSettingsAndNotifier.singleton.modifySettings("PUBLIC_IP", getMyPublicIP());
 
 
 
@@ -76,9 +112,9 @@ public class PrologueServer implements Notifiable {
     }
 
     private void stopServer() {
-        GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_INACTIVE+"",false);
+        GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_INACTIVE + "", false);
         server.stop(1);
-        
+
 
 
 
@@ -98,7 +134,7 @@ public class PrologueServer implements Notifiable {
             default:
                 break;
         }
-        GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", state + "",false);
+        GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", state + "", false);
 
     }
 
@@ -111,23 +147,26 @@ public class PrologueServer implements Notifiable {
         changeState(Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("prologueState")));
     }
 
-/**
- * Snippet from http://www.daniweb.com/software-development/java/threads/62812
- * @return
- */
-    public void getMyPublicIP(){
+    /**
+     * Snippet from http://www.daniweb.com/software-development/java/threads/62812
+     * @return
+     */
+    public void getMyPublicIP() {
         try {
             URL autoIP = new URL("http://www.whatismyip.com/automation/n09230945.asp");
-            BufferedReader in = new BufferedReader( new InputStreamReader(autoIP.openStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(autoIP.openStream()));
             String ip_address = (in.readLine()).trim();
 
             GlobalSettingsAndNotifier.singleton.modifySettings("PUBLIC_IP", ip_address);
 
-         }catch (Exception e){
-             GlobalSettingsAndNotifier.singleton.modifySettings("PUBLIC_IP", "ERROR");
-	    	e.printStackTrace();
+        } catch (Exception e) {
+            GlobalSettingsAndNotifier.singleton.modifySettings("PUBLIC_IP", "ERROR");
+            e.printStackTrace();
 
-            	    }
+        }
     }
-    
+
+    public  static void setCertPass(String pass){
+        passphrase = pass.toCharArray();
+    }
 }

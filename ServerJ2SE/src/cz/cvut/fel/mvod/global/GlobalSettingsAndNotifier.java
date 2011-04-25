@@ -38,6 +38,7 @@ public final class GlobalSettingsAndNotifier implements Serializable {
         listeners = new ArrayList<Notifiable>();
         try {
             tryLoad();
+            modifySettings("prologueState", PrologueServer.STATE_INACTIVE+"");
         } catch (Exception ex) {
             ex.printStackTrace();
             locale = new Locale("cs", "CZ");
@@ -54,6 +55,8 @@ public final class GlobalSettingsAndNotifier implements Serializable {
             modifySettings("Prologue_certpath", "null");
             modifySettings("Prologue_USEDEFAULTCERT", "true");
             modifySettings("NET_ORIGIN", "NO_RESTRICTIONS");
+            modifySettings("Voting_useEmbedded", "true");
+
             permited = new ArrayList<networkAddressRange>();
             int[] add = new int[]{0, 0, 0, 0};
             int[] mask = new int[]{0, 0, 0, 0};
@@ -144,7 +147,7 @@ public final class GlobalSettingsAndNotifier implements Serializable {
      * @param flagNotify if true the change will provoke a notification to all listeners
      */
     public void modifySettings(String name, String value, boolean flagNotify) {
-        //System.out.println("SETTING "+name +" modified to "+value);
+        System.out.println("SETTING "+name +" modified to "+value);
         if (!flagNotify) {
             settings.put(name.toUpperCase(), value);
         } else {
