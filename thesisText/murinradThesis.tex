@@ -678,12 +678,13 @@ Creating a TLS\cite{tls} connection requires the server, the listening part, to 
 \subsection{Persistence}
 \paragraph{Server} The persistence tools of this side is documented in Jakub Valenta's bachelor's thesis\cite{bakalarkaJV}.
 \paragraph{Android}
-For persistence of the Android application data a SQLite\cite{sqlite} database was used along with "Shared Preferences"\cite{storage} mechanism. The SQLite database is used for structured data - the server information, and the latter,"Shared Storage" is for storing the main password hash.
+For persistence of the Android application data a SQLite\cite{sqlite} database was used along with "Shared Preferences"\cite{storage} mechanism. The SQLite database is used for structured data - the server information, and the latter,"Shared Storage" is for storing primitive unstructured data.
 
 \subsection{Used integrated development environments (IDEs)}
 There are a number of powerful IDEs to use with Java. For this project I have selected to use Netbeans for the Java SE part and Eclipse for Android. Netbeans was chosen because I had good knowledge of this tool and was confident with it's use. Eclipse was the recommended IDE by Google to develop Android applications. Both these tools were are very intuitive and pleasant to work with. 
 
 \section{Server}
+The server is a desktop applciation implemented in Java SE.
 \subsection{Prologue - information/registration server}
 The Prologue server is the implementation of a voting information and registration server defined in the design chapter. It is a part of the application. The server is implemented using a standard "HttpsServer" java class. This class provides basic request handling. Every request is passed to a handler class. There are two handling classes that this server uses the "registeringHandle" and the "providingHandle". The former has voting registration enabled, while the latter only provides the information necessary to connect with a mobile device.
 \paragraph{Connections and encryption}
@@ -731,8 +732,51 @@ Example of a body of a response to a OPTIONS request.
 \end{lstlisting}
 This form was designed for future use with load balancing.
 \paragraph{IP filtration}
+The IP filtration is a security feature that enables the voting administrator to limit the physical locations the voters are able to vote from. The filtration itself is implemented by using a list of networkAddressRange classes. These classes contain the information for one network. Meaning the binary representation of the IP address, and the subnet mask also in binary. A string representation of these two values is also included. The class publishes a method called "isAllowed" that is used to determine if the address is allowed to connect.
 
+\begin{lstlisting}
+ public int isAllowed(int[] address, boolean isSecured) \{
+        if (isOnNetwork(address)) \{
 
+            if (action.equals(ALLOW_ANY)) {
+                return 1;
+            \}
+            if (action.equals(ALLOW_SSL) && isSecured)\{
+                return 1;
+            \}
+            if (action.equals(ALLOW_SSL) && !isSecured) \{
+                return 1;
+            \}
+            if (action.equals(DENY_ACCESS)) {
+                return -1;
+            \}
+            return 1;
+
+       \} else \{
+            return 3;
+        \}
+    \}
+\end{lstlisting}
+The class networkAddressRange also has a static method called isOnLan(int[] address). This checks whether the given address is on one of the three network ranges defined in RFC1918 as private.
+
+\section{Mobile device - Android}
+The Android application is implemented in the Java programming language. It uses the Android class libraries and is executed in the Dalvik Virtual Machine. For me this was my first experience and therefore the code underwent multiple refactorizations as my competence and confidence increased.
+\subsection{GUI} 
+The GUI is discussed in the of the attachments as it was analyzed separately.
+\subsection{Communications}
+\paragraph{General}The communications is implemented in an almost identical way as the server communications. The Connections class handles all the communications that are performed by the device. The class is written to be executed in a different thread so as not to slow down the GUI. The connection first attempts an unencrypted TCP connection to the server. Then as mentioned above asks for a list of ports with the OPTIONS request and if there are secure ports available it then connects to them. If the handshakes goes well it requests the list of questions and sends them to the XML parser and then it sends it to the view to display them. The responses are handled by a class called "Interceptor". This class is used in a very similar way to the Handler class on the server part.\\
+In order for and application to access the network on the Android device, it has to ask for this permission in the AndroidManifest.xml. The permissions are added by inserting <uses-permission android:name="android.permission.INTERNET" /> into the XML.
+\paragraph{SSL/TLS}
+The implementation of a secure SSL/TSL connection on this platform is an interesting problem. Of course, the platform provides the user with the necessary libraries to to this but they all use and  list of trusted certificate authority controlled by the device vendor. \footnote{A certificate authority is an organization that is trusted enough that we know that if it certifies that "A" is "A" then a person trying to connect to "A" can trust it.} In essence this is the correct behavior. But, for our deployment, a signed certificate is often unneeded or impossible to obtain - e.g. having a trusted certificate for a local IP is pointless. This means that a custom trust manager\footnote{A trust manages is a class that's purpose is to determine the validity of a given certificate}  is to be used that can ignore the exceptions and let the user decide whether or not she or he wants to trust the certificate chain.
+\subsection{Device security and Cryptography}
+Sensitive data that is stored on the device is encrypted. All encrypting/decrypting is handled by a singleton of a Cryptography class. The encryption is performed using DES\cite{des}. While proved to be crackable in a matter of days, this protection is sufficient as it is unlikely that a stolen device would go unnoticed for this period of time.  The key used in the process is the master password that the user creates upon the application first run. This password is never stored in any persistent storage. Only it's hash is stored for login purposes.	 Currently, only the login password to a voting point(server)  is considered sensitive data and only this is encrypted. The implementation, however, enables encrypting virtually anything in the future.
+\subsection{Persistance}
+\paragraph{Primitives}The android application needs to store the server connection data and the master password's hash. This is done using the "shared preferences" mechanism that the platform provides. The access to this store a custom PreferencesStorage class was created. This class is responsible for initializing the store and retrieving information. \\
+\paragraph{Structured data}
+Along with data primitives, the application also stores information needed to connect to a voting point/server. This is stored in a SQLite database. The access class for this database is called DatabaseStorage. This defines and provides all operations that can be used on the database. All data is saved in a database called ServerStore and in a table called "Servers". The table is created by calling 
+CREATE TABLE IF NOT EXISTS Server (id INTEGER PRIMARY KEY AUTOINCREMENT, IPAddress VARCHAR, portN VARCHAR, uName VARCHAR, pass VARCHAR ,Fname VARCHAR);
+\subsection{XML Parsing and XML Creation}
+Virtually all usable data is communicated in XML form. To convert XML data into usable data the XMLParser class was created. The class has methods of parsing all the possible XML types and decides the type of the XML automatically. For sending data, it has to be converted into XML form. The XMLMaker class was created for this purpose. It handles all the XML creating processes uses in this part of the project.
 
 
 %*****************************************************************************
