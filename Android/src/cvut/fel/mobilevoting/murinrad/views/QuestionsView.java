@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 import cvut.fel.mobilevoting.murinrad.R;
 import cvut.fel.mobilevoting.murinrad.R.string;
-import cvut.fel.mobilevoting.murinrad.communications.ConnectionHTTP;
+import cvut.fel.mobilevoting.murinrad.communications.Connection;
 import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.gui.NoSSLDialog;
@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 public class QuestionsView extends Activity {
 	ServerData server;
-	ConnectionHTTP con;
+	Connection con;
 	LinearLayout layout;
 	public Handler mHandler;
 	ArrayList<QuestionButtonLayout> buttons;
@@ -65,7 +65,7 @@ public class QuestionsView extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		con = new ConnectionHTTP(server, this);
+		con = new Connection(server, this);
 		// con.start();
 	}
 
@@ -159,7 +159,7 @@ public class QuestionsView extends Activity {
 
 	}
 
-	public void askForTrust(String thumbPrint, ConnectionHTTP instance) {
+	public void askForTrust(String thumbPrint, Connection instance) {
 		Dialog d = new SecurityExceptionDialogue(this, thumbPrint, instance);
 		d.show();
 
@@ -179,7 +179,7 @@ public class QuestionsView extends Activity {
 
 	}
 
-	public void showNoSSLDialog(ConnectionHTTP instance) {
+	public void showNoSSLDialog(Connection instance) {
 		Dialog d = new NoSSLDialog(this, instance);
 		d.show();
 		
