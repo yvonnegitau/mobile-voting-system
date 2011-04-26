@@ -3,18 +3,28 @@ The style file: csplainnat.bst
 Database file #1: reference.bib
 Warning--entry type for "bakalarkaJV" isn't style-file defined
 --line 8 of file reference.bib
+Warning--I didn't find a database entry for "whatIsJavaSE"
 Warning--I didn't find a database entry for "infodp"
 Warning--empty year in goodevpi
 Warning--empty year in goodevver
+Warning--empty year in storage
 Warning--empty year in storageAnd
 Warning--empty year in whatisAnd
 Warning--empty year in whatIsRoot
+Warning--empty year in whatIsGroovy
 Warning--empty year in DalvikVM
 Warning--empty year in DareLabs
 Warning--empty year in DareLabsWeb
 Warning--empty year in HandyPoll
 Warning--empty year in MarketAnd
 Warning--empty year in whatIsMVC
+Warning--empty year in androCompatDef
+Warning--empty year in tls
+Warning--empty year in whatIsBroadcasting
+Warning--empty year in whatIsUPD
 Warning--empty year in whatISBTS
 Warning--empty year in GSMCypherWeakness
-(There were 15 warnings)
+Warning--empty year in iconsource
+Warning--empty year in openssl
+Warning--empty year in sqlite
+(There were 25 warnings)

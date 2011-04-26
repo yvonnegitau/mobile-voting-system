@@ -19,6 +19,26 @@
 % pripadne pisete-li cesky, pak lze zkusit take:
 % \usepackage[OT1]{fontenc} 
 \usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{listings}
+\lstset{ %
+language=Java,                % choose the language of the code
+basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+numbers=left,                   % where to put the line-numbers
+numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+stepnumber=1,                   % the step between two line-numbers. If it is 1 each line will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+frame=single,   		% adds a frame around the code
+tabsize=2,  		% sets default tabsize to 2 spaces
+captionpos=b,   		% sets the caption-position to bottom
+breaklines=true,    	% sets automatic line breaking
+breakatwhitespace=false,    % sets if automatic breaks should only happen at whitespace
+escapeinside={\%}{)}          % if you want to add a comment within your code
+}
 %=-=-=-=-=-=-=-=-=-=-=-=--=%
 % In case of problems with PDF fonts, one may try to uncomment this line:
 %\usepackage{lmodern}
@@ -384,7 +404,7 @@ The communication protocol is very efficient and therefore enables the use in ar
 
 
 \section{Server}
-A server is the part of the system that counts the votes, listens to connections and authenticates people. As this role is a practically a single point of failure, it needs to be well designed, and also well implemented. The languages of choice are practically limitless but as, my predecessor I chose Java as the programming language to implement it. The reason for this is, that it would be pointless and very time consuming to implement it in a different language. Also Java SE is my preferred language. Next, when creating an application such as this is the issue of the number of concurrent connections and operations. This system is designed to be used in a small to medium sized environment with  a maximum of 200 concurrent connections. A larger number would require expensive hardware equipment and/or load balancing. Load balancing will not be used or implemented. The server is also responsible for advertising its presence on the local area network, offer a means of voter registration and providing simple information about how to connect. The first part is solvable by using a UDP\cite{whatIsUPD} broadcast\cite{whatIsBroadcasting}. In short, this will send a datagram to all the computers within a network with the information needed to achieve a connection as well as a friendly name of the server. I chose UDP broadcasts because UDP is unreliable, meaning the sender does not wait for a response. Also this is the standard way of sending adverts through the network. The second part is solvable by multiple ways. First, and this is how Jakub Valenta's system works, the user creation is strictly local, and the administrator,the person in charge of creating the elections, creates the users manually. This requires the voters presence and  it is painfully slow (imagine 200 people before some event standing in line to enter their passwords). What would be better is, to create a web page with a simple form where users would input their names and login credentials. A script would then aggregate this data in a file, possibly an XML file for simplicity, and then another program would be used when verifying the voters identity. Although this would not mean the disappearance of the 200 people lines, it would fasten the process significantly, as only a personal number would have to be verified. The third problem, the info and registration web page, is solvable by implementing a simple web server into the present server software, by using a lightweight HTTP server(Apache for example)  in concurrency with the server software or using a small web server library. Using an external web server - such as Apache, IIS, nginx, would be very easy from an implementation point of view, however for the end user the installation and configuration of any of these servers would be a hardly overcomable obstacle. Implementing a new server would be a waste of time and effort as there are plenty of libraries with light-weight HTTP servers. For these reasons I decided to use a small HTTP server library. I have previously mentioned a personal number. This number or alphanumerical combination will be used to verify the identity of the registered user. It could be his ID Card number, Drivers license number anything person bound. Because it will be possible to vote from the Internet, a new system of verifying the connecting user origin will be needed. The system is necessary when the jurisdiction or some other agreement stipulates that the voter is to be present at a specific place. The Wi-Fi's limited range ensures this. Because the two possible mobile devices will be connected, the server will have to support multiple types of connections.
+A server is the part of the system that counts the votes, listens to connections and authenticates people. As this role is a practically a single point of failure, it needs to be well designed, and also well implemented. When creating an application such as this is the issue of the number of concurrent connections and operations. This system is designed to be used in a small to medium sized environment with  a maximum of 200 concurrent connections. A larger number would require expensive hardware equipment and/or load balancing. Load balancing will not be used or implemented. The server is also responsible for advertising its presence on the local area network, offer a means of voter registration and providing simple information about how to connect. The first part is solvable by using a UDP\cite{whatIsUPD} broadcast\cite{whatIsBroadcasting}. In short, this will send a datagram to all the computers within a network with the information needed to achieve a connection as well as a friendly name of the server. I chose UDP broadcasts because UDP is unreliable, meaning the sender does not wait for a response. Also this is the standard way of sending adverts through the network. The second part is solvable by multiple ways. First, and this is how Jakub Valenta's system works, the user creation is strictly local, and the administrator,the person in charge of creating the elections, creates the users manually. This requires the voters presence and  it is painfully slow (imagine 200 people before some event standing in line to enter their passwords). What would be better is, to create a web page with a simple form where users would input their names and login credentials. A script would then aggregate this data in a file, possibly an XML file for simplicity, and then another program would be used when verifying the voters identity. Although this would not mean the disappearance of the 200 people lines, it would fasten the process significantly, as only a personal number would have to be verified. The third problem, the info and registration web page, is solvable by implementing a simple web server into the present server software, by using a lightweight HTTP server(Apache for example)  in concurrency with the server software or using a small web server library. Using an external web server - such as Apache, IIS, nginx, would be very easy from an implementation point of view, however for the end user the installation and configuration of any of these servers would be a hardly overcomable obstacle. Implementing a new server would be a waste of time and effort as there are plenty of libraries with light-weight HTTP servers. For these reasons I decided to use a small HTTP server library. I have previously mentioned a personal number. This number or alphanumerical combination will be used to verify the identity of the registered user. It could be his ID Card number, Drivers license number anything person bound. Because it will be possible to vote from the Internet, a new system of verifying the connecting user origin will be needed. The system is necessary when the jurisdiction or some other agreement stipulates that the voter is to be present at a specific place. The Wi-Fi's limited range ensures this. Because the two possible mobile devices will be connected, the server will have to support multiple types of connections.
 
 \section{Client}
 The client is the part of the system that provides an interface for the voter to log in, vote and check the results. This part should be easy to use, lightweight and most importantly compatible with a lot of devices and safe. The safety of the mobile device is for a larger analysis and has a dedicated section that follows this one. The problem of user friendliness is really a matter of designing the application to behave consistently with the operating system. Explanation: an Android user is knows how Android applications usually work and expects this one to behave in this manner. It would be very confusing to use the same design principles for an iPhone, which has one useful hardware button, and an Android phone which has at least four. The next problem is being lightweight. The application is running on a very limited device. Limited in computing power, bandwidth, memory and electric power. In the context of our application, computing power is not really an issue as no business logic is done on this end and computations are not very demanding. The bandwidth is also not a big concern as the data that is send is plain text and as such is not very large. The main problem that we need to combat here is power drainage and memory consumption. Every open connection on a cell phone lowers it's power levels considerably. The phone will therefore have to use the connection as little as possible and close the connection after every request. As conference events and voting can involve people that speak multiple languages, the mobile application should be designed to be easily translatable. This is done by using external strings when making any writings in the applications.\\
@@ -614,7 +634,105 @@ Because of this, the communication part of the application will be in the "servi
 	
 %*****************************************************************************
 \chapter{Implementation}
-Implementation in progress
+Implementation is the part of a software development process where the design becomes a real program. This step involves choosing the programming language, writing code and compiling.
+
+\section{Tools}
+\subsection{Programming language}
+The programming language defines some key characteristics of the final product. Some languages offer great optimization and some are good at being portable across many platforms. The language chosen for this project was Java and Groovy\cite{whatIsGroovy}. While the application could have been written in any other language, I chose Java as the programming language to implement it. First, concerning all the programming languages I know, Java is my most preferred because of the vastness of it's libraries, secondly Java is platform independent and that means that the time intensive task of recompiling the program for different platforms is removed. The third reason is because the base program was already implemented in Java and Groovy and a complete rewrite would be pointless. In my work, I only used Java and the reasons for using Groovy in some parts of the program are discussed in Jakub Valenta's bachelor's thesis\cite{bakalarkaJV}.
+
+\paragraph{Java platform}
+A Java platform is a specific set of standards that enable Java written code to be run. \\
+As my predecessor I have chosen to use the Java SE\cite{whatIsJavaSE} platform. Java SE is a general-purpose platform and is well suited for this type of project.
+
+\paragraph{Android platform}
+Android applications can be written in either Java or C/C++. Programming applications for this platform in C/C++ however, has a number of drawbacks. One of which is bad portability. I is unlikely that an application written in this way will be very portable. For this reason I decided to use the recommended Android platform, which uses the Java programing language. This also made implementing the whole system easier I was using only one language, albeit different platforms.
+
+\subsection{3$^{rd}$ party libraries}
+By a  3$^{rd}$ party library I mean a piece of compiled code that is used as a pre made solution for common problems that  is not included in the original collection of Java SE libraries or Android libraries.
+\paragraph{XML Pull\cite{xmlpull}}
+This is the only third party library which is used in the implementation. While a part of the standard Android library suite this is not a part of Java SE. This library XML serialization and does this in a much simpler way than the traditional Java SE serializers. An example of use in my implementation is the method providing a fall-back generation of the registration web page.\\
+\begin{lstlisting}
+      public String makeIntroPage(String IP, int port) throws XmlPullParserException, IOException {
+        XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
+                System.getProperty(XmlPullParserFactory.PROPERTY_NAME), null);
+        XmlSerializer serializer = factory.newSerializer();
+        String xml = new String();
+        StringWriter os = new StringWriter();
+        serializer.setOutput(os);
+        serializer.setPrefix("", NAMESPACE);
+        serializer.startTag(NAMESPACE, "html");
+        serializer.startTag(NAMESPACE, "head");
+        serializer.startTag(NAMESPACE, "meta");
+	}
+\end{lstlisting}
+
+\subsection{User Interface}
+\paragraph{Server}
+The GUI of the server application is implemented using Swing and Groovy. As stated beforehand Groovy is was not used in this project but rather inherited. Therefore, it will not be discussed. Swing is a great toolkit for creating a simple GUI such as used in this project. To design the user interface I used the standard design tool that comes in Netbeans.
+\paragraph{Android}
+The Android framework does not enable the developer to use any other GUI framework other than it's own toolkit. The icons for the project are from an open source icon library\cite{iconsource}, edited in MS paint when needed.
+
+\subsection{Cryptography}
+Creating a TLS\cite{tls} connection requires the server, the listening part, to have a digital certificate. For testing and development purposes a self-signed certificate was sufficient.To generate this certificate, and all other default certificates used in the application I used OpenSSL\cite{openssl}.
+
+\subsection{Persistence}
+\paragraph{Server} The persistence tools of this side is documented in Jakub Valenta's bachelor's thesis\cite{bakalarkaJV}.
+\paragraph{Android}
+For persistence of the Android application data a SQLite\cite{sqlite} database was used along with "Shared Preferences"\cite{storage} mechanism. The SQLite database is used for structured data - the server information, and the latter,"Shared Storage" is for storing the main password hash.
+
+\subsection{Used integrated development environments (IDEs)}
+There are a number of powerful IDEs to use with Java. For this project I have selected to use Netbeans for the Java SE part and Eclipse for Android. Netbeans was chosen because I had good knowledge of this tool and was confident with it's use. Eclipse was the recommended IDE by Google to develop Android applications. Both these tools were are very intuitive and pleasant to work with. 
+
+\section{Server}
+\subsection{Prologue - information/registration server}
+The Prologue server is the implementation of a voting information and registration server defined in the design chapter. It is a part of the application. The server is implemented using a standard "HttpsServer" java class. This class provides basic request handling. Every request is passed to a handler class. There are two handling classes that this server uses the "registeringHandle" and the "providingHandle". The former has voting registration enabled, while the latter only provides the information necessary to connect with a mobile device.
+\paragraph{Connections and encryption}
+Clients can only connect to Prologue using a TLS\cite{tls} connection. The connection uses certificates that are used in the handshakes. Java enables the use of a number of certificate formats. First, a Java keystore format was used but then was dropped in favor of PKCS12\cite{pkcs12}. The PKCS12 format has the advantage of being more user friendly and more widespread. The user friendliness comes from the fact that the PKCS12 format is the only standard format that enables private key storage.
+\paragraph{Web pages}
+The server on its start fetches all files named like "index_[language-code].html". The language-code is the same as the codes in the Accept-languages\cite{httpHead} field in a HTTP request header. The reasons for this will be discussed later on. These pages are parsed and the relevant information such as server IP addresses and ports are added to them. A special "<--PUBLIC_IP-->" and "<--PORT-->" tag denotes the place where where information should be placed.  This web page then serves a the home page providing the registered users all the necessary information needed for the actual connection. When the system does not find any index file that could be used as a main page, then a hard coded one is used as a fallback. The registration page is a simple form page that sends the relevant data to the server via the POST HTTP method. This page's name has the form of "register_[language-code].html".
+\paragraph{Registration and approval}
+The registration and approval are very close processes and despite the approval is not part of the Prologue server it will be discussed here. As stated previously the registration page is a simple form page that posts registration data to the server. The server checks for mismatching passwords, duplicate user names and then saves the registered person to a file called "registrations.xml". This is done to ensure that if the server crashes for whatever reason the registrations will be kept safe on the disk. Once the registrations are stopped the approval table is brought up and approved registrants are saved do a file called "approved.voter". This has the same format as the export file of the voters from the original system and therefore is easily imported into the application.
+
+\subsection{Settings}
+Because a big number of features being added to the system a centralized repository of settings was required. A class called "GlobalSettingsAndNotifier" has been created for this purpose. The class contains a singleton that has all the relevant setting data that affects the system. The instance also contains a list of listeners that are notified upon a specific changes. The settings are stored in key pairs <String, String>. A list of settings can be found in the attachments. Upon close the relevant settings are saved into a "settings.conf" file and are loaded upon the restart.
+\subsection{Internationalization}
+The whole system has been adapted to use with a multitude of languages. Upon load the settings class loads the appropriate language and provides the whole system with a library of terms. The application uses .properties files for this use.
+
+
+
+\begin{lstlisting}
+english .properties file:
+regFormTitle=Registration form
+nameFormInput=Name:
+surnameFormInput=Surname:
+
+czech .properties file:
+regFormTitle=Registrační formulář
+nameFormInput=Jméno:
+surnameFormInput=Příjmení:
+\end{lstlisting}
+
+\subsection{Beaconing}
+When the voting is started, the server will begin broadcasting a UDP packet that advertises it's presence to the voting devices. \\
+
+The form of the packet, where friendlyName denotes the name of the server so that the end user can differentiate between multiple servers being run on the same network, the listenPost denotes the port the server is listening on, and a server id which is generated by random and clearly identifies the server for the end device. This is used to prevent the same server showing up more than once in the end device menu.
+\begin{lstlisting}
+<serverinfo id='" + serverID + "'><friendlyname>" + friendlyName + "</friendlyname><port>" + listenPort + "</port></serverinfo>
+\end{lstlisting}
+\subsection{Security}
+\paragraph{SSL/TSL}
+The connection is switched to TSL every time that is possible. The clients built according to the new specifications made in in this project will always upon connection send an OPTIONS HTTP request. After which the server will reply with a list of secure ports that it is listening to.\\
+Example of a body of a response to a OPTIONS request.
+\begin{lstlisting}
+<listenports>
+	<port secure="false">10666</port>
+	<port secure="true">11109</port>
+</listenports>
+\end{lstlisting}
+This form was designed for future use with load balancing.
+\paragraph{IP filtration}
+
+
 
 
 %*****************************************************************************

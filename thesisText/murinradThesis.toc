@@ -58,22 +58,47 @@
 \contentsline {subsection}{\numberline {4.3.2}Persistence}{19}{subsection.4.3.2}
 \contentsline {subsection}{\numberline {4.3.3}Communication}{19}{subsection.4.3.3}
 \contentsline {chapter}{\numberline {5}Implementation}{21}{chapter.5}
-\contentsline {chapter}{\numberline {6}Testing}{23}{chapter.6}
-\contentsline {chapter}{\numberline {7}Deployment}{25}{chapter.7}
-\contentsline {section}{\numberline {7.1}Overview}{25}{section.7.1}
-\contentsline {section}{\numberline {7.2}Server deployment}{25}{section.7.2}
-\contentsline {section}{\numberline {7.3}Hardware}{25}{section.7.3}
-\contentsline {subsection}{\numberline {7.3.1}Connectivity}{25}{subsection.7.3.1}
-\contentsline {subsubsection}{\numberline {7.3.1.1}General}{25}{subsubsection.7.3.1.1}
-\contentsline {subsection}{\numberline {7.3.2}Wireless Ethernet (Wi-Fi)}{26}{subsection.7.3.2}
-\contentsline {subsection}{\numberline {7.3.3}Operating system and software}{26}{subsection.7.3.3}
-\contentsline {section}{\numberline {7.4}Client deployment}{26}{section.7.4}
-\contentsline {subsection}{\numberline {7.4.1}Hardware and software}{26}{subsection.7.4.1}
-\contentsline {subsubsection}{\numberline {7.4.1.1}Android}{26}{subsubsection.7.4.1.1}
-\contentsline {subsubsection}{\numberline {7.4.1.2}Feature phone}{26}{subsubsection.7.4.1.2}
-\contentsline {subsection}{\numberline {7.4.2}Connectivity}{27}{subsection.7.4.2}
-\contentsline {chapter}{\numberline {8}Conclusion}{29}{chapter.8}
-\contentsline {chapter}{\numberline {A}Abbreviations}{33}{appendix.A}
-\contentsline {chapter}{\numberline {B}UML diagrams}{35}{appendix.B}
-\contentsline {chapter}{\numberline {C}Installation and how to use}{37}{appendix.C}
-\contentsline {chapter}{\numberline {D}Enclosed CD Table of Contents}{39}{appendix.D}
+\contentsline {section}{\numberline {5.1}Tools}{21}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Programming language}{21}{subsection.5.1.1}
+\contentsline {paragraph}{Java platform}{21}{section*.19}
+\contentsline {paragraph}{Android platform}{21}{section*.20}
+\contentsline {subsection}{\numberline {5.1.2}3$^{rd}$ party libraries}{22}{subsection.5.1.2}
+\contentsline {paragraph}{XML Pull\cite {xmlpull}}{22}{section*.21}
+\contentsline {subsection}{\numberline {5.1.3}User Interface}{22}{subsection.5.1.3}
+\contentsline {paragraph}{Server}{22}{section*.22}
+\contentsline {paragraph}{Android}{22}{section*.23}
+\contentsline {subsection}{\numberline {5.1.4}Cryptography}{22}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}Persistence}{22}{subsection.5.1.5}
+\contentsline {paragraph}{Server}{22}{section*.24}
+\contentsline {paragraph}{Android}{23}{section*.25}
+\contentsline {subsection}{\numberline {5.1.6}Used integrated development environments (IDEs)}{23}{subsection.5.1.6}
+\contentsline {section}{\numberline {5.2}Server}{23}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Prologue - information/registration server}{23}{subsection.5.2.1}
+\contentsline {paragraph}{Connections and encryption}{23}{section*.26}
+\contentsline {paragraph}{Web pages}{23}{section*.27}
+\contentsline {paragraph}{Registration and approval}{23}{section*.28}
+\contentsline {subsection}{\numberline {5.2.2}Settings}{24}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Internationalization}{24}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}Beaconing}{24}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}Security}{24}{subsection.5.2.5}
+\contentsline {paragraph}{SSL/TSL}{24}{section*.29}
+\contentsline {paragraph}{IP filtration}{25}{section*.30}
+\contentsline {chapter}{\numberline {6}Testing}{27}{chapter.6}
+\contentsline {chapter}{\numberline {7}Deployment}{29}{chapter.7}
+\contentsline {section}{\numberline {7.1}Overview}{29}{section.7.1}
+\contentsline {section}{\numberline {7.2}Server deployment}{29}{section.7.2}
+\contentsline {section}{\numberline {7.3}Hardware}{29}{section.7.3}
+\contentsline {subsection}{\numberline {7.3.1}Connectivity}{29}{subsection.7.3.1}
+\contentsline {subsubsection}{\numberline {7.3.1.1}General}{29}{subsubsection.7.3.1.1}
+\contentsline {subsection}{\numberline {7.3.2}Wireless Ethernet (Wi-Fi)}{30}{subsection.7.3.2}
+\contentsline {subsection}{\numberline {7.3.3}Operating system and software}{30}{subsection.7.3.3}
+\contentsline {section}{\numberline {7.4}Client deployment}{30}{section.7.4}
+\contentsline {subsection}{\numberline {7.4.1}Hardware and software}{30}{subsection.7.4.1}
+\contentsline {subsubsection}{\numberline {7.4.1.1}Android}{30}{subsubsection.7.4.1.1}
+\contentsline {subsubsection}{\numberline {7.4.1.2}Feature phone}{30}{subsubsection.7.4.1.2}
+\contentsline {subsection}{\numberline {7.4.2}Connectivity}{31}{subsection.7.4.2}
+\contentsline {chapter}{\numberline {8}Conclusion}{33}{chapter.8}
+\contentsline {chapter}{\numberline {A}Abbreviations}{37}{appendix.A}
+\contentsline {chapter}{\numberline {B}UML diagrams}{39}{appendix.B}
+\contentsline {chapter}{\numberline {C}Installation and how to use}{41}{appendix.C}
+\contentsline {chapter}{\numberline {D}Enclosed CD Table of Contents}{43}{appendix.D}

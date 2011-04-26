@@ -1,4 +1,4 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{23}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -23,16 +23,23 @@ web:developer.android.com.
   \verb|http://developer.android.com/resources/dashboard/platform-versions.html|,
   Retrieved on 22.\,1.\,2011.
 
-\bibitem[web:developer.android.com({\natexlab{c}})]{storageAnd}
+\bibitem[webdeveloper.android.com()]{storage}
+webdeveloper.android.com.
+\newblock SQLite Home Page.
+\newblock \\
+  \verb|http://developer.android.com/guide/topics/data/data-storage.html#pref|,
+  Retrieved on 26.\,4.\,2011.
+
+\bibitem[web:developer.android.com({\natexlab{a}})]{storageAnd}
 web:developer.android.com.
-\newblock What is Android?, {\natexlab{c}}.
+\newblock What is Android?, {\natexlab{a}}.
 \newblock \\
   \verb|http://developer.android.com/guide/topics/data/data-storage.html#pref|,
   Retrieved on 26.\,2.\,2011.
 
-\bibitem[web:developer.android.com({\natexlab{d}})]{whatisAnd}
+\bibitem[web:developer.android.com({\natexlab{b}})]{whatisAnd}
 web:developer.android.com.
-\newblock What is Android?, {\natexlab{d}}.
+\newblock What is Android?, {\natexlab{b}}.
 \newblock \\
   \verb|http://developer.android.com/guide/basics/what-is-android.html|,
   Retrieved on 26.\,2.\,2011.
@@ -42,6 +49,11 @@ web:en.wikipedia.org.
 \newblock Rooting (Android OS).
 \newblock \\ \verb|http://en.wikipedia.org/wiki/Rooting_(Android_OS)|,
   Retrieved on 17.\,3.\,2011.
+
+\bibitem[web:groovy.codehaus.org()]{whatIsGroovy}
+web:groovy.codehaus.org.
+\newblock Groovy - Home.
+\newblock \\ \verb|http://groovy.codehaus.org/|, Retrieved on 25.\,4.\,2011.
 
 \bibitem[web:market.android.com({\natexlab{a}})]{DalvikVM}
 web:market.android.com.
@@ -81,6 +93,31 @@ web:msdn.microsoft.com.
 \newblock \\ \verb|http://msdn.microsoft.com/en-us/library/ff649643.aspx|,
   Retrieved on 17.\,3.\,2011.
 
+\bibitem[web:static.googleusercontent.com()]{androCompatDef}
+web:static.googleusercontent.com.
+\newblock Android OS Compatibility Definition Document.
+\newblock \\
+  \verb|http://static.googleusercontent.com/external_content/untrusted_dlcp/source.android.com/sk//compatibility/android-2.3.3-cdd.pdf|,
+  Retrieved on 30.\,3.\,2011.
+
+\bibitem[web:tools.ietf.org({\natexlab{a}})]{tls}
+web:tools.ietf.org.
+\newblock The Transport Layer Security (TLS) Protocol, {\natexlab{a}}.
+\newblock \\ \verb|http://tools.ietf.org/html/rfc5246|, Retrieved on
+  25.\,4.\,2011.
+
+\bibitem[web:tools.ietf.org({\natexlab{b}})]{whatIsBroadcasting}
+web:tools.ietf.org.
+\newblock RFC 919 - Broadcasting Internet Datagrams, {\natexlab{b}}.
+\newblock \\ \verb|http://tools.ietf.org/html/rfc919|, Retrieved on
+  31.\,3.\,2011.
+
+\bibitem[web:tools.ietf.org({\natexlab{c}})]{whatIsUPD}
+web:tools.ietf.org.
+\newblock RFC 768 - User Datagram Protocol, {\natexlab{c}}.
+\newblock \\ \verb|http://tools.ietf.org/html/rfc768|, Retrieved on
+  31.\,3.\,2011.
+
 \bibitem[web:wikipedia.org()]{whatISBTS}
 web:wikipedia.org.
 \newblock Base transceiver station - Wikipedia, the free encyclopedia.
@@ -92,5 +129,21 @@ web:wireless.arcada.fi.
 \newblock Mobile and Wireless Communication Systems - GSM - Security.
 \newblock \\ \verb|http://wireless.arcada.fi/MOBWI/material/CN_1_6.htm|,
   Retrieved on 17.\,3.\,2011.
+
+\bibitem[web:www.openssl.org({\natexlab{a}})]{iconsource}
+web:www.openssl.org.
+\newblock Open Icon Library - Free/Open Icons, {\natexlab{a}}.
+\newblock \\ \verb|http://openiconlibrary.sourceforge.net/|, Retrieved on
+  25.\,4.\,2011.
+
+\bibitem[web:www.openssl.org({\natexlab{b}})]{openssl}
+web:www.openssl.org.
+\newblock OpenSSL: The Open Source toolkit for SSL/TLS, {\natexlab{b}}.
+\newblock \\ \verb|http://www.openssl.org/|, Retrieved on 25.\,4.\,2011.
+
+\bibitem[web:www.sqlite.org()]{sqlite}
+web:www.sqlite.org.
+\newblock SQLite Home Page.
+\newblock \\ \verb|http://www.sqlite.org/|, Retrieved on 26.\,4.\,2011.
 
 \end{thebibliography}
