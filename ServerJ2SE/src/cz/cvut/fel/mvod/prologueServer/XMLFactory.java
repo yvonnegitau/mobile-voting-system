@@ -118,7 +118,15 @@ public class XMLFactory {
         return true;
 
     }
-
+/**
+ * Generates an introductory web page
+ * WARNING, this method is now to be used only as fallback when the "index.html" is not available
+ * @param IP the external IP of the server
+ * @param port the port of the server
+ * @return
+ * @throws XmlPullParserException
+ * @throws IOException
+ */
     public String makeIntroPage(String IP, int port) throws XmlPullParserException, IOException {
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
                 System.getProperty(XmlPullParserFactory.PROPERTY_NAME), null);
@@ -127,7 +135,6 @@ public class XMLFactory {
         StringWriter os = new StringWriter();
         serializer.setOutput(os);
         serializer.setPrefix("", NAMESPACE);
-
         serializer.startTag(NAMESPACE, "html");
         serializer.startTag(NAMESPACE, "head");
         serializer.startTag(NAMESPACE, "meta");
