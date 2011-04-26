@@ -68,7 +68,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-public class ConnectionHTTP extends Thread implements Runnable,
+public class Connection extends Thread implements Runnable,
 		ConnectionInterface {
 	DefaultHttpClient connection;
 	Handler conThread;
@@ -79,7 +79,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 	ServerData server;
 	SchemeRegistry schemeRegistry = null;
 	String usingScheme = "http";
-	ConnectionHTTP instance;
+	Connection instance;
 	boolean run = true;
 
 	/*
@@ -97,7 +97,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 
 	}
 
-	public ConnectionHTTP(ServerData server, QuestionsView parent) {
+	public Connection(ServerData server, QuestionsView parent) {
 		this.parent = parent;
 		this.server = server;
 		this.instance = this;
@@ -126,7 +126,7 @@ public class ConnectionHTTP extends Thread implements Runnable,
 					post.getParams(), schemeRegistry);
 
 			connection = new DefaultHttpClient(cm, params);
-			this.connection.addResponseInterceptor(new MyInterceptor(this));
+			this.connection.addResponseInterceptor(new Interceptor(this));
 			notifyOfProggress();
 			postAndRecieve("OPTIONS", "/", null, null, true);
 			// notifyOfProggress(false);

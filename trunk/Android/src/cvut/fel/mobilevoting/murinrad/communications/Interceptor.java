@@ -14,10 +14,10 @@ import org.xml.sax.SAXException;
 
 import android.util.Log;
 
-public class MyInterceptor implements HttpResponseInterceptor {
+public class Interceptor implements HttpResponseInterceptor {
 	ConnectionInterface server;
 
-	public MyInterceptor(ConnectionInterface ci) {
+	public Interceptor(ConnectionInterface ci) {
 		super();
 		server = ci;
 
@@ -43,7 +43,7 @@ public class MyInterceptor implements HttpResponseInterceptor {
 
 				try {
 					XMLParser.XMLParser.parseServerXML(new String(buffer),
-							server.getParent(), (ConnectionHTTP) server);
+							server.getParent(), (Connection) server);
 				} catch (SAXException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -33,7 +33,7 @@ public class XMLParser {
 	}
 
 	protected void parseServerXML(String XML, final QuestionsView surface,
-			ConnectionHTTP server) throws SAXException, IOException,
+			Connection server) throws SAXException, IOException,
 			ParserConfigurationException {
 		Document doc = preprocess(XML);
 		Element root = doc.getDocumentElement();

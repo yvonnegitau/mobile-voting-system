@@ -34,7 +34,7 @@ public class DatabaseStorage {
 	private static final String dbCreationSQL = "CREATE TABLE IF NOT EXISTS "
 			+ dbTableName
 			+ " (id INTEGER PRIMARY KEY AUTOINCREMENT, IPAddress VARCHAR, portN VARCHAR, uName VARCHAR, pass VARCHAR ,Fname VARCHAR);commit;";
-	SQLiteDatabase DB = null;
+	SQLiteDatabase DnB = null;
 
 	public DatabaseStorage(Context context) {
 
