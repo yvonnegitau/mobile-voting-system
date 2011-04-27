@@ -26,6 +26,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
+import javax.net.ssl.TrustManagerFactory;
 
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -68,12 +69,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-public class Connection extends Thread implements Runnable,
-		ConnectionInterface {
+public class Connection extends Thread implements Runnable, ConnectionInterface {
 	DefaultHttpClient connection;
 	Handler conThread;
 	Context context;
 	boolean connected = false;
+	boolean exc = false;
 	int port = 0;
 	QuestionsView parent;
 	ServerData server;
@@ -91,8 +92,9 @@ public class Connection extends Thread implements Runnable,
 
 	@Override
 	public void run() {
-		while(true) {
-			if(run)InitializeUnsecure();
+		while (true) {
+			if (run)
+				InitializeUnsecure();
 		}
 
 	}
@@ -108,7 +110,7 @@ public class Connection extends Thread implements Runnable,
 	public void InitializeUnsecure() {
 
 		try {
-			run =false;
+			run = false;
 			port = server.getPort();
 			HttpParams params = new BasicHttpParams();
 			HttpConnectionParams.setConnectionTimeout(params, 3000);
@@ -133,105 +135,97 @@ public class Connection extends Thread implements Runnable,
 			instance = this;
 
 		} catch (IllegalStateException ex) {
-			
 
 		} catch (Exception ex) {
-			Log.e("Android mobile voting" , "INIT HTTP error "+ ex.toString());
+			Log.e("Android mobile voting", "INIT HTTP error " + ex.toString());
 			showNoConError();
-			
-			
+
 		}
-		
+
 	}
-	
-	public void forceInit(){
+
+	public void forceInit() {
 		run = true;
-		
+
 	}
 
 	public void InitializeSecure(int sslPort) {
 		if (sslPort != -1) {
+			SSLSocketFactory sslf = null;
+			SSLSocket s = null;
 			port = sslPort;
 			try {
 				// notifyOfProggress(false);
 				KeyStore trusted = KeyStore.getInstance(KeyStore
 						.getDefaultType());
 				trusted.load(null, null);
-				SSLSocketFactory sslf = null;
-				SSLSocket s = null;
-				try {
-					sslf = new SSLSocketFactory(trusted);
-
-					s =  (SSLSocket) sslf.connectSocket(sslf.createSocket(),
-							server.getAddress(), sslPort, null, 0,
-							new BasicHttpParams());
-					postAndRecieve("GET", "/", null, null, true);
-					
-				} catch (SSLException ex) {
-					if(s!=null)s.close();
-					sslf = null;
+				
+				
+					sslf = new MySSLSocketFactory(trusted);
+					Log.w("Android mobile voting", "1");
+					sslf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+					Log.w("Android mobile voting", "2");
+					BasicHttpParams params = new BasicHttpParams();
+					Log.w("Android mobile voting", "3");
+					HttpConnectionParams.setConnectionTimeout(params, 500);
+					Log.w("Android mobile voting", "4");
+					s = (SSLSocket) sslf.connectSocket(sslf.createSocket(),
+							server.getAddress(), sslPort, null, 0, params);
+				if(exc) {
 					SSLSession ssls = null;
-					s = null;
-					try {
-						sslf = new MySSLSocketFactory(trusted);
-						sslf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-						BasicHttpParams params = new BasicHttpParams();
-						HttpConnectionParams
-								.setConnectionTimeout(params, 500);
-						s = (SSLSocket) sslf.connectSocket(sslf.createSocket(),
-								server.getAddress(), sslPort, null, 0,
-								params);
-					} catch (SSLException e) {
-						Log.w("Android mobile voing CERT CHECK", e.toString());
-						s.close();
-					}
-
-					s.startHandshake();
 					ssls = s.getSession();
 					final javax.security.cert.X509Certificate[] x = ssls
-							.getPeerCertificateChain();
+					.getPeerCertificateChain();
 
-					for (int i = 0; i < x.length; i++) {
+			for (int i = 0; i < x.length; i++) {
 
-						parent.mHandler.post(new Runnable() {
+				parent.mHandler.post(new Runnable() {
 
-							@Override
-							public void run() {
+					@Override
+					public void run() {
 
-								try {
-									parent.askForTrust(getThumbPrint(x[0]),
-											instance);
-								} catch (NoSuchAlgorithmException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (CertificateEncodingException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (final Exception ex) {
-									parent.mHandler.post(new Runnable() {
+						try {
+							parent.askForTrust(getThumbPrint(x[0]),
+									instance);
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (CertificateEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (final Exception ex) {
+							parent.mHandler.post(new Runnable() {
 
-										@Override
-										public void run() {
-											parent.showToast(ex.toString());
+								@Override
+								public void run() {
+									parent.showToast(ex.toString());
 
-										}
-
-									});
-									Log.w("Android Mobile Voting", "400 Error");
-									parent.finish();
 								}
 
-							}
-						});
+							});
+							Log.w("Android Mobile Voting", "400 Error");
+							parent.finish();
+						}
 
 					}
+				});
 
+			}
+
+					
+					
+					
 				}
+
+				s.startHandshake();
+				
+				
 				Scheme https = new Scheme("https", sslf, sslPort);
 
 				schemeRegistry.register(https);
 				usingScheme = "https";
 				port = sslPort;
+				if(!exc) permitException();
 			} catch (final Exception ex) {
 				parent.mHandler.post(new Runnable() {
 
@@ -275,7 +269,7 @@ public class Connection extends Thread implements Runnable,
 	 * @return
 	 */
 	public boolean parseResponceCode(String data) {
-		Log.d("Android mobile voting",data);
+		Log.d("Android mobile voting", data);
 		if (data.contains("400")) {
 
 			parent.mHandler.post(new Runnable() {
@@ -372,13 +366,13 @@ public class Connection extends Thread implements Runnable,
 	public void postAnswers(ArrayList<QuestionData> answers) {
 		Log.i("Android Mobile Voting", "in posting method");
 		String xml = XMLMaker.XMLMaker.buildAnswer(answers);
-		try{
-		postAndRecieve("POST", "/", null, xml, true);
-		postAndRecieve("GET", "/", null, null, true);
-		}catch(IOException ex ) {
-			
+		try {
+			postAndRecieve("POST", "/", null, xml, true);
+			postAndRecieve("GET", "/", null, null, true);
+		} catch (IOException ex) {
+
 			parent.finish();
-			
+
 		}
 	}
 
@@ -473,13 +467,20 @@ public class Connection extends Thread implements Runnable,
 			TrustManager tm = new X509TrustManager() {
 				public void checkClientTrusted(X509Certificate[] chain,
 						String authType) throws CertificateException {
-
+						
 					Log.w("Android mobile voting", "CERTIFICATE ERROR1");
 				}
 
 				public void checkServerTrusted(X509Certificate[] chain,
 						String authType) throws CertificateException {
-					Log.w("Android mobile voting", "CERTIFICATE ERROR1");
+					try{
+					getDefaultTrust().checkServerTrusted(chain, authType);
+					} catch (CertificateException ex) {
+						Log.w("Android Mobile Voting","Custom X509TrustException");
+						exc = true;
+						
+					}
+					
 				}
 
 				public X509Certificate[] getAcceptedIssuers() {
@@ -510,9 +511,9 @@ public class Connection extends Thread implements Runnable,
 			public void run() {
 				Looper.prepare();
 				try {
-				postAndRecieve("GET", "/", null, null, true);
-				} catch (Exception ex){
-					
+					postAndRecieve("GET", "/", null, null, true);
+				} catch (Exception ex) {
+
 				}
 				Looper.loop();
 			}
@@ -522,22 +523,22 @@ public class Connection extends Thread implements Runnable,
 		// notifyOfProggress();
 
 	}
-	
+
 	public void showNoConError() {
 		Thread t = new Thread() {
 			@Override
 			public void run() {
 				Looper.prepare();
 				try {
-				parent.showConnectionError();
-				} catch (Exception ex){
-					
+					parent.showConnectionError();
+				} catch (Exception ex) {
+
 				}
 				Looper.loop();
 			}
 		};
 		t.start();
-		
+
 	}
 
 	private void notifyOfProggress() {
@@ -550,6 +551,37 @@ public class Connection extends Thread implements Runnable,
 
 		});
 
+	}
+	/**
+	 * http://www.coderanch.com/t/207318/sockets/java/do-hold-Java-default-SSL
+	 * @return
+	 */
+	private X509TrustManager getDefaultTrust() {
+		TrustManagerFactory trustManagerFactory = null;
+		try {
+			trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}   
+		   
+		try {
+			trustManagerFactory.init((KeyStore)null);
+		} catch (KeyStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}   
+		   
+		System.out.println("JVM Default Trust Managers:");   
+		for (TrustManager trustManager : trustManagerFactory.getTrustManagers()) {   
+		    System.out.println(trustManager);   
+		   
+		    if (trustManager instanceof X509TrustManager) {   
+		        X509TrustManager x509TrustManager = (X509TrustManager)trustManager;   
+		        return x509TrustManager;   
+		    }   
+		}
+		return null;
 	}
 
 }
