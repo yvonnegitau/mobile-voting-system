@@ -26,6 +26,7 @@ public class DatabaseStorage {
 	public static final String dbName = "ServerStore";
 	public static final String dbTableName = "Servers";
 	private static Context context;
+	
 
 	private static final String testData = "INSERT INTO "
 			+ dbTableName
@@ -34,7 +35,7 @@ public class DatabaseStorage {
 	private static final String dbCreationSQL = "CREATE TABLE IF NOT EXISTS "
 			+ dbTableName
 			+ " (id INTEGER PRIMARY KEY AUTOINCREMENT, IPAddress VARCHAR, portN VARCHAR, uName VARCHAR, pass VARCHAR ,Fname VARCHAR);commit;";
-	SQLiteDatabase DnB = null;
+	SQLiteDatabase DB = null;
 
 	public DatabaseStorage(Context context) {
 
