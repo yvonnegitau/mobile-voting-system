@@ -776,11 +776,14 @@ Sensitive data that is stored on the device is encrypted. All encrypting/decrypt
 Along with data primitives, the application also stores information needed to connect to a voting point/server. This is stored in a SQLite database. The access class for this database is called DatabaseStorage. This defines and provides all operations that can be used on the database. All data is saved in a database called ServerStore and in a table called "Servers". The table is created by calling 
 CREATE TABLE IF NOT EXISTS Server (id INTEGER PRIMARY KEY AUTOINCREMENT, IPAddress VARCHAR, portN VARCHAR, uName VARCHAR, pass VARCHAR ,Fname VARCHAR);
 \subsection{XML Parsing and XML Creation}
-Virtually all usable data is communicated in XML form. To convert XML data into usable data the XMLParser class was created. The class has methods of parsing all the possible XML types and decides the type of the XML automatically. For sending data, it has to be converted into XML form. The XMLMaker class was created for this purpose. It handles all the XML creating processes uses in this part of the project.
+Virtually all usable data is communicated in XML form. To convert XML data into usable data the XMLParser class was created. The class has methods of parsing all the possible XML types and decides the type of the XML automatically. For sending data, it has to be converted into XML form. The XMLMaker class was created for this purpose. It implements all the XML creating processes uses in this part of the project.
 
 
 %*****************************************************************************
 \chapter{Testing}
+Testing plays an important role in this project. Testing early and often provided this project with a lot of precious feedback on how adding features and code altered the behaviour of the system and enabled problematic parts to be quickly identified and repaired. The previous project \cite{baklarkaJV} already had tests that were run on it. As the core classes of its bussines logic remained unchanged, the tests were left as they were and their results are still valid.
+\section{Unit testing}
+Unit testing is testing aimed at individual classes and their methods. In this project the Unit testing method of testing was used mainly on convertion classes, where data had to be converted from one form to another. These classes include the XMLParser, XMLMaker, the Cryptography class in the android project and the networkAddressRange class in the desktop project. 
 
 \begin{itemize}
  \item Způsob, průběh a výsledky testování.
