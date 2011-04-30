@@ -666,6 +666,9 @@ This is the only third party library which is used in the implementation. While 
 	}
 \end{lstlisting}
 
+\paragraph{Robotium\cite{robotium}}
+Robotium is a testing suite that enables GUI action scripting for the Android Platform. 
+
 \subsection{User Interface}
 \paragraph{Server}
 The GUI of the server application is implemented using Swing and Groovy. As stated beforehand Groovy is was not used in this project but rather inherited. Therefore, it will not be discussed. Swing is a great toolkit for creating a simple GUI such as used in this project. To design the user interface I used the standard design tool that comes in Netbeans.
@@ -781,14 +784,28 @@ Virtually all usable data is communicated in XML form. To convert XML data into 
 
 %*****************************************************************************
 \chapter{Testing}
-Testing plays an important role in this project. Testing early and often provided this project with a lot of precious feedback on how adding features and code altered the behaviour of the system and enabled problematic parts to be quickly identified and repaired. The previous project \cite{baklarkaJV} already had tests that were run on it. As the core classes of its bussines logic remained unchanged, the tests were left as they were and their results are still valid.
+Testing plays an important role in this project. Testing early and often provided this project with a lot of precious feedback on how adding features and code altered the behavior of the system and enabled problematic parts to be quickly identified and repaired. The previous project \cite{baklarkaJV} already had tests that were run on it. As the core classes of its business logic remained unchanged, the tests were left as they were and their results are still valid.
 \section{Unit testing}
-Unit testing is testing aimed at individual classes and their methods. In this project the Unit testing method of testing was used mainly on convertion classes, where data had to be converted from one form to another. These classes include the XMLParser, XMLMaker, the Cryptography class in the android project and the networkAddressRange class in the desktop project. 
+Unit testing is testing aimed at individual classes and their methods. It is a white-box testing method meaning that it is created with respect to the inner workings of the object tested and is aimed at finding common error such as when a null string is inputed and errors in implemented algorithms. In this project the Unit testing method of testing was used mainly on conversion classes, where data had to be converted from one form to another. These classes include the XMLParser, XMLMaker, the Cryptography class in the android project and the networkAddressRange class in the desktop project. The unit testing is performed by the JUnitTest framework\cite{junit}. I found this framework very comfortable to work with as it comes embedded with the two IDEs I worked in and I had some experiences with it from past school projects.
+\section{Integration testing}
+Integration testing is targeted at finding out how the individual components work with each other. As because this is a client - server application, this part of testing was very important and it's results were often the main guidelines of how the project should continue. The testing itself was done by creating a mock voting server and trying to connect to it with the client software. Different combinations of inputs were used and errors were logged in the project logbook.
+\section{GUI Testing}
+\paragraph{Server}
+The server's GUI was tested by hand. This approach was used because of the minimalist interface and the the fast responsiveness of the application. After each major modification of the GUI the new feature was tester for function and how well it integrates to the environment.
+\paragraph{Android}
+The android's GUI was tested differently than the server's. Because the platform's emulator is very slow, and constant installation on a real device is also very time consuming a need for an automated GUI test was created. Of all the GUI testing platforms, Robotium was found to have the most suitable properties. It is simple, requires minimal setup and integrates very well with the emulator software. \\
+\begin{lstlisting}
+public void testGoodLogin() {
+		solo.clearEditText((EditText)solo.getView(R.string.passwordField));
+		solo.enterText((EditText)solo.getView(R.string.passwordField), "11111111");
+		solo.clickOnButton("OK");
+		solo.assertCurrentActivity("Passes did not match", cvut.fel.mobilevoting.murinrad.views.ServerListView.class);
+		
+	}
+\end{lstlisting}
+\section{Compatibility testing}
+\section{Test Results}
 
-\begin{itemize}
- \item Způsob, průběh a výsledky testování.
- \item Srovnání s existujícími řešeními, pokud jsou známy.
-\end{itemize} 
  %**********************************************************************************
  \chapter{Deployment}
 \section{Overview}
@@ -802,7 +819,7 @@ The server application does not have any specific haddware requirements and will
 The server needs at least connectivity to a LAN(Local Area Network) for basic local voting(e.g. when the voting is to be held from a specific place) . For truly mobile voting, the server needs a connection to the Internet. Although the for Internet connectivity the connection has to use the TCP/IP protocol  suite, it should be noted that the LAN has to use this suite too. It is advisable to use cables instead of a wireless connection. \\
 When Internet connectivity is required it is recommended that the server has his own external IP address to facilitate the configuration, however if that is not possible than at least access to the gateway device is needed in order to properly set-up port forwarding rules.
 \\
-If voting is to be through the Internet, then the server should have a domain name and the name registered at a DNS. This would alleviate the shock the users often experience when working with IP addresses. If for some reason a static IP address is unavailable, the use of a dynamic DNS service is advisable. The dynamic DNS service serves just like a normal DNS, but the server/ADSL router has a small piece of software installed, that reports whenever it acquires a new external IP to the service and the service then updates the DNS entries. The whole process takes no more than 5 minutes and this time is acceptable.
+If voting is to be through the Internet, then the server should have a domain name and the name registered at a DNS. This would alleviate the shock the users often experience when working with IP addresses. If for some reason a static IP address is unavailable, the use of a dynamic DNS service is advisable. The dynamic DNS service serves just like a normal DNS, but the server/ADSL router has a small piece of software installed, that reports whenever it acquires a new external IP to the service and the service then updates the DNS entries. The whole process should take no more than 5 minutes and this time is acceptable.
 \\
 \subsection{Wireless Ethernet (Wi-Fi)}
 For rapid deployment, the computer should be able to behave as a wireless access point. One method that I tested and worked perfectly, was using piece of software called Connectify. This works only under Microsoft \textregistered Windows\textregistered and does not provide many security features. However, for a quick and small deployment it is suitable. \\
@@ -832,12 +849,9 @@ As it is with the server, for local voting it is sufficient for the client to be
 
 %*****************************************************************************
 \chapter{Conclusion}
+The aim of this work was to enhance the mobile voting system originally  created by Jakub Valenta in his bachelor's thesis. The goals were to implement SSL, add internationalization and create an Android client that follows the good practices for Android applications. These goals were supplemented with goals outlined in the analysis part of the project and developed as time progressed and I gained a better understanding of the area. The whole system performs well, however as I had no real knowledge of creating Android applications I was not able to resolve some performance issues on this side. On the plus side the whole system is ready to be used in a real situation.For this, however, testing on a larger scale is recommended.\\
 
-\begin{itemize}
-\item Zhodnocení splnění cílů DP/BP a  vlastního přínosu práce (při formulaci je třeba vzít v potaz zadání práce).
-\item Diskuse dalšího možného pokračování práce.
-
-\end{itemize} 	
+As for the continuation of this project, it needs more compatible clients. The analysis and design of the mobile client in this thesis is in my opinion a good foundation for the creation of other mobile clients - the iOS platform from Apple and BlackBerry OS from RIM are two platforms that come to mind as the targeted audience of this project is very likely to own one of these devices.  
 
 
 \bibliographystyle{csplainnat}
