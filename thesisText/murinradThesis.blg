@@ -4,7 +4,10 @@ Database file #1: reference.bib
 Warning--entry type for "bakalarkaJV" isn't style-file defined
 --line 8 of file reference.bib
 Warning--I didn't find a database entry for "whatIsJavaSE"
+Warning--I didn't find a database entry for "baklarkaJV"
 Warning--I didn't find a database entry for "infodp"
+Warning--empty year in robotium
+Warning--empty year in des
 Warning--empty year in goodevpi
 Warning--empty year in goodevver
 Warning--empty year in storage
@@ -12,6 +15,7 @@ Warning--empty year in storageAnd
 Warning--empty year in whatisAnd
 Warning--empty year in whatIsRoot
 Warning--empty year in whatIsGroovy
+Warning--empty year in junit
 Warning--empty year in DalvikVM
 Warning--empty year in DareLabs
 Warning--empty year in DareLabsWeb
@@ -26,5 +30,8 @@ Warning--empty year in whatISBTS
 Warning--empty year in GSMCypherWeakness
 Warning--empty year in iconsource
 Warning--empty year in openssl
+Warning--empty year in pkcs12
 Warning--empty year in sqlite
-(There were 25 warnings)
+Warning--empty year in httpHead
+Warning--empty year in xmlpull
+(There were 32 warnings)

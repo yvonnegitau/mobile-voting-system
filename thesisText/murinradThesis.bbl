@@ -1,4 +1,4 @@
-\begin{thebibliography}{23}
+\begin{thebibliography}{29}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -8,6 +8,20 @@
 \bibitem[Valenta(2010)]{bakalarkaJV}
 VALENTA, J.
 \newblock Mobilní hlasovací zarízení [in Czech], 2010.
+
+\bibitem[web:code.google.com()]{robotium}
+web:code.google.com.
+\newblock robotium - It's like Selenium, but for Android™ - Google Project
+  Hosting.
+\newblock \\ \verb|http://code.google.com/p/robotium/|, Retrieved on
+  30.\,4.\,2011.
+
+\bibitem[web:csrc.nist.gov/()]{des}
+web:csrc.nist.gov/.
+\newblock HTTP/1.1: Header Field Definitionse.
+\newblock \\
+  \verb|http://csrc.nist.gov/publications/fips/fips46-3/fips46-3.pdf|,
+  Retrieved on 26.\,4.\,2011.
 
 \bibitem[web:developer.android.com({\natexlab{a}})]{goodevpi}
 web:developer.android.com.
@@ -23,23 +37,23 @@ web:developer.android.com.
   \verb|http://developer.android.com/resources/dashboard/platform-versions.html|,
   Retrieved on 22.\,1.\,2011.
 
-\bibitem[webdeveloper.android.com()]{storage}
-webdeveloper.android.com.
-\newblock SQLite Home Page.
+\bibitem[web:developer.android.com({\natexlab{c}})]{storage}
+web:developer.android.com.
+\newblock SQLite Home Page, {\natexlab{c}}.
 \newblock \\
   \verb|http://developer.android.com/guide/topics/data/data-storage.html#pref|,
   Retrieved on 26.\,4.\,2011.
 
-\bibitem[web:developer.android.com({\natexlab{a}})]{storageAnd}
+\bibitem[web:developer.android.com({\natexlab{d}})]{storageAnd}
 web:developer.android.com.
-\newblock What is Android?, {\natexlab{a}}.
+\newblock What is Android?, {\natexlab{d}}.
 \newblock \\
   \verb|http://developer.android.com/guide/topics/data/data-storage.html#pref|,
   Retrieved on 26.\,2.\,2011.
 
-\bibitem[web:developer.android.com({\natexlab{b}})]{whatisAnd}
+\bibitem[web:developer.android.com({\natexlab{e}})]{whatisAnd}
 web:developer.android.com.
-\newblock What is Android?, {\natexlab{b}}.
+\newblock What is Android?, {\natexlab{e}}.
 \newblock \\
   \verb|http://developer.android.com/guide/basics/what-is-android.html|,
   Retrieved on 26.\,2.\,2011.
@@ -54,6 +68,11 @@ web:en.wikipedia.org.
 web:groovy.codehaus.org.
 \newblock Groovy - Home.
 \newblock \\ \verb|http://groovy.codehaus.org/|, Retrieved on 25.\,4.\,2011.
+
+\bibitem[web:junit.org()]{junit}
+web:junit.org.
+\newblock JUnit.org.
+\newblock \\ \verb|http://www.junit.org/|, Retrieved on 30.\,4.\,2011.
 
 \bibitem[web:market.android.com({\natexlab{a}})]{DalvikVM}
 web:market.android.com.
@@ -141,9 +160,26 @@ web:www.openssl.org.
 \newblock OpenSSL: The Open Source toolkit for SSL/TLS, {\natexlab{b}}.
 \newblock \\ \verb|http://www.openssl.org/|, Retrieved on 25.\,4.\,2011.
 
+\bibitem[web:www.rsa.com()]{pkcs12}
+web:www.rsa.com.
+\newblock SQLite Home Page.
+\newblock \\ \verb|http://www.rsa.com/rsalabs/node.asp?id=2138|, Retrieved on
+  26.\,4.\,2011.
+
 \bibitem[web:www.sqlite.org()]{sqlite}
 web:www.sqlite.org.
 \newblock SQLite Home Page.
 \newblock \\ \verb|http://www.sqlite.org/|, Retrieved on 26.\,4.\,2011.
+
+\bibitem[web:www.w3.org()]{httpHead}
+web:www.w3.org.
+\newblock HTTP/1.1: Header Field Definitionse.
+\newblock \\ \verb|http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html|,
+  Retrieved on 26.\,4.\,2011.
+
+\bibitem[web:xmlpull.org()]{xmlpull}
+web:xmlpull.org.
+\newblock XML Pull parsing.
+\newblock \\ \verb|http://www.xmlpull.org/|, Retrieved on 25.\,4.\,2011.
 
 \end{thebibliography}
