@@ -1,3 +1,18 @@
+/*
+  Copyright 2011 Radovan Murin
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
 package cvut.fel.mobilevoting.murinrad.communications;
 
 import java.io.IOException;
@@ -12,11 +27,24 @@ import org.apache.http.HttpResponseInterceptor;
 import org.apache.http.protocol.HttpContext;
 import org.xml.sax.SAXException;
 
-import android.util.Log;
-
+/**
+ * Implementation of a HttpResponceInterceptor
+ * 
+ * the class intercepts the responces, parses them and then notifies the
+ * appropriate components
+ * 
+ * @author Radovan Murin
+ * 
+ */
 public class Interceptor implements HttpResponseInterceptor {
 	ConnectionInterface server;
 
+	/**
+	 * constructor for the class
+	 * 
+	 * @param ci
+	 *            an implementation of a ConnectionInterface
+	 */
 	public Interceptor(ConnectionInterface ci) {
 		super();
 		server = ci;
@@ -28,31 +56,27 @@ public class Interceptor implements HttpResponseInterceptor {
 			throws HttpException, IOException {
 		if (server.parseResponceCode(response.getStatusLine().getStatusCode()
 				+ "")) {
-			Log.d("Android mobiel voting", "IM INT THE INTERCEPTOR");
+
 			Header[] cl = response.getHeaders("Content-length");
-			Log.d("Android mobiel voting", "content length");
+
 			if (cl != null && !cl[0].getValue().equals("0")) {
-				Log.d("Android mobile voting", "Goodies!");
+
 				HttpEntity hE = response.getEntity();
-				Log.d("Android mobile voting", "Whats innit?");
+
 				byte[] buffer = new byte[Integer.parseInt(cl[0].getValue())];
-				Log.d("Android mobile voting", "Delicious cake?");
+
 				hE.getContent().read(buffer);
-				Log.d("Android mobile voting", "You shouldnt have + "
-						+ new String(buffer));
 
 				try {
 					XMLParser.XMLParser.parseServerXML(new String(buffer),
 							server.getParent(), (Connection) server);
 				} catch (SAXException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				} catch (ParserConfigurationException e) {
-					// TODO Auto-generated catch block
+
 					e.printStackTrace();
 				}
-
-				// connection.receiveResponseEntity(new Basi)
 
 			}
 

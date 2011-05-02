@@ -1,18 +1,22 @@
+/*
+Copyright 2011 Radovan Murin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 package cvut.fel.mobilevoting.murinrad.views;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.Iterator;
-
-import cvut.fel.mobilevoting.murinrad.R;
-import cvut.fel.mobilevoting.murinrad.R.string;
-import cvut.fel.mobilevoting.murinrad.communications.Connection;
-import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
-import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
-import cvut.fel.mobilevoting.murinrad.gui.NoSSLDialog;
-import cvut.fel.mobilevoting.murinrad.gui.QuestionButton;
-import cvut.fel.mobilevoting.murinrad.gui.QuestionButtonLayout;
-import cvut.fel.mobilevoting.murinrad.gui.SecurityExceptionDialogue;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,13 +29,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
+import cvut.fel.mobilevoting.murinrad.R;
+import cvut.fel.mobilevoting.murinrad.communications.Connection;
+import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
+import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
+import cvut.fel.mobilevoting.murinrad.gui.NoSSLDialog;
+import cvut.fel.mobilevoting.murinrad.gui.QuestionButtonLayout;
+import cvut.fel.mobilevoting.murinrad.gui.SecurityExceptionDialogue;
+/**
+ * Question list viewer Activity
+ * @author Murko
+ *
+ */
 public class QuestionsView extends Activity {
 	ServerData server;
 	Connection con;
@@ -79,7 +90,10 @@ public class QuestionsView extends Activity {
 	public void showToast(String message) {
 		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 	}
-
+	/**
+	 * Outputs the question list
+	 * @param questions
+	 */
 	public void drawQuestions(ArrayList<QuestionData> questions) {
 		showNextProgres();
 		buttons = new ArrayList<QuestionButtonLayout>();
@@ -158,7 +172,11 @@ public class QuestionsView extends Activity {
 		showingCheckers = b;
 
 	}
-
+	/**
+	 * Asks the user if he wants to trust the server that has an invalid certificate
+	 * @param thumbPrint
+	 * @param instance
+	 */
 	public void askForTrust(String thumbPrint, Connection instance) {
 		Dialog d = new SecurityExceptionDialogue(this, thumbPrint, instance);
 		d.show();
@@ -166,8 +184,8 @@ public class QuestionsView extends Activity {
 	}
 
 	/**
-	 * 
-	 * @param state
+	 * Shows/dismisses a progress dialogue
+	 *
 	 */
 	public void showNextProgres() {
 		if (curentP == null) {
@@ -178,13 +196,18 @@ public class QuestionsView extends Activity {
 		}
 
 	}
-
+/**
+ * Asks the user if he wants to access the server using no security
+ * @param instance
+ */
 	public void showNoSSLDialog(Connection instance) {
 		Dialog d = new NoSSLDialog(this, instance);
 		d.show();
 		
 	}
-	
+	/**
+	 * Displays an error when no connection is present
+	 */
 	public void showConnectionError() {
 		if (curentP != null) {
 			curentP.dismiss();

@@ -1,3 +1,18 @@
+/*
+  Copyright 2011 Radovan Murin
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
 package cvut.fel.mobilevoting.murinrad.crypto;
 
 import java.io.UnsupportedEncodingException;
@@ -20,14 +35,24 @@ import cvut.fel.mobilevoting.murinrad.storage.DatabaseStorage;
 import cvut.fel.mobilevoting.murinrad.storage.PreferencesStorage;
 import android.util.Log;
 
+/**
+ * Class provides encryption/decryption methods for the application
+ * 
+ * @author Radovan Murin
+ * 
+ */
 public class Cryptography {
 	public static Cryptography crypto = new Cryptography();
 	public static String masterKey = null;
 	private DESKeySpec keySpec = null;
 	private static SecretKey key = null;
-	static boolean  initialized = false;
+	static boolean initialized = false;
 	private String pHash = null;
 
+	/**
+	 * Constructor Before actual use the class it needs to be initialized by
+	 * init()
+	 */
 	public Cryptography() {
 		pHash = PreferencesStorage.store
 				.getEntry(PreferencesStorage.PASSWORD_HASH);
@@ -35,11 +60,12 @@ public class Cryptography {
 	}
 
 	/**
+	 * Returns the md5 HASH
 	 * Snippet from http://www.kospol.gr/204/create-md5-hashes-in-android/
-	 * Return s the md5 HASH
 	 * 
-	 * @param
-	 * @return
+	 * 
+	 * @param s string to be hashed
+	 * @return the hash from the string
 	 */
 	public static final String md5(final String s) {
 		try {
@@ -68,10 +94,10 @@ public class Cryptography {
 	/**
 	 * Encrypts the given string with the master code
 	 * 
-	 * @param input
+	 * @param input the string to be encrypted
 	 * @param sKey
 	 *            not used
-	 * @return
+	 * @return a Base64 encoded and encrypted string
 	 * @throws UnsupportedEncodingException
 	 * @throws NoSuchAlgorithmException
 	 * @throws NoSuchPaddingException
@@ -101,10 +127,10 @@ public class Cryptography {
 	 * Decrypts the given string with the master code
 	 * 
 	 * @param input
-	 *            the string to be decrypted
+	 *            the string to be decrypted in Base64
 	 * @param sKey
 	 *            not used now
-	 * @return
+	 * @return the decripted string
 	 * @throws InvalidKeyException
 	 * @throws NoSuchAlgorithmException
 	 * @throws NoSuchPaddingException
@@ -128,6 +154,12 @@ public class Cryptography {
 
 	}
 
+	/**
+	 * Verifies the password
+	 * 
+	 * @param pass the password to be verified
+	 * @return -1 if there is no password in shadow, 0 if other error or mismatch, 1 if match
+	 */
 	public int verifyPass(String pass) {
 		if (pHash.equals(""))
 			return -1;
@@ -171,14 +203,14 @@ public class Cryptography {
 	 * 
 	 * @param s
 	 *            key in open text
-	 * @return
+	 * @return true if success, false if not
 	 */
 	public boolean ChangeCryptoKey(String s) {
 		if (s.length() < 7)
 			return false;
 		DatabaseStorage db = new DatabaseStorage(main.c.getApplicationContext());
 		ArrayList<ServerData> servers = db.getServers();
-		Log.i("Android Mobile Voting", "Servers size "+servers.size());
+		Log.i("Android Mobile Voting", "Servers size " + servers.size());
 		init(s);
 		PreferencesStorage.store.addEntry(PreferencesStorage.PASSWORD_HASH,
 				md5(s));
@@ -190,18 +222,17 @@ public class Cryptography {
 
 		for (int i = 0; i < servers.size(); i++) {
 			try {
-				Log.i("Android Mobile Voting", "Adding servername "+servers.get(i).getFriendlyName());
+				Log.i("Android Mobile Voting", "Adding servername "
+						+ servers.get(i).getFriendlyName());
 				servers.get(i).setId(-1);
 				db.addServer(servers.get(i));
-				
+
 			} catch (Exception e) {
 				Log.e("Android Mobile Voting", e.toString());
-				 db.dropDatabase();
-				db.closeDB();
+				db.dropDatabase();
 				return false;
 			}
 		}
-		db.closeDB();
 		return true;
 	}
 }

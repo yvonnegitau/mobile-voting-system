@@ -1,11 +1,24 @@
+/*
+  Copyright 2011 Radovan Murin
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
 package cvut.fel.mobilevoting.murinrad.communications;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.io.UnsupportedEncodingException;
-
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
@@ -14,61 +27,51 @@ import java.security.KeyStoreException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
-import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.concurrent.TimeoutException;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
-import javax.net.ssl.TrustManagerFactory;
-
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 import javax.security.cert.CertificateEncodingException;
 
-import org.apache.http.*;
-
+import org.apache.http.HttpHost;
+import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.HttpPost;
-
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
-
 import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.entity.BasicHttpEntity;
-
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
-
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicHttpEntityEnclosingRequest;
-
 import org.apache.http.params.BasicHttpParams;
-
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import cvut.fel.mobilevoting.murinrad.R;
-import cvut.fel.mobilevoting.murinrad.crypto.Base64;
 import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
 
-import android.content.Context;
-
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-
+/**
+ * Class that manages the actual connection to the server and sends the requests
+ * 
+ * @author Radovan Murin
+ * 
+ */
 public class Connection extends Thread implements Runnable, ConnectionInterface {
 	DefaultHttpClient connection;
 	Handler conThread;
@@ -107,6 +110,9 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 
 	}
 
+	/**
+	 * Initializes the HTTP connection
+	 */
 	public void InitializeUnsecure() {
 
 		try {
@@ -144,11 +150,22 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 
 	}
 
+	/**
+	 * Forces the initialisation of the connection helper method as
+	 * Thread.stop() is deprecated
+	 */
 	public void forceInit() {
 		run = true;
 
 	}
 
+	/**
+	 * Initializes the HTTPs connection
+	 * 
+	 * @param sslPort
+	 *            the number of the port the server should be listening for
+	 *            SSL/TLS connections
+	 */
 	public void InitializeSecure(int sslPort) {
 		if (sslPort != -1) {
 			SSLSocketFactory sslf = null;
@@ -159,73 +176,69 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 				KeyStore trusted = KeyStore.getInstance(KeyStore
 						.getDefaultType());
 				trusted.load(null, null);
-				
-				
-					sslf = new MySSLSocketFactory(trusted);
-					Log.w("Android mobile voting", "1");
-					sslf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-					Log.w("Android mobile voting", "2");
-					BasicHttpParams params = new BasicHttpParams();
-					Log.w("Android mobile voting", "3");
-					HttpConnectionParams.setConnectionTimeout(params, 500);
-					Log.w("Android mobile voting", "4");
-					s = (SSLSocket) sslf.connectSocket(sslf.createSocket(),
-							server.getAddress(), sslPort, null, 0, params);
-				if(exc) {
+
+				sslf = new MySSLSocketFactory(trusted);
+				Log.w("Android mobile voting", "1");
+				sslf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+				Log.w("Android mobile voting", "2");
+				BasicHttpParams params = new BasicHttpParams();
+				Log.w("Android mobile voting", "3");
+				HttpConnectionParams.setConnectionTimeout(params, 500);
+				Log.w("Android mobile voting", "4");
+				s = (SSLSocket) sslf.connectSocket(sslf.createSocket(),
+						server.getAddress(), sslPort, null, 0, params);
+				if (exc) {
 					SSLSession ssls = null;
 					ssls = s.getSession();
 					final javax.security.cert.X509Certificate[] x = ssls
-					.getPeerCertificateChain();
+							.getPeerCertificateChain();
 
-			for (int i = 0; i < x.length; i++) {
+					for (int i = 0; i < x.length; i++) {
 
-				parent.mHandler.post(new Runnable() {
+						parent.mHandler.post(new Runnable() {
 
-					@Override
-					public void run() {
+							@Override
+							public void run() {
 
-						try {
-							parent.askForTrust(getThumbPrint(x[0]),
-									instance);
-						} catch (NoSuchAlgorithmException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (CertificateEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (final Exception ex) {
-							parent.mHandler.post(new Runnable() {
+								try {
+									parent.askForTrust(getThumbPrint(x[0]),
+											instance);
+								} catch (NoSuchAlgorithmException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (CertificateEncodingException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (final Exception ex) {
+									parent.mHandler.post(new Runnable() {
 
-								@Override
-								public void run() {
-									parent.showToast(ex.toString());
+										@Override
+										public void run() {
+											parent.showToast(ex.toString());
 
+										}
+
+									});
+									Log.w("Android Mobile Voting", "400 Error");
+									parent.finish();
 								}
 
-							});
-							Log.w("Android Mobile Voting", "400 Error");
-							parent.finish();
-						}
+							}
+						});
 
 					}
-				});
 
-			}
-
-					
-					
-					
 				}
 
 				s.startHandshake();
-				
-				
+
 				Scheme https = new Scheme("https", sslf, sslPort);
 
 				schemeRegistry.register(https);
 				usingScheme = "https";
 				port = sslPort;
-				if(!exc) permitException();
+				if (!exc)
+					retrieveQuestions();
 			} catch (final Exception ex) {
 				parent.mHandler.post(new Runnable() {
 
@@ -257,16 +270,8 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#sendReq
-	 * ()
-	 */
-
-	/**
-	 * Parses the responce code
-	 * 
-	 * @param data
-	 * @return
+	 * @see cvut.fel.mobilevoting.murinrad.communications.ConnectionInterface#
+	 * parseResponceCode(String data)
 	 */
 	public boolean parseResponceCode(String data) {
 		Log.d("Android mobile voting", data);
@@ -426,8 +431,10 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 	 * http://stackoverflow.com/questions/1270703/how-to-retrieve-compute-an-
 	 * x509-certificates-thumbprint-in-java
 	 * 
+	 * 
+	 * 
 	 * @param cert
-	 * @return
+	 * @return a string of the certificate thumb print
 	 * @throws NoSuchAlgorithmException
 	 * @throws CertificateEncodingException
 	 */
@@ -442,6 +449,15 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 
 	}
 
+	/**
+	 * 
+	 * Gets the hex code from a byte array
+	 * http://stackoverflow.com/questions/1270703/how-to-retrieve-compute-an-
+	 * x509-certificates-thumbprint-in-java
+	 * 
+	 * @param bytes
+	 * @return a string of hex data
+	 */
 	public static String hexify(byte bytes[]) {
 
 		char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -457,6 +473,13 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 		return buf.toString();
 	}
 
+	/**
+	 * Custom SSLSocket factory that enables ignoring bad certificate if the
+	 * user wishses to do so
+	 * 
+	 * @author Murko
+	 * 
+	 */
 	public class MySSLSocketFactory extends SSLSocketFactory {
 		SSLContext sslContext = SSLContext.getInstance("TLS");
 
@@ -467,20 +490,21 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 			TrustManager tm = new X509TrustManager() {
 				public void checkClientTrusted(X509Certificate[] chain,
 						String authType) throws CertificateException {
-						
+
 					Log.w("Android mobile voting", "CERTIFICATE ERROR1");
 				}
 
 				public void checkServerTrusted(X509Certificate[] chain,
 						String authType) throws CertificateException {
-					try{
-					getDefaultTrust().checkServerTrusted(chain, authType);
+					try {
+						getDefaultTrust().checkServerTrusted(chain, authType);
 					} catch (CertificateException ex) {
-						Log.w("Android Mobile Voting","Custom X509TrustException");
+						Log.w("Android Mobile Voting",
+								"Custom X509TrustException");
 						exc = true;
-						
+
 					}
-					
+
 				}
 
 				public X509Certificate[] getAcceptedIssuers() {
@@ -505,7 +529,10 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 		}
 	}
 
-	public void permitException() {
+	/**
+	 * retrieves the questions and sends them to the view Starts the connection
+	 */
+	public void retrieveQuestions() {
 		Thread t = new Thread() {
 			@Override
 			public void run() {
@@ -524,6 +551,9 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 
 	}
 
+	/**
+	 * Sends a message to the GUI thread to display a connection error
+	 */
 	public void showNoConError() {
 		Thread t = new Thread() {
 			@Override
@@ -541,6 +571,9 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 
 	}
 
+	/**
+	 * Alters the state of the conenction progres dialog - on/off
+	 */
 	private void notifyOfProggress() {
 		parent.mHandler.post(new Runnable() {
 
@@ -552,34 +585,38 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 		});
 
 	}
+
 	/**
-	 * http://www.coderanch.com/t/207318/sockets/java/do-hold-Java-default-SSL
+	 * http://www.coderanch.com/t/207318/sockets/java/do-hold-Java-default-SSL a
+	 * getter method for outputting the defauld certificate validator
+	 * 
 	 * @return
 	 */
 	private X509TrustManager getDefaultTrust() {
 		TrustManagerFactory trustManagerFactory = null;
 		try {
-			trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+			trustManagerFactory = TrustManagerFactory
+					.getInstance(TrustManagerFactory.getDefaultAlgorithm());
 		} catch (NoSuchAlgorithmException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}   
-		   
+		}
+
 		try {
-			trustManagerFactory.init((KeyStore)null);
+			trustManagerFactory.init((KeyStore) null);
 		} catch (KeyStoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}   
-		   
-		System.out.println("JVM Default Trust Managers:");   
-		for (TrustManager trustManager : trustManagerFactory.getTrustManagers()) {   
-		    System.out.println(trustManager);   
-		   
-		    if (trustManager instanceof X509TrustManager) {   
-		        X509TrustManager x509TrustManager = (X509TrustManager)trustManager;   
-		        return x509TrustManager;   
-		    }   
+		}
+
+		System.out.println("JVM Default Trust Managers:");
+		for (TrustManager trustManager : trustManagerFactory.getTrustManagers()) {
+			System.out.println(trustManager);
+
+			if (trustManager instanceof X509TrustManager) {
+				X509TrustManager x509TrustManager = (X509TrustManager) trustManager;
+				return x509TrustManager;
+			}
 		}
 		return null;
 	}
