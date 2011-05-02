@@ -1,16 +1,23 @@
+/*
+  Copyright 2011 Radovan Murin
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
 package cvut.fel.mobilevoting.murinrad.communications;
 
 import java.io.ByteArrayInputStream;
-
-import cvut.fel.mobilevoting.murinrad.*;
-import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
-import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
-import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -23,15 +30,32 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import android.os.Handler;
 import android.util.Log;
-
+import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
+import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
+import cvut.fel.mobilevoting.murinrad.views.QuestionsView;
+/**
+ * An XML parser that parses the XMLs that can be recieved in the communications
+ * @author Radovan Murin
+ *
+ */
 public class XMLParser {
+	/**
+	 * The singleton instance of this class, does all the work
+	 */
 	public static final XMLParser XMLParser = new XMLParser();
 
 	private XMLParser() {
 	}
-
+/**
+ * parses a server connection XML
+ * @param XML the xml
+ * @param surface a surface to display errors
+ * @param server the server that does the connection
+ * @throws SAXException
+ * @throws IOException
+ * @throws ParserConfigurationException
+ */
 	protected void parseServerXML(String XML, final QuestionsView surface,
 			Connection server) throws SAXException, IOException,
 			ParserConfigurationException {
@@ -114,7 +138,14 @@ public class XMLParser {
 		});
 
 	}
-
+/**
+ * processes the XML for parsing
+ * @param XML
+ * @return
+ * @throws ParserConfigurationException
+ * @throws SAXException
+ * @throws IOException
+ */
 	private Document preprocess(String XML)
 			throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -125,7 +156,15 @@ public class XMLParser {
 		return doc;
 
 	}
-
+/**
+ * Parses the beacon that the server periodicaly sends to the clients by UDP
+ * @param xml
+ * @param IP
+ * @return returns a server that needs editing before connecting
+ * @throws ParserConfigurationException
+ * @throws SAXException
+ * @throws IOException
+ */
 	protected ServerData parseBeacon(String xml, String IP)
 			throws ParserConfigurationException, SAXException, IOException {
 		Document doc = preprocess(xml);

@@ -1,29 +1,25 @@
 package cvut.fel.mobilevoting.murinrad.gui;
 
-import cvut.fel.mobilevoting.murinrad.R;
-import cvut.fel.mobilevoting.murinrad.crypto.Cryptography;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.*;
-import android.widget.*;
-
+import android.widget.Toast;
+import cvut.fel.mobilevoting.murinrad.R;
+import cvut.fel.mobilevoting.murinrad.crypto.Cryptography;
+/**
+ * Dialogue that sets the main password
+ * @author Radovan Murin
+ *
+ */
 public class PasswordSetterDialogue extends Dialog {
-	private final Context context;
-
+	/**
+ * The constructor for the dialog
+ * @param context the context the application is in right now
+ */
 	public PasswordSetterDialogue(final Context context) {
 		super(context);
-		this.context = context;
 		setContentView(R.layout.passwordadddialog);
 		setTitle(context.getString(R.string.passwordDialogTitle));
 		final TextView oldPass = (TextView) findViewById(R.id.oldPass);
@@ -71,7 +67,11 @@ public class PasswordSetterDialogue extends Dialog {
 		});
 
 	}
-
+/**
+ * Verifies that the password length is correct
+ * @param s
+ * @return
+ */
 	private boolean verifyLength(String s) {
 		if (s.length() == 8)
 			return true;

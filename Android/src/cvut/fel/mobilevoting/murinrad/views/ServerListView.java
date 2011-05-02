@@ -1,10 +1,24 @@
+/*
+Copyright 2011 Radovan Murin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 package cvut.fel.mobilevoting.murinrad.views;
 
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -12,31 +26,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import java.net.Inet4Address;
-import java.net.InetSocketAddress;
-
 import cvut.fel.mobilevoting.murinrad.R;
-import cvut.fel.mobilevoting.murinrad.R.id;
-import cvut.fel.mobilevoting.murinrad.R.menu;
-import cvut.fel.mobilevoting.murinrad.R.string;
 import cvut.fel.mobilevoting.murinrad.communications.BeaconListener;
 import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.gui.PasswordSetterDialogue;
 import cvut.fel.mobilevoting.murinrad.gui.ServerButton;
 import cvut.fel.mobilevoting.murinrad.storage.DatabaseStorage;
-
+/**
+ * A server list that shows the servers in persistence and provides a means to manage servers/voting points
+ * @author Radovan Murin
+ *
+ */
 public class ServerListView extends Activity {
 	private LinearLayout layout = null;
 	private DatabaseStorage storage;
 	// private ArrayList<ServerData> servers = new ArrayList<ServerData>();
 	private ArrayList<ServerData> servers;
-	private ArrayList<ServerData> beaconingServers;
 	int helper = 0;
 	public Handler handler = new Handler();
 	BeaconListener bl;
@@ -46,6 +53,7 @@ public class ServerListView extends Activity {
 		super.onCreate(savedInstanceState);
 		// beaconingServers = new ArrayList<ServerData>();
 		bl = new BeaconListener(this);
+		@SuppressWarnings("unused")
 		Thread t = new Thread() {
 			@Override
 			public void run(){

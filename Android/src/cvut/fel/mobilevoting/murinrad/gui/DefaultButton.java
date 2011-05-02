@@ -1,15 +1,20 @@
 package cvut.fel.mobilevoting.murinrad.gui;
 
 import android.content.Context;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.Button;
-
+/**
+ * The default button look class
+ * @author Radovan Murin
+ *
+ */
 public abstract class DefaultButton extends Button {
 	Context context;
+	/**
+	 * The constructor of the button
+	 * @param context the application context
+	 * @param btnTXT the text of the button
+	 */
 	public DefaultButton(Context context,String btnTXT) {
 		super(context);
 		setTextSize(18);
@@ -35,8 +40,8 @@ public abstract class DefaultButton extends Button {
 
 	}
 
-	public abstract void onClickAction();
+	protected abstract void onClickAction();
 
-	public abstract void onLongClickAction();
+	protected abstract void onLongClickAction();
 
 }

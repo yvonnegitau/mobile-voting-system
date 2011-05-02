@@ -1,44 +1,50 @@
+/*
+  Copyright 2011 Radovan Murin
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
+
 package cvut.fel.mobilevoting.murinrad;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 import cvut.fel.mobilevoting.murinrad.crypto.Cryptography;
 import cvut.fel.mobilevoting.murinrad.gui.PasswordSetterDialogue;
-import cvut.fel.mobilevoting.murinrad.storage.PreferencesStorage;
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.*;
-import android.widget.*;
-
+/**
+ * The main entry class for this application
+ * @author Radovan Murin
+ *
+ */
 public class main extends Activity {
+	/**
+	 * the reference to this activity for displaying purposes
+	 */
 	public static Activity c;
-	private static final String shadowFile = "shadow";
-	private String pHash;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// SharedPreferences settings = getSharedPreferences(shadowFile, 0);
-		// String temp = Cryptography.md5("Ahoj");
-		// Toast.makeText(c, temp, Toast.LENGTH_LONG).show();
-		// SharedPreferences.Editor editor = settings.edit();
-		// editor.putString("pHash", temp);
-		// editor.commit();
-		// pHash = settings.getString("pHash", "");
 		c = this;
-		// pHash = Cryptography.md5("Ahoj");
 		setContentView(R.layout.main);
 		Button okButton = null;
-
 		final EditText passwordField = (EditText) findViewById(R.string.passwordField);
-		
 		okButton = (Button) findViewById(R.string.loginConfirmBTN);
 		okButton.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				String test = passwordField.getText().toString();
@@ -59,7 +65,9 @@ public class main extends Activity {
 		//PreferencesStorage.store.addEntry(PreferencesStorage.PASSWORD_HASH, "");
 		passCheck("");
 	}
-
+/**
+ * Displays the new password dialogue
+ */
 	void showNewPassword() {
 		PasswordSetterDialogue d = new PasswordSetterDialogue(this);
 		d.show();
@@ -74,9 +82,8 @@ public class main extends Activity {
 	/**
 	 * Checks the master password
 	 * 
-	 * @param pass
-	 *            string value of the password
-	 * @return
+	 * @param pass string value of the password
+	 * @return false if the pass is incorrect, true if correct
 	 */
 	private boolean passCheck(String pass) {
 		int outcome = Cryptography.crypto.verifyPass(pass);
