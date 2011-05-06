@@ -1,7 +1,18 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+Copyright 2011 Radovan Murin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 package cz.cvut.fel.mvod.prologueServer;
 
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
@@ -15,8 +26,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *
- * @author Murko
+ * A class thats purpose is to load localized web pages.
+ * @author Radovan Murin
  */
 public class webPageLocalizer {
 
@@ -91,7 +102,11 @@ public class webPageLocalizer {
 
 
     }
-
+/**
+ * Returns the best matching web page for the given language
+ * @param langs the requested langueage
+ * @return the String representation of the web page.
+ */
     public String getWP(String[] langs) {
 
         String page = null;

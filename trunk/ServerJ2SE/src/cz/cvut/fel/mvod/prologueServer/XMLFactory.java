@@ -1,11 +1,19 @@
 package cz.cvut.fel.mvod.prologueServer;
-
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+Copyright 2011 Radovan Murin
 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 import cz.cvut.fel.mvod.crypto.Base64;
 import cz.cvut.fel.mvod.crypto.CryptoUtils;
 import java.io.File;
@@ -24,8 +32,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 /**
- *
- * @author Murko
+ * A class that creates XMLs handles creates XMLs
+ * @author Radovan Murin
  */
 public class XMLFactory {
 
@@ -33,7 +41,11 @@ public class XMLFactory {
 
     public XMLFactory() {
     }
-
+    /**
+     * Adds a registrant into persistance
+     * @param values the values of the registrant
+     * @return true if succesful
+     */
     public boolean addRegistrationEntry(HashMap<String, String> values) {
         try {
             File file = new File("registrations.xml");
@@ -123,7 +135,7 @@ public class XMLFactory {
  * WARNING, this method is now to be used only as fallback when the "index.html" is not available
  * @param IP the external IP of the server
  * @param port the port of the server
- * @return
+ * @return the String containing the web page
  * @throws XmlPullParserException
  * @throws IOException
  */

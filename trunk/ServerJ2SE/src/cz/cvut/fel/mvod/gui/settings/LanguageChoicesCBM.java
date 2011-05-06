@@ -1,8 +1,18 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+Copyright 2011 Radovan Murin
 
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 package cz.cvut.fel.mvod.gui.settings;
 
 import java.util.HashMap;
@@ -12,8 +22,8 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- *
- * @author Murko
+ * A class of a combo box with available languages
+ * @author Radovan Murin
  */
 public class LanguageChoicesCBM extends DefaultComboBoxModel {
     HashMap<Locale, String> locales;
@@ -27,7 +37,11 @@ public class LanguageChoicesCBM extends DefaultComboBoxModel {
         Iterator<String> is = locales.values().iterator();
         while(is.hasNext()) addElement(is.next());
     }
-    
+    /**
+     * returns the language position.
+     * @param loc the language that it's position si desired to know.
+     * @return The position in the combo box.
+     */
     public int getLangPos(Locale loc){
         String lang = locales.get(loc);
         System.out.println("Looking up "+loc.getLanguage());
@@ -42,7 +56,10 @@ public class LanguageChoicesCBM extends DefaultComboBoxModel {
         }
         return i;
     }
-
+/**
+ * returns the locale that is currently selected
+ * @return
+ */
     public Locale getSelected(){
         String sel = (String) getSelectedItem();
         Iterator<Locale> il = locales.keySet().iterator();
