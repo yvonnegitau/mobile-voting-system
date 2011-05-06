@@ -1,7 +1,18 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+Copyright 2011 Radovan Murin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 package cz.cvut.fel.mvod.gui.settings;
 
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
@@ -22,8 +33,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Murko
+ * This class handles certificate changes - loading/unloading, checks decrypting.
+ * @author Radovan Murin
  */
 public class CertManager {
 
@@ -32,7 +43,11 @@ public class CertManager {
 
     private CertManager() {
     }
-
+/**
+ * Starts a certificate change on a particular system.
+ * @param system the system to have the certificate settings changed.
+ * @throws FileNotFoundException thrown if the file cannot be found.
+ */
     public static void changeCert(int system) throws FileNotFoundException {
         boolean loadOK = false;
         String passphrase = "11111";

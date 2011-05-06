@@ -1,7 +1,18 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+Copyright 2011 Radovan Murin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 package cz.cvut.fel.mvod.common;
 
 import java.io.Serializable;
@@ -12,15 +23,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Murko
+ * This class represents one network address range entity that has self evaluating capabilities
+ * @author Radovan Murin
  */
 public class networkAddressRange implements Serializable {
-
+    /**
+     * Addresses matching this range will be denied access
+     */
     public static String DENY_ACCESS = "DENY_ACCESS";
+    /**
+     * Addresses matching this range will be allowed access only if using secure connections.
+     */
     public static String ALLOW_SSL = "ALLOW_SSL";
+    /**
+     * Addresses matching this range will be allowed access.
+     */
     public static String ALLOW_ANY = "ALLOW_ANY";
-
+    /**
+     * An ArrayList of private networks as devined byt RFC 1918 and RFC 4193
+     */
     private static final ArrayList<networkAddressRange> locals = new ArrayList<networkAddressRange>();;
 
     
@@ -42,8 +63,8 @@ public class networkAddressRange implements Serializable {
 
 /**
  * Checks if the parameter address is in a private network as defined by RFC 1918 and RFC 4193
- * @param remote
- * @return
+ * @param remote the address that is to be validated, integer of 4 numbers from 0-255
+ * @return true, if the address is on the lan,
  */
     public static boolean isOnLAN(int[] remote) {
         Iterator<networkAddressRange> it = locals.iterator();
@@ -58,7 +79,13 @@ public class networkAddressRange implements Serializable {
     String networkForHumans;
     int shortMask = 0;
     private String action;
-
+/**
+ * The class constructor. the IPs are to be given as arrays of four elements e.g. {192,168,1,1}
+ * @param network the network address of this range, can be a network address, device address, broadcast.
+ * @param mask The network mask
+ * @param action the default action
+ * @throws Exception throws exception when a bad address is detected
+ */
     public networkAddressRange(int[] network, int[] mask, String action) throws Exception {
         setNetwork(network, mask);
         this.action = action;
@@ -67,8 +94,8 @@ public class networkAddressRange implements Serializable {
     }
 /**
  * Checks if the parameter address is on the network that this Object represents
- * @param address
- * @return
+ * @param address remote address to be checked
+ * @return true if the address belongs to the network represented by this instance
  */
     private boolean isOnNetwork(int[] address) {
         BitSet remote = getBits(address);
@@ -140,7 +167,7 @@ public class networkAddressRange implements Serializable {
         }
     }
 /**
- * returns the bit set from the inputted bytes
+ * Returns the bit set from the inputted bytes
  * @param bytes
  * @return
  */
@@ -165,27 +192,31 @@ public class networkAddressRange implements Serializable {
         return bits;
     }
 /**
- * returns a normal xxx.xxx.xxx.xxx representation of the network IP
- * @return
+ * Returns a normal xxx.xxx.xxx.xxx representation of the network IP
+ * @return a Human readable network address
  */
     public String getNetworkForHumans() {
         return networkForHumans;
     }
 /**
- * returns the short mask, basically the number of 'ones' in front. e.g. 111110000 -> 5
- * @return
+ * Returns the short mask, basically the number of 'ones' in front. e.g. 111110000 -> 5
+ * @return the number of consecutive one's in the subnet mask, starting from the beggining.
  */
     public int getShortMask() {
         return shortMask;
     }
 /**
- * Returns the action
- * @return
+ * Returns the action that should be done with the packet if it mathes this instance's range
+ * @return the action as defined in the thesis text
  */
     public String getAction() {
         return action;
     }
-
+/**
+ * Validates the given IP if it is a valid IPv4 address
+ * @param address the address to be validated
+ * @return true if valid
+ */
     private static boolean isValidIPv4(int[] address) {
          if (address.length != 4) return false;
 

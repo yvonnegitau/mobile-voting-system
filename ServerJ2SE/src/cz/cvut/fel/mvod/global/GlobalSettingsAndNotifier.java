@@ -1,4 +1,20 @@
 /*
+Copyright 2011 Radovan Murin
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -19,8 +35,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Murko
+ * A global settings repository. All relevant settings that affect the applcation are stored here.
+ * Whenever the settings are altered the listeners of this class are notified.
+ * @author Radovan Murin
  */
 public final class GlobalSettingsAndNotifier implements Serializable {
 
@@ -38,7 +55,7 @@ public final class GlobalSettingsAndNotifier implements Serializable {
         listeners = new ArrayList<Notifiable>();
         try {
             tryLoad();
-            modifySettings("prologueState", PrologueServer.STATE_INACTIVE+"");
+            modifySettings("prologueState", PrologueServer.STATE_INACTIVE + "");
         } catch (Exception ex) {
             ex.printStackTrace();
             locale = new Locale("cs", "CZ");
@@ -84,13 +101,19 @@ public final class GlobalSettingsAndNotifier implements Serializable {
 
 
     }
-
+/**
+ * Changes the locale to the one specified
+ * @param loc the locale the system should change to, if the locale is not supported the default is used.(English)
+ */
     public void ChangeLocale(Locale loc) {
         System.out.println("Changing locale to " + loc.getLanguage());
         messages = ResourceBundle.getBundle("MessagesBundle", loc);
         locale = loc;
     }
-
+/**
+ * Returns the locale at the present time
+ * @return the locale
+ */
     public Locale getLocale() {
         return locale;
 
@@ -98,7 +121,7 @@ public final class GlobalSettingsAndNotifier implements Serializable {
 
     /**
      * Adds a settings change listener that will be alerted everytime a change in settings has occured
-     * @param n
+     * @param n an Notifiable instance
      */
     public void addListener(Notifiable n) {
         listeners.add(n);
@@ -147,14 +170,19 @@ public final class GlobalSettingsAndNotifier implements Serializable {
      * @param flagNotify if true the change will provoke a notification to all listeners
      */
     public void modifySettings(String name, String value, boolean flagNotify) {
-        System.out.println("SETTING "+name +" modified to "+value);
+        System.out.println("SETTING " + name + " modified to " + value);
         if (!flagNotify) {
             settings.put(name.toUpperCase(), value);
         } else {
             modifySettings(name.toUpperCase(), value);
         }
     }
-
+/**
+ * Attempts to load the settings.conf file that contain the settings storedfrom a previous session
+ * @throws IOException if the file is corrupted
+ * @throws FileNotFoundException if the file is not found
+ * @throws ClassNotFoundException if the file has bad data
+ */
     public void tryLoad() throws IOException, FileNotFoundException, ClassNotFoundException {
 
         savedSettings s = ObjectReadWriter.loadSettings();
@@ -166,7 +194,10 @@ public final class GlobalSettingsAndNotifier implements Serializable {
 
 
     }
-
+/**
+ * Returns a serialisable representation of the settings
+ * @return the instance that can be saved to a file
+ */
     public savedSettings getSavable() {
         return new savedSettings(locale, settings, permited);
     }

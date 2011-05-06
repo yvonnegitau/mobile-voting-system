@@ -1,10 +1,19 @@
 package cz.cvut.fel.mvod.prologueServer;
-
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-//import com.sun.net.httpserver.HttpServer;
+Copyright 2011 Radovan Murin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 import com.sun.net.httpserver.*;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
@@ -21,19 +30,35 @@ import javax.net.ssl.*;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Murko
+ *  The class that represents a server that prodes voter registration and connection information
+ * @author Radovan Murin
  */
 public class PrologueServer implements Notifiable {
-
+/**
+ * The server is providing information and accepting new regiestrations
+ */
     public static final int STATE_REGISTERING = 1;
+    /**
+     * The server is only providing information to connect.
+     */
     public static final int STATE_PROVIDING = 2;
+    /**
+     * Server offline
+     */
     public static final int STATE_INACTIVE = 3;
     static char[] passphrase;
     HttpsServer s;
     SSLContext sslContext;
     HttpsServer server;
-
+/**
+ * The constructor of the server, any exception except IOException are likely caused by a bad certificate.
+ * @throws IOException the server is likely to have the port blocked.
+ * @throws NoSuchAlgorithmException
+ * @throws KeyStoreException
+ * @throws CertificateException
+ * @throws UnrecoverableKeyException
+ * @throws KeyManagementException
+ */
     public PrologueServer() throws IOException, NoSuchAlgorithmException, KeyStoreException, CertificateException, UnrecoverableKeyException, KeyManagementException {
 
         getMyPublicIP();
@@ -103,14 +128,18 @@ public class PrologueServer implements Notifiable {
 
 
     }
-
+/**
+ * Prevents new user registration.
+ */
     private void stopRegistration() {
 
         server.removeContext("/");
         server.createContext("/", new ProvidingHandler());
 
     }
-
+/**
+ * Stops the server.
+ */
     private void stopServer() {
         GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_INACTIVE + "", false);
         server.stop(1);
@@ -119,7 +148,10 @@ public class PrologueServer implements Notifiable {
 
 
     }
-
+/**
+ * Changes the server state
+ * @param state the state to change the server state into
+ */
     private void changeState(int state) {
         //if(state == )
         switch (state) {
@@ -137,7 +169,10 @@ public class PrologueServer implements Notifiable {
         GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", state + "", false);
 
     }
-
+/**
+ * returns the state the serer is currently in
+ * @return
+ */
     public int getState() {
         return Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("prologueState"));
     }
@@ -148,7 +183,9 @@ public class PrologueServer implements Notifiable {
     }
 
     /**
+     *
      * Snippet from http://www.daniweb.com/software-development/java/threads/62812
+     * Detects the public IP and places it in the settings.
      * @return
      */
     public void getMyPublicIP() {
@@ -165,7 +202,10 @@ public class PrologueServer implements Notifiable {
 
         }
     }
-
+/**
+ * Sets the password to the certificate file.
+ * @param pass
+ */
     public  static void setCertPass(String pass){
         passphrase = pass.toCharArray();
     }

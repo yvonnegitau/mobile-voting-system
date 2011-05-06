@@ -1,9 +1,19 @@
 package cz.cvut.fel.mvod.prologueServer;
-
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+Copyright 2011 Radovan Murin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -17,8 +27,9 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.util.HashMap;
 
 /**
- *
- * @author Murko
+ * An HTTP handler that handles incoming traffic to the prologue server. It handles new user creating and information web page output.
+ * 
+ * @author Radovan Murin
  */
 public class registeringHandler implements HttpHandler {
 
@@ -86,21 +97,39 @@ public class registeringHandler implements HttpHandler {
         }
 
     }
-
+/**
+ * Verifies that the inputted passwords match
+ * @param p1 password1
+ * @param p2 password2
+ * @return true if the passwords match
+ */
     private boolean passCheck(String p1, String p2) {
         return p1.equals(p2);
     }
-
+/**
+ * Returns the fallback introduction web page
+ * @param sa
+ * @return
+ * @throws XmlPullParserException
+ * @throws IOException
+ */
     protected String generateMainWebPage(String[] sa) throws XmlPullParserException, IOException {
         wpb = new XMLFactory();
         return wpb.makeIntroPage(GlobalSettingsAndNotifier.singleton.getSetting("PUBLIC_IP"), Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT")));
     }
-
+/**
+ * Returns the registration web page
+ * @return the string representation of the web page.
+ */
     protected String generateRegWebPage() {
         FileOperator fr = new FileOperator();
         return fr.getWholeTextFile("regpage.html");
     }
-
+/**
+ * Parses the body of the post method.
+ * @param body the body that needs parsing
+ * @return the message that is to applear to the end user, informing the succes/failure of the request.
+ */
     protected String parsePost(String body) {
         String[] tokens = body.split("&");
 

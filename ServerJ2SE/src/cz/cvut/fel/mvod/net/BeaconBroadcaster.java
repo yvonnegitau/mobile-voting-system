@@ -1,7 +1,18 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+Copyright 2011 Radovan Murin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 package cz.cvut.fel.mvod.net;
 
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
@@ -16,8 +27,9 @@ import java.util.List;
 import javax.swing.Timer;
 
 /**
- *
- * @author Murko
+ * A UDP beacon broadcaster. The broadcaster advertises the location and the presence of an active server on the
+ * local network.
+ * @author Radovan Murin
  */
 public class BeaconBroadcaster extends Thread implements Notifiable {
 
@@ -31,7 +43,12 @@ public class BeaconBroadcaster extends Thread implements Notifiable {
     private int ID;
     private InfoXMLGenerator payload;
    // private String state = GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon");
-
+/**
+ * Constructior of the broadcaster
+ * @param FriendlyName the friendly name of the server as is should appear on the devices
+ * @param listenPort the HTTP listening port
+ * @throws UnknownHostException
+ */
     public BeaconBroadcaster(String FriendlyName, int listenPort) throws UnknownHostException {
         payload = new InfoXMLGenerator(FriendlyName, listenPort);
         GlobalSettingsAndNotifier.singleton.addListener(this);

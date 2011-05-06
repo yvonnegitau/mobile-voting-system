@@ -1,7 +1,18 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+Copyright 2011 Radovan Murin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 package cz.cvut.fel.mvod.gui.settings;
 
 import cz.cvut.fel.mvod.common.networkAddressRange;
@@ -18,8 +29,8 @@ import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicTabbedPaneUI.MouseHandler;
 
 /**
- *
- * @author Murko
+ * A dialog that enables the adding of IPs to the rules.
+ * @author Radovan Murin
  */
 public class IPAdderDialogue extends JDialog {
 
@@ -32,7 +43,9 @@ public class IPAdderDialogue extends JDialog {
     JButton okBTN;
     JButton cancelBTN;
     IPAdderDialogue instance;
-
+/**
+ * The constructor of the dialogue.
+ */
     public IPAdderDialogue() {
         super();
         IP = new JTextField(16);
@@ -105,7 +118,10 @@ public class IPAdderDialogue extends JDialog {
 
 
     }
-
+/**
+ * Displays an error.
+ * @param toString the given error.
+ */
     private void showError(String toString) {
         JOptionPane.showMessageDialog(instance,
                 toString,

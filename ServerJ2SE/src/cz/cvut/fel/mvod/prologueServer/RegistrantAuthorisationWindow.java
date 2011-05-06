@@ -1,9 +1,19 @@
 package cz.cvut.fel.mvod.prologueServer;
-
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+Copyright 2011 Radovan Murin
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
 import cz.cvut.fel.mvod.common.Voter;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import java.awt.BorderLayout;
@@ -21,8 +31,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
- *
- * @author Murko
+ * A class representing a window that provides user verification and final approval
+ * @author Radovan Murin
  */
 public class RegistrantAuthorisationWindow extends JFrame {
 
@@ -32,7 +42,9 @@ public class RegistrantAuthorisationWindow extends JFrame {
     private RowFilter<Object, Object> RowFilter;
     JTextField finder = new JTextField();
     TableRowSorter<TableModel> sorter;
-
+/**
+ * The class constructior
+ */
     public RegistrantAuthorisationWindow() {
         super(GlobalSettingsAndNotifier.singleton.messages.getString("voterVerifTitle"));
         constructVerificationWindow();
@@ -47,8 +59,10 @@ public class RegistrantAuthorisationWindow extends JFrame {
 
         setVisible(true);
     }
-
-    public void constructVerificationWindow() {
+/**
+ * Construct method for the window
+ */
+    private void constructVerificationWindow() {
         setLayout(new BorderLayout());
         status = new JLabel(GlobalSettingsAndNotifier.singleton.messages.getString("identityCheckLabel"));
         add(status, BorderLayout.NORTH);
@@ -148,6 +162,9 @@ public class RegistrantAuthorisationWindow extends JFrame {
         public void mouseExited(MouseEvent e) {
         }
     }
+    /**
+     * The row filter for filtering registrants
+     */
     RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
 
         @Override
