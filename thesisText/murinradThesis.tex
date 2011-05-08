@@ -290,31 +290,31 @@ The aim of this work is to design and implement an electronic voting application
 \chapter{Introduction}
 
 \paragraph*{}
-Voting is a delicate matter. Whoever the voter is, he or she usually wants to vote as transparently and freely as possible. In most cases this is achieved by strict rules which often make it necessary for the voter to be physically present. But what about the one member of the board who is always traveling? What about a member of a council that is stuck in a traffic jam on the way to the council hall? \\
+Voting is a delicate matter. Whoever the voter is, he or she usually wants to vote as transparently and freely as possible. In most cases, this is achieved by strict rules which often make it necessary for the voter to be physically present at the place where the voting takes place. But what about the one member of the board who is always traveling? What about a member of a council that is stuck in a traffic jam on the way to the council hall? \\
 In today's world we are witnesses of a process that is merging two devices into one. The PDA - Personal Digital Assistant and the cell phone. This means that more and more people carry in fact powerful computers in their pockets that enable them to perform a lot of tasks without the need of being at their desks. It also enables a person to vote safely and easily while he is unable to attend a meeting in person. 
 
 %*****************************************************************************
 \chapter{Description of the problem and goals}
 
 \section{Description}
-The main idea is to have a system that enables people to vote electronically without the need of having to move to a voting machine. This should quicken the whole process of voting and eliminate the need of error-prone human vote counters and provide a new degree of user comfort and security. The problems of creating such a system can be divided into six areas:
+The main idea is to have a system that enables people to vote electronically without the need of having to move to a voting machine. This should quicken the whole process of voting and eliminate the need for error-prone human vote counters and provide a new degree of user comfort, security and greater mobility. The problems of creating such a system can be divided into six areas:
 \begin{enumerate}
 \item Authentication and registration -  determining whether or not the person behind the user name and password.
-\item Data Transfer and device security - ensuring that the devices communicate in a safe and efficient manner.
+\item Data transfer and device security - ensuring that the devices communicate in a safe and efficient manner.
 \item Voting - 	emulating the voting process so that it reflects real life voting, designing safe storage of the results.
-\item Result Presentation - presenting the voting results in an easy and accessible manner.
+\item Result presentation - presenting the voting results in an easy and accessible manner.
 \item Device compatibility - making the resulting application to run on a large number of devices.
 \item Ease of use - the software is aimed at the average user, the manuals and design must reflect that.
 \end{enumerate}
 
-This work is based on Jakub Valenta's bachelor's thesis\cite{bakalarkaJV}. In his thesis, he created a fully functioning voting server,the part running on a personal computer and counts the votes, and a J2ME client, the part with which the voter actually votes. Now, in the conclusion of his bachelor's thesis, Jakub Valenta \cite{bakalarkaJV} states, that the ever changing and manufacturer specific implementation of Java ME, configuration CLDC and MIDP specification is the biggest obstacle in deploying his software on a larger scale.  The aim of this work is to overcome this shortcoming and create a new application that will communicate with a server based on his work and improve the server. 
+This work is based on Jakub Valenta's bachelor's thesis\cite{bakalarkaJV}. In his thesis, he created a fully functioning voting server,the part running on a personal computer and counts the votes, and a J2ME client, the part with which the voter actually votes. Now, in the conclusion of his bachelor's thesis, Jakub Valenta \cite{bakalarkaJV} states, that the ever changing and manufacturer specific implementation of Java ME, configuration CLDC\cite{cldc} and MIDP\cite{midp} specification is the biggest obstacle in deploying his software on a larger scale.  The aim of this work is to overcome this shortcoming and create a new application that will communicate with a server based on his work and improve the server. 
 
 \subsection{Authentication and registration}
 The number of voters makes it tricky to register. The goal here is to make the registration process as quick and as unambiguous as possible.
 \subsection{Data transfer and device security}
 When voting on a delicate matter, privacy and voter intent cannot be tampered with. The voter has to be sure that his vote has been received without change and in the case if a secret ballot, unseen by a third party. \\
 %Next, the nature of how the Android platform enables parts of an application to launch within another application. The resulting "app" will have to deal with this.\\
-Another thing is physical security. The cell phone will never be safe from this perspective. People often leave them at hotels, public restrooms, they are often the target of small theft. Because of this fact, the phone application will have to be protected from unauthorized use. A more detailed analysis of this issues is in the chapter Analysis, section Security\ref{sec:security}.   \\
+Another thing is physical security. The cell phone will never be safe from this perspective. People often leave them at hotels, public restrooms, they are often the target of small theft. Because of this fact, the phone application will have to be protected from unauthorized use. A more detailed analysis of this issues is in the chapter Analysis, section Security \ref{sec:security}.   \\
 \subsection{Voting}
 The voting process is described in Jakub Valenta's work \cite{bakalarkaJV} . The process is based on real life voting where people first see the question and possible answers. Then they choose their answer of choice and send their vote. The system acts just like a human vote counter and commissioner. It registers the participants, authenticates them, counts up the votes and publishes them on the web or wherever it is suitable.
 \subsection{Result Presentation}
@@ -360,7 +360,7 @@ The goal of my thesis is to enhance the voting system from Jakub Valenta's\cite{
 The Android application is to be written from scratch in Java for Android (Dalvik VM\cite{DalvikVM}). It will enable the user to vote securely, provide the user with basic information about the candidates or choices - e.g. age, occupation, few words about ballot choices. The Android application will also be able to view the results of a closed question. In order to maximize the number of people able to use this software it will also be localized into several languages.
 
 \subsection{Server side}
-The main goal here, is to increase the amount of information the server provides about the question and itself. without compromising the compatibility with the J2ME application. Next, is to implement a secure way of communicating with the clients so that the security will no longer be reliant on Wi-Fi encryption. Another goal is to be able to differentiate between clients connecting from the local network and users connecting from the Internet and enhance the authentication.
+The main goal here, is to increase the amount of information the server provides about the question and itself without compromising the compatibility with the J2ME application. Next, is to implement a secure way of communicating with the clients so that the security will no longer be reliant on Wi-Fi encryption. Another goal is to be able to differentiate between clients connecting from the local network and users connecting from the Internet and enhance the authentication.
 
 
 
@@ -386,7 +386,7 @@ In summary the aim of this work is:
 %*****************************************************************************
 \chapter{Analysis}
 \section{Vision}
-This electronic voting system will be based on the existing work of Jakub Valenta/cite{bakalarkaJV} and will enable people to vote electronically without the need of being at a specific place or having multiple vote counters employed. This will eliminate the problems of counting errors and provide a new degree of security. The system will be primarily designed for group decision making where the majority decides but it will be also usable for candidate voting. The whole voting process will take place from a mobile device. The system will be highly portable and usable in an international environment.
+This electronic voting system will be based on the existing work of Jakub Valenta \cite{bakalarkaJV} and will enable people to vote electronically without the need of being at a specific place or having multiple vote counters employed. This will eliminate the problems of counting errors and provide, new degree of security and mobility. The system will be primarily designed for group decision making where the majority decides but it will be also usable for candidate voting. The whole voting process will take place from a mobile device. The system will be highly portable and usable in an international environment.
 \section{State of the software at the beginning}
 \subsection{Overview}
 \paragraph{}
@@ -398,16 +398,16 @@ The communication was handled by HTTP. Jakub Valenta\cite{bakalarkaJV} states th
 Suppose there is a ballot question such as this: "Do you agree with proposal no. 22?" The purpose of mobile voting is to be able to vote from wherever the voter is right in the moment and it is possible that he will simply not know the details behind such proposals because he is not physically present at the meeting. This is a problem when using the current system as there is no simple way of providing the details about the question at hand.\\
 Another negative is that SSL is not implemented in communication with the server. This means that anybody who has access to the Wi-Fi through which the voters vote can see all data en route between the devices. And although the connection between a cell phone and the BTS\cite{whatISBTS}  is encrypted, this encryption has been proven to be weak\cite{GSMCypherWeakness} and breakable in real time. This fact  prevents the use of a cell phone network as a data carrier without encryption on a higher network layer. What is worse than seeing the data is changing them. When using an open network (no access control) virtually anyone with the right software can alter the data.\\
 As stated previously, in spite the fact that the majority of the currently sold cell phones support J2ME, the application is unlikely to run on most of them because of compatibility issues.\cite{bakalarkaJV}
-Another negative is the lack of internationalization. The whole application has hard-coded Czech messages. 
+Another negative is the lack of internationalization. The whole application had hard-coded Czech messages. 
 
 \subsection{Positives}
 On the other hand the work has it's positive features. The fact that the voting was made so simple made running it on a limited device smooth and without problems. The installation, had some faults but they were quickly resolved. The user interface was very comfortable and straightforward. This enabled very easy initial setup even without a tutorial.\\
-The communication protocol is very efficient and therefore enables the use in areas without 3G signal. (it will even work swiftly with a basic GPRS connection. Documentation was excellent. All in all, the application does what it needs and does it well.
+The communication protocol is very efficient and therefore enables the use in areas without 3G signal. (it will even work swiftly with a basic GPRS connection. Documentation was excellent. All in all, the application did what it needed and did it well.
 %Toto Po vacate analyze balalaika vicar positive
 
 
 \section{Server}
-A server is the part of the system that counts the votes, listens to connections and authenticates people. As this role is a practically a single point of failure, it needs to be well designed, and also well implemented. When creating an application such as this, there is the issue of the number of concurrent connections and operations. This system is designed to be used in a small to medium sized environment with a maximum of 200 concurrent connections. A larger number would require expensive hardware equipment and/or load balancing. Load balancing will not be used or implemented. The server is also responsible for advertising its presence on the local area network, offer a means of voter registration and providing simple information about how to connect. The first part is solvable by using a UDP\cite{whatIsUPD} broadcast\cite{whatIsBroadcasting}. In short, this will send a datagram to all the computers within a network with the information needed to achieve a connection as well as a friendly name of the server. I chose UDP broadcasts because UDP is unreliable, meaning the sender does not wait for a response. Also this is the standard way of sending adverts through the network. The second part is solvable by multiple ways. First, and this is how Jakub Valenta's system works, the user creation is strictly local, and the administrator,the person in charge of creating the elections, creates the users manually. This requires the voters presence and  it is painfully slow (imagine 200 people before some event standing in line to enter their passwords). What would be better is, to create a web page with a simple form where users would input their names and login credentials. A script would then aggregate this data in a file, possibly an XML file for simplicity, and then another program would be used when verifying the voters identity. Although this would not mean the disappearance of the 200 people lines, it would fasten the process significantly, as only a personal number would have to be verified. The third problem, the information and registration web page, is solvable by implementing a simple web server into the present server software, by using a HTTP server(Apache for example)  in concurrency with the server software or using a small web server library. Using an external web server - such as Apache, IIS, nginx, would be very easy from an implementation point of view, however for the end user the installation and configuration of any of these servers would be a hardly overcomable obstacle. None of the already implemented HTTP servers offered a reasonable SSL option and therefore I decided to implement it myself. I have previously mentioned a personal number. This number or alphanumerical combination will be used to verify the identity of the registered user. It could be his ID Card number, Drivers license number anything person bound. Because it will be possible to vote from the Internet, a new system of verifying the connecting user origin will be needed. The system is necessary when the jurisdiction or some other agreement stipulates that the voter is to be present at a specific place. The Wi-Fi's limited range ensures this. Because the two possible mobile devices will be connected, the server will have to support multiple types of connections.
+A server is the part of the system that counts the votes, listens to connections and authenticates people. As this role is a practically a single point of failure, it needs to be well designed, and also well implemented. When creating an application such as this, there is the issue of the number of concurrent connections and operations. This system is designed to be used in a small to medium sized environment with a maximum of 200 concurrent connections. A larger number would require expensive hardware equipment and/or load balancing. Load balancing will not be used or implemented. The server is also responsible for advertising its presence on the local area network, offer a means of voter registration and providing simple information about how to connect. The first part is solvable by using a UDP\cite{whatIsUPD} broadcast\cite{whatIsBroadcasting}. In short, this will send a datagram to all the computers within a network with the information needed to achieve a connection as well as a friendly name of the server. I chose UDP broadcasts because UDP is unreliable, meaning the sender does not wait for a response. Also this is the standard way of sending adverts through the network. The second part is solvable by multiple ways. First, and this is how Jakub Valenta's system works, the user creation is strictly local, and the administrator,the person in charge of creating the elections, creates the users manually. This requires the voters presence and  it is painfully slow (imagine 200 people before some event standing in line to enter their passwords). What would be better is, to create a web page with a simple form where users would input their names and login credentials. A script would then aggregate this data in a file, possibly an XML file for simplicity, and then another program would be used when verifying the voters identity. Although this would not mean the disappearance of the 200 people lines, it would fasten the process significantly, as only a personal number would have to be verified. The third problem, the information and registration web page, is solvable by implementing a simple web server into the present server software, by using a HTTP server(Apache for example)  in concurrency with the server software or using a small web server library. Using an external web server - such as Apache, IIS, nginx, would be very easy from an implementation point of view, however for the end user the installation and configuration of any of these servers would be a hardly overcomable obstacle. When looking for an already java library with a simple HTTPs server, none offered a reasonable SSL option and therefore I decided to implement it myself. I have previously mentioned a personal number. This number or alphanumerical combination will be used to verify the identity of the registered user. It could be his ID Card number, Drivers license number anything person bound. Because it will be possible to vote from the Internet, a new system of verifying the connecting user origin will be needed. The system is necessary when the jurisdiction or some other agreement stipulates that the voter is to be present at a specific place. The Wi-Fi's limited range ensures this. Because the two possible mobile devices will be connected, the server will have to support multiple types of connections.
 
 \section{Client}
 The client is the part of the system that provides an interface for the voter to log in, vote and check the results. This part should be easy to use, lightweight and most importantly compatible with a lot of devices and safe. The safety of the mobile device is for a larger analysis and has a dedicated section that follows this one. The problem of user friendliness is really a matter of designing the application to behave consistently with the operating system. Explanation: an Android user is knows how Android applications usually work and expects this one to behave in this manner. It would be very confusing to use the same design principles for an iPhone, which has one useful hardware button, and an Android phone which has at least four. The next problem is being lightweight. The application is running on a very limited device. Limited in computing power, bandwidth, memory and electrical power. In the context of our application, computing power is not really an issue as no computationally intensive calculations are done on this end and computations are not very demanding. The bandwidth is also not a big concern as the data that is send is plain text and as such is not very large. The main problem that we need to combat here is power drainage and memory consumption. Every open connection on a cell phone lowers it's power levels considerably. The phone will therefore have to use the connection as little as possible and close the connection after every request. For this the HTTP protocol comes very helpful. As conference events and voting can involve people that speak multiple languages, the mobile application should be designed to be easily translatable. This is done by using external strings when making any writings in the applications.\\
@@ -415,7 +415,9 @@ Platform specific analysis:
 \subsection{Feature phone}
 The feature phone is the most limited of all mobile devices capable of running third party software. It runs a very basic implementation of Java ME, has very little computing power and no multitasking capabilities. This added up means, that the client has to be very basic.
 \subsection{Android device}
- As an application was already written for the J2ME platform the next logical choice is Android. The benefit of Android\cite{whatisAnd} is that while Java ME implementations may vary, Android is mostly consistent and a piece of software written and tested on one device should work on another. Forward compatibility is not guaranteed but as the changes are mostly additive, it is highly probable \cite{goodevpi}. But the as the version is higher the framework has more and more functionalities that make some of the programming unnecessary. The question here is the choice of the base version on for which the application will be written. The distribution of versions are in the figure below.
+ As an application was already written for the J2ME platform the next logical choice is Android. The benefit of Android\cite{whatisAnd} is that while Java ME implementations may vary, Android is mostly consistent and a piece of software written and tested on one device should work on another. Forward compatibility is not guaranteed but as the changes are mostly additive, it is highly probable \cite{goodevpi}.
+% But the as the version is higher the framework has more and more functionalities that make some of the programming unnecessary.
+ The question here is the choice of the base version on for which the application will be written. The distribution of versions are in the figure below.
 
 
 
@@ -445,12 +447,12 @@ As it was stated earlier, mobile devices are susceptible to a number of threads.
 \item Rooted device
 \end{enumerate}
 \subsection{Physical theft}
-Physical theft poses a risk that the stored login information in the device. While the most obvious solution would be not to store login credentials on the device. This would be inconvenient for the end user. Therefore a better solution would be, to request a master code upon every application launch. Another possibility for the software would be making an IMSI number check and in an event of a different SIM, or no SIM being inserted into the device, the app would wipe all user data on launch. 
+Physical theft poses a risk that the stored login information in the device. The most obvious solution would be not to store login credentials on the device. This would be inconvenient for the end user. Therefore a better solution would be, to request a master code upon every application launch. Another possibility for the software would be making an IMSI number check and in an event of a different SIM, or no SIM being inserted into the device, the app would wipe all user data on launch. 
 \subsection{Man in the middle attack}
 A man in the middle attack is a common attack where the attacker has access to the transfer medium (in our case air). The attacker can then see the data being exchanged or, what is worse, alter it. In order to protect against such an attack the whole communication has to be encrypted, preferably by SSL. This, along with a Certificate signed by a trusted authority should ensure that the application will always know if the communication is being tampered with. Proper training manuals will have to warn the users about the dangers of unsecured connections.
 \subsection{Malicious software}
 The graphics interface of the application can be replicated and the user made to believe that he/she is entering his login credentials to the real application. This problem can be avoided by signing the application, and proper user manuals.\\
-Next, a malicious program can try to copy stored data of the voting app. This problem is addressed by using a private storage mechanism provided by Android. \cite{storageAnd}
+Next, a malicious program can try to copy stored data of the voting app. This problem is addressed by using a private storage mechanism provided by Android. \cite{storage}
 \subsection{Malicious servers}
 Because this software is open-source, anybody can alter its behavior and run it. This creates a potential security thread where users could connect to a false server that is advertising on the same local area network. Here the users would give their login credentials in false belief that they are giving them to a legitimate server. In reality they would be disclosing them to a third person who could then use them to login to the original server and vote on their behalf. The same problem goes for the server information web page and registration web page. The advertising issue can be solved by careful network settings which are discussed in the deployment section. The web page problem solution is identical to that of the Man in the middle attack problem solution.
 \subsection{"Rooted" device}
@@ -578,10 +580,10 @@ The design of the "Mobile Voting System" is the original design of Jan Valenta w
 \section{Communication}
 
 Presently, the communication is handled by the HTTP protocol. This protocol has, in my opinion, and advantage in being standardized and so it facilitates implementing the communicating part of the application. The protocol, however, is not safe. It sends data as open text and that is not acceptable for this kind of an application.\\
- Therefore, Android applications will send a special "Hello from Android" message that will consist of a request with the method OPTIONS specified and no body. The server then will either send XML encoded data with open ports and whether they are using SSL of not. If there is no secure method of connection available, the application gives a warning to the user. This behavior will depend on the security settings on the server side. \\
+ Therefore, Android applications will send a special "Hello" message that will consist of a request with the method OPTIONS specified and no body. The server then will send XML encoded data with open ports and whether they are using SSL or not. If there is no secure method of connection available, the application gives a warning to the user. This behavior will depend on the security settings on the server side. \\
   The feature phone will continue to use HTTP as altering it's programming in such a degree is beyond the scope of this thesis. If the security will demand it, the server will reject any non-encrypted communication attempted through a mobile network. The connection termination will be preceded by a "419 BAD ORIGIN" code. Feature phones will still be able to connect through a Wi-Fi connection. Provided that the Wi-Fi is protected. This will also be customizable via the server settings.\\
  
-This differentiation will be possible because of the new IP checking mechanism that will be added. When a client connects, the server will perform an IP check to determine whether the client is connecting from the a permitted network or not. The easiest way to perform this check is to see if the IP address is from the private subnets. As a packet with a private IP cannot survive on the Internet(it is discarded by the first properly configured router), it is safe to assume, that such a packet came from the local network. The reason why I perform this check is to ensure that the voter is physically present at the voting site when the legislature of some other rules require it. VPN technology is to be dealt with on the operating system level.\\
+This differentiation of the origination IP of the connection  will be possible because of the new IP checking mechanism that will be added. When a client connects, the server will perform an IP check to determine whether the client is connecting from the a permitted network or not. The easiest way to perform this check is to see if the IP address is from the private subnets. As a packet with a private IP cannot survive on the Internet(it is discarded by the first properly configured router), it is safe to assume, that such a packet came from the local network. The reason why this check is performed is to ensure that the voter is physically present at the voting site when the legislature of some other rules require it. VPN technology is to be dealt with on the operating system level.\\
 
 It is crucial that the client will not send the password when the communication is to be encrypted. Therefore, the first "hello" message has to be without a password. If a faulty client implementation sends the password unencrypted in this first hello message the server will invalidate the credentials of that user and add a log about it.\\
 
@@ -590,7 +592,7 @@ Data in HTTP answers will be sent in the XML format created by Jan Valenta. A ne
 \subsection{Summary of codes used in communication}
 Original\cite{bakalarkaJV}
 \begin{itemize}
-\item 200 Request success
+\item 200 Request success.
 \item 400 The request was not understood by the server. The server understands only GET and POST request.
 \item 401 Authentication credentials bad.
 \item 403 Authentication credentials required and not present.
@@ -599,7 +601,7 @@ Original\cite{bakalarkaJV}
 
 Extentions
 \begin{itemize}
-\item 419 Bad origin
+\item 419 Bad origin.
 \end{itemize}
 \section{Server side}
 \subsection{Minor Changes}
@@ -609,15 +611,8 @@ The server GUI will have some minor changes from it's original version. The ques
 \section{Android side}
 The android application will be designed with best practices for the platform in mind.
 
-\subsection{Graphical User Interface (GUI) - View}
-TO BE MOVED TO PRILOHY
-
-The android GUI is discussed in another document.
-
-
-
-
-
+\subsection{Graphical User Interface (GUI)}
+This section sums up the design of the GUI system of the Android device. For a more complete description and guidelines on how to add new features, please see the attached document.\\
 The application will have a minimalist user interface that will enable to use touch screens with ease.The main screen will consist of a list of servers that were added in advance. After choosing the desired server and a successful connection the application will view possible questions. Again in the of a list. The user will then choose a question he wants to view. Here, the application will behave in three different ways. First, it will normally display question details, and possible answers, second behaviour is to display the question results - as an ordered table when the question is closed and results published, third is to inform the user that he has already answered, and the results are not yet available.  \\
 Possible answers to a question will be displayed as  buttons. After the desired answer is selected, the user will be able to send his response by long pressing the question button. The send button is hidden in order to reduce the risk of accidental sending. \\
 When designing the GUI, the possibility of a third person being able to look at the devices display has to be taken into account. The passwords are never shown as text, therefore no risk exists in that somebody will see the password. However, there is a risk that someone will, on purpose or by accident see what answers are highlighted. One secure way of displaying the chosen answer is, of course, not to display them at all. This, however, poses more dangers than benefits. It introduces uncertainty for the voter about which answer they have chosen as touch screens are not very precise. A compromise is, that the choice will be highlighted for only a few second after the user has made his choice. With this in mind the user inteface will print out a small discrete message with the chosen answer for a shot amount of time after choosing the answer. \\
@@ -650,7 +645,7 @@ A Java platform is a specific set of standards that enable Java written code to 
 As my predecessor I have chosen to use the Java SE\cite{whatIsJavaSE} platform. Java SE is a general-purpose platform and is well suited for this type of project.
 
 \paragraph{Android platform}
-Android applications can be written in either Java or C/C++. Programming applications for this platform in C/C++ however, has a number of drawbacks. One of which is bad portability. I is unlikely that an application written in this way will be very portable. For this reason I decided to use the recommended Android platform, which uses the Java programing language. This also made implementing the whole system easier I was using only one language, albeit different platforms.
+Android applications can be written in either Java or C/C++. Programming applications for this platform in C/C++ however, has a number of drawbacks. One of which is bad portability. I is unlikely that an application written in this way will be very portable. For this reason I decided to use the recommended Android platform, which uses the Java programing language. This also made implementing the whole system easier as I was using only one language, albeit different platforms.
 
 \subsection{3$^{rd}$ party libraries}
 By a  3$^{rd}$ party library I mean a piece of compiled code that is used as a pre made solution for common problems that  is not included in the original collection of Java SE libraries or Android libraries.
@@ -679,7 +674,7 @@ When used properly, version control prevents changes that turn out wrong to have
 
 \subsection{User Interface}
 \paragraph{Server}
-The GUI of the server application is implemented using Swing and Groovy. As stated beforehand Groovy is was not used in this project but rather inherited. Therefore, it will not be discussed. Swing is a great toolkit for creating a simple GUI such as used in this project. To design the user interface I used the standard design tool that comes in Netbeans.
+The GUI of the server application is implemented using Swing and Groovy. As stated beforehand Groovy was not used in this project but rather inherited. Therefore, it will not be discussed. Swing is a great toolkit for creating a simple GUI such as used in this project. To design the user interface I used the standard design tool that comes in Netbeans.
 \paragraph{Android}
 The Android framework does not enable the developer to use any other GUI framework other than it's own toolkit. The icons for the project are from an open source icon library\cite{iconsource}, edited in MS paint when needed.
 
@@ -695,13 +690,13 @@ For persistence of the Android application data a SQLite\cite{sqlite} database w
 There are a number of powerful IDEs to use with Java. For this project I have selected to use Netbeans for the Java SE part and Eclipse for Android. Netbeans was chosen because I had good knowledge of this tool and was confident with it's use. Eclipse was the recommended IDE by Google to develop Android applications. Both these tools were are very intuitive and pleasant to work with. 
 
 \section{Server}
-The server is a desktop applciation implemented in Java SE.
+The server is a desktop application implemented in Java SE.
 \subsection{Prologue - information/registration server}
 The Prologue server is the implementation of a voting information and registration server defined in the design chapter. It is a part of the application. The server is implemented using a standard "HttpsServer" java class. This class provides basic request handling. Every request is passed to a handler class. There are two handling classes that this server uses the "registeringHandle" and the "providingHandle". The former has voting registration enabled, while the latter only provides the information necessary to connect with a mobile device.
 \paragraph{Connections and encryption}
 Clients can only connect to Prologue using a TLS\cite{tls} connection. The connection uses certificates that are used in the handshakes. Java enables the use of a number of certificate formats. First, a Java keystore format was used but then was dropped in favor of PKCS12\cite{pkcs12}. The PKCS12 format has the advantage of being more user friendly and more widespread. The user friendliness comes from the fact that the PKCS12 format is the only standard format that enables private key storage.
 \paragraph{Web pages}
-The server on its start fetches all files named like "index_[language-code].html". The language-code is the same as the codes in the Accept-languages\cite{httpHead} field in a HTTP request header. The reasons for this will be discussed later on. These pages are parsed and the relevant information such as server IP addresses and ports are added to them. A special "<--PUBLIC_IP-->" and "<--PORT-->" tag denotes the place where where information should be placed.  This web page then serves a the home page providing the registered users all the necessary information needed for the actual connection. When the system does not find any index file that could be used as a main page, then a hard coded one is used as a fallback. The registration page is a simple form page that sends the relevant data to the server via the POST HTTP method. This page's name has the form of "register_[language-code].html".
+The server on its start fetches all files that names match "index\_[language-code].html". The language-code is the same as the codes in the Accept-languages\cite{httpHead} field in a HTTP request header. The reasons for this will be discussed later on. These pages are parsed and the relevant information such as server IP addresses and ports are added to them. A special "<-\-PUBLIC\_IP-\->" and "<-\-PORT-\->" tag denotes the place where where information should be placed.  This web page then serves a the home page providing the registered users all the necessary information needed for the actual connection. When the system does not find any index file that could be used as a main page, then a hard coded one is used as a fallback. The registration page is a simple form page that sends the relevant data to the server via the POST HTTP method. This page's name has the form of "register\_[language-code].html".
 \paragraph{Registration and approval}
 The registration and approval are very close processes and despite the approval is not part of the Prologue server it will be discussed here. As stated previously the registration page is a simple form page that posts registration data to the server. The server checks for mismatching passwords, duplicate user names and then saves the registered person to a file called "registrations.xml". This is done to ensure that if the server crashes for whatever reason the registrations will be kept safe on the disk. Once the registrations are stopped the approval table is brought up and approved registrants are saved do a file called "approved.voter". This has the same format as the export file of the voters from the original system and therefore is easily imported into the application.
 
@@ -719,9 +714,9 @@ nameFormInput=Name:
 surnameFormInput=Surname:
 
 czech .properties file:
-regFormTitle=Registrační formulář
-nameFormInput=Jméno:
-surnameFormInput=Příjmení:
+regFormTitle=Registracni formular
+nameFormInput=Jmeno:
+surnameFormInput=Prijmeni:
 \end{lstlisting}
 
 \subsection{Beaconing}
@@ -746,27 +741,27 @@ This form was designed for future use with load balancing.
 The IP filtration is a security feature that enables the voting administrator to limit the physical locations the voters are able to vote from. The filtration itself is implemented by using a list of networkAddressRange classes. These classes contain the information for one network. Meaning the binary representation of the IP address, and the subnet mask also in binary. A string representation of these two values is also included. The class publishes a method called "isAllowed" that is used to determine if the address is allowed to connect.
 
 \begin{lstlisting}
- public int isAllowed(int[] address, boolean isSecured) \{
-        if (isOnNetwork(address)) \{
+ public int isAllowed(int[] address, boolean isSecured) {
+        if (isOnNetwork(address)) {
 
             if (action.equals(ALLOW_ANY)) {
                 return 1;
-            \}
-            if (action.equals(ALLOW_SSL) && isSecured)\{
+            }
+            if (action.equals(ALLOW_SSL) && isSecured){
                 return 1;
-            \}
-            if (action.equals(ALLOW_SSL) && !isSecured) \{
+            }
+            if (action.equals(ALLOW_SSL) && !isSecured){
                 return 1;
-            \}
+           }
             if (action.equals(DENY_ACCESS)) {
                 return -1;
-            \}
+           }
             return 1;
 
-       \} else \{
+      } else {
             return 3;
-        \}
-    \}
+        }
+    }
 \end{lstlisting}
 The class networkAddressRange also has a static method called isOnLan(int[] address). This checks whether the given address is on one of the three network ranges defined in RFC1918 as private.
 
@@ -778,7 +773,7 @@ The GUI is discussed in the of the attachments as it was analyzed separately.
 \paragraph{General}The communications is implemented in an almost identical way as the server communications. The Connections class handles all the communications that are performed by the device. The class is written to be executed in a different thread so as not to slow down the GUI. The connection first attempts an unencrypted TCP connection to the server. Then as mentioned above asks for a list of ports with the OPTIONS request and if there are secure ports available it then connects to them. If the handshakes goes well it requests the list of questions and sends them to the XML parser and then it sends it to the view to display them. The responses are handled by a class called "Interceptor". This class is used in a very similar way to the Handler class on the server part.\\
 In order for and application to access the network on the Android device, it has to ask for this permission in the AndroidManifest.xml. The permissions are added by inserting <uses-permission android:name="android.permission.INTERNET" /> into the XML.
 \paragraph{SSL/TLS}
-The implementation of a secure SSL/TLS connection on this platform is an interesting problem. Of course, the platform provides the user with the necessary libraries to to this but they all use and  list of trusted certificate authority controlled by the device vendor. \footnote{A certificate authority is an organization that is trusted enough that we know that if it certifies that "A" is "A" then a person trying to connect to "A" can trust it.} In essence this is the correct behavior. But, for our deployment, a signed certificate is often unneeded or impossible to obtain - e.g. having a trusted certificate for a local IP is pointless. This means that a custom trust manager\footnote{A trust manages is a class that's purpose is to determine the validity of a given certificate}  is to be used that can ignore the exceptions and let the user decide whether or not she or he wants to trust the certificate chain.
+The implementation of a secure SSL/TLS connection on this platform is an interesting problem. Of course, the platform provides the user with the necessary libraries to to this but they all use and  list of trusted certificate authority controlled by the device vendor. \footnote{A certificate authority is an organization that is trusted enough that we know that if it certifies that "A" is "A" then a person trying to connect to "A" can trust it.} In essence this is the correct behavior. But, for our deployment, a signed certificate is often unneeded or impossible to obtain - e.g. having a trusted certificate for a local IP is pointless. This means that a custom trust manager\footnote{A trust manages is a class that's purpose is to determine the validity of a given certificate.}  is to be used that can ignore the exceptions and let the user decide whether or not she or he wants to trust the certificate chain.
 \subsection{Device security and Cryptography}
 Sensitive data that is stored on the device is encrypted. All encrypting/decrypting is handled by a singleton of a Cryptography class. The encryption is performed using DES\cite{des}. While proved to be crackable in a matter of days, this protection is sufficient as it is unlikely that a stolen device would go unnoticed for this period of time.  The key used in the process is the master password that the user creates upon the application first run. This password is never stored in any persistent storage. Only it's hash is stored for login purposes.	 Currently, only the login password to a voting point(server)  is considered sensitive data and only this is encrypted. The implementation, however, enables encrypting virtually anything in the future.
 \subsection{Persistance}
@@ -792,7 +787,7 @@ Virtually all usable data is communicated in XML form. To convert XML data into 
 
 %*****************************************************************************
 \chapter{Testing}
-Testing plays an important role in this project. Testing early and often provided this project with a lot of precious feedback on how adding features and code altered the behavior of the system and enabled problematic parts to be quickly identified and repaired. The previous project \cite{baklarkaJV} already had tests that were run on it. As the core classes of its business logic remained unchanged, the tests were left as they were and their results are still valid.
+Testing plays an important role in this project. Testing early and often provided this project with a lot of precious feedback on how adding features and code altered the behavior of the system and enabled problematic parts to be quickly identified and repaired. The previous project \cite{bakalarkaJV} already had tests that were run on it. As the core classes of its business logic remained unchanged, the tests were left as they were and their results are still valid.
 \section{Unit testing}
 Unit testing is testing aimed at individual classes and their methods. It is a white-box testing method meaning that it is created with respect to the inner workings of the object tested and is aimed at finding common error such as when a null string is inputed and errors in implemented algorithms. In this project the Unit testing method of testing was used mainly on conversion classes, where data had to be converted from one form to another. These classes include the XMLParser, XMLMaker, the Cryptography class in the android project and the networkAddressRange class in the desktop project. The unit testing is performed by the JUnitTest framework\cite{junit}. I found this framework very comfortable to work with as it comes embedded with the two IDEs I worked in and I had some experiences with it from past school projects.
 \section{Integration testing}
@@ -898,6 +893,9 @@ As for the continuation of this project, it needs more compatible clients. The a
 \item DTD - Document Type Definition
  \item VPN - Virtual Private Network
 \item IP - Internet Protocol
+\item HTTP - Hyper Text Transfer Protocol
+\item HTTPs - Hyper Text Transfer Secure Protocol
+\item VM - Virtual Machine
 \end{description}
 
 
@@ -920,31 +918,6 @@ As for the continuation of this project, it needs more compatible clients. The a
 \end{figure}
 
 %*****************************************************************************
-\chapter{Installation and how to use}
-\textbf{\large Tato příloha velmi žádoucí zejména u softwarových implementačních prací.}
-
-%*****************************************************************************
 \chapter{Enclosed CD Table of Contents}
-\textbf{\large Tato příloha je povinná pro každou práci. Každá práce musí totiž obsahovat přiložené CD. Viz dále.}
-
-Může vypadat například takto. Váš seznam samozřejmě bude odpovídat typu vaší práce. (viz \cite{infodp}):
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=14cm]{figures/seznamcd}
-\caption{Seznam přiloženého CD --- příklad}
-\label{fig:seznamcd}
-\end{center}
-\end{figure}
-
-
-
-Na GNU/Linuxu si strukturu přiloženého CD můžete snadno vyrobit příkazem:\\ 
-\verb|$ tree . >tree.txt|\\
-Ve vzniklém souboru pak stačí pouze doplnit komentáře.
-
-Z \textbf{README.TXT} (případne index.html apod.)  musí být rovněž zřejmé, jak programy instalovat, spouštět a jaké požadavky mají tyto programy na hardware.
-
-Adresář \textbf{text}  musí obsahovat soubor s vlastním textem práce v PDF nebo PS formátu, který bude později použit pro prezentaci diplomové práce na WWW.
-
+CD NOT YET CREATED
 \end{document}

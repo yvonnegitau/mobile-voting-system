@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (MiKTeX 2.9) (preloaded format=pdflatex 2011.4.25)  3 MAY 2011 22:38
+This is pdfTeX, Version 3.1415926-1.40.11 (MiKTeX 2.9) (preloaded format=pdflatex 2011.5.4)  9 MAY 2011 01:43
 entering extended mode
 **murinradThesis.tex
 (C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.tex
@@ -624,6 +624,12 @@ Chapter 1.
 
 ]
 Chapter 2.
+
+Package natbib Warning: Citation `cldc' on page 3 undefined on input line 310.
+
+
+Package natbib Warning: Citation `midp' on page 3 undefined on input line 310.
+
 [3]
 Underfull \hbox (badness 10000) in paragraph at lines 315--318
 
@@ -647,39 +653,34 @@ Chapter 3.
 [7
 
 ] [8] [9]
-<figures/VersionDistribution.PNG, id=624, 208.52907pt x 133.24782pt>
+<figures/VersionDistribution.PNG, id=625, 208.52907pt x 133.24782pt>
 File: figures/VersionDistribution.PNG Graphic file (type png)
 
 <use figures/VersionDistribution.PNG>
-Underfull \hbox (badness 10000) in paragraph at lines 426--426
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
 []\T1/cmr/m/n/10.95 Figure 3.1: []Version Dis-tri-bu-tion of An-droid [[]] from
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 426--426
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
 \T1/cmr/m/n/10.95 http://developer.android.com/resources/dashboard/platform-ver
 sions.html re-trieved on
  []
 
 [10 <C:/Users/Murko/Documents/Bakalarka/txt/figures/VersionDistribution.PNG>]
-[11] [12] <figures/AndroidUCs.PNG, id=669, 503.63156pt x 373.395pt>
+[11] [12] <figures/AndroidUCs.PNG, id=670, 503.63156pt x 373.395pt>
 File: figures/AndroidUCs.PNG Graphic file (type png)
 
 <use figures/AndroidUCs.PNG>
-Overfull \hbox (68.11519pt too wide) in paragraph at lines 518--519
+Overfull \hbox (68.11519pt too wide) in paragraph at lines 520--521
  [] 
  []
 
 [13] [14 <C:/Users/Murko/Documents/Bakalarka/txt/figures/AndroidUCs.PNG>]
 Chapter 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 580--583
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 584--585
+Underfull \hbox (badness 10000) in paragraph at lines 582--585
 
  []
 
@@ -688,289 +689,71 @@ Underfull \hbox (badness 10000) in paragraph at lines 586--587
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 588--589
+
+ []
+
 [15
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 597--598
+Underfull \hbox (badness 10000) in paragraph at lines 599--600
 
  []
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 627--629
+Underfull \hbox (badness 10000) in paragraph at lines 622--624
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 632--633
+Underfull \hbox (badness 10000) in paragraph at lines 627--628
 
  []
 
 
-Underfull \vbox (badness 1675) has occurred while \output is active []
+Underfull \vbox (badness 2573) has occurred while \output is active []
 
  [17]
 [18]
 Chapter 5.
 
 Package natbib Warning: Citation `whatIsJavaSE' on page 19 undefined on input l
-ine 650.
+ine 645.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 655.
+(Font)              <12> on input line 650.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 655.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 655.
+(hyperref)                removing `math shift' on input line 650.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 655.
+(hyperref)                removing `superscript' on input line 650.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 650.
 
 [19
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 658--659
+Underfull \hbox (badness 10000) in paragraph at lines 653--654
 
  []
 
-[20]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.704 ...tart fetches all files named like "index_
-                                                  [language-code].html". The...
-
-? 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.705 \paragraph
-                {Registration and approval}
-? 
-
-Overfull \hbox (76.24051pt too wide) in paragraph at lines 704--705
- []\T1/cmr/bx/n/10.95 Web pages[] \T1/cmr/m/n/10.95 The server on its start fet
-ches all files named like "index$[]\OML/cmm/m/it/10.95 language \OMS/cmsy/m/n/1
-0.95   \OML/cmm/m/it/10.95 code\OT1/cmr/m/n/10.95 ]\OML/cmm/m/it/10.95 :html\OT
-1/cmr/m/n/10.95 "\OML/cmm/m/it/10.95 :Thelanguage \OMS/cmsy/m/n/10.95  $
- []
-
-
-Overfull \hbox (727.47908pt too wide) in paragraph at lines 704--705
-$\OML/cmm/m/it/10.95 codeisthesameasthecodesintheAccept \OMS/cmsy/m/n/10.95   \
-OML/cmm/m/it/10.95 languages\OT1/cmr/m/n/10.95 [[]]\OML/cmm/m/it/10.95 fieldina
-HTTPrequestheader:Thereasonsforthiswillbediscussedlateron:Thesepagesareparsedan
-dtherelevantinformationsuchasserverIPaddressesandportsareaddedtothem:Aspecial\O
-T1/cmr/m/n/10.95 " \OML/cmm/m/it/10.95 <$
- []
-
-
-Overfull \hbox (2010.99863pt too wide) in paragraph at lines 704--705
-$\OMS/cmsy/m/n/10.95     \OML/cmm/m/it/10.95 PUBLIC[]P \OMS/cmsy/m/n/10.95     
-\OML/cmm/m/it/10.95 > \OT1/cmr/m/n/10.95 "\OML/cmm/m/it/10.95 and\OT1/cmr/m/n/1
-0.95 " \OML/cmm/m/it/10.95 < \OMS/cmsy/m/n/10.95     \OML/cmm/m/it/10.95 PORT \
-OMS/cmsy/m/n/10.95     \OML/cmm/m/it/10.95 > \OT1/cmr/m/n/10.95 "\OML/cmm/m/it/
-10.95 tagdenotestheplacewherewhereinformationshouldbeplaced:Thiswebpagethenserv
-esathehomepageprovidingtheregisteredusersallthenecessaryinformationneededforthe
-actualconnection:Whenthesystemdoesnotfindanyindexfilethatcouldbeusedasamainpage
-; thenahardcodedoneisusedasafallback:Theregistrationpageisasimpleformpagethatse
-ndstherelevantdatatotheserverviathePOSTHTTPmethod:Thispage[]snamehastheformof\O
-T1/cmr/m/n/10.95 "\OML/cmm/m/it/10.95 register[]language \OMS/cmsy/m/n/10.95  $
-
- []
-
-[21]
-
-! Package inputenc Error: Unicode char \u8:�\expandafter not set up for use wit
-h LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.722 regFormTitle=Registrační 
-                                 formulář
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.722 regFormTitle=Registrační 
-                                 formulář
-? 
-
-! Package inputenc Error: Unicode char \u8:�\expandafter not set up for use wit
-h LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.722 regFormTitle=Registrační 
-                                 formulář
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.722 regFormTitle=Registrační 
-                                 formulář
-? 
-
-! Package inputenc Error: Unicode char \u8:�\expandafter not set up for use wit
-h LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.722 regFormTitle=Registrační formulář
-                                           
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.722 regFormTitle=Registrační formulář
-                                           
-? 
-
-! Package inputenc Error: Unicode char \u8:�\expandafter not set up for use wit
-h LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.722 regFormTitle=Registrační formulář
-                                           
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.722 regFormTitle=Registrační formulář
-                                           
-? 
-
-! Package inputenc Error: Unicode char \u8:�\expandafter not set up for use wit
-h LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.723 nameFormInput=Jméno:
-                           
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.723 nameFormInput=Jméno:
-                           
-? 
-
-! Package inputenc Error: Unicode char \u8:�\expandafter not set up for use wit
-h LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.724 surnameFormInput=Příjmení:
-                                   
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.724 surnameFormInput=Příjmení:
-                                   
-? 
-
-! Package inputenc Error: Unicode char \u8:�\expandafter not set up for use wit
-h LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.724 surnameFormInput=Příjmení:
-                                   
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.724 surnameFormInput=Příjmení:
-                                   
-? 
-
-! Package inputenc Error: Unicode char \u8:�\expandafter not set up for use wit
-h LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.724 surnameFormInput=Příjmení:
-                                   
-? 
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.724 surnameFormInput=Příjmení:
-                                   
-? 
-
-Underfull \hbox (badness 10000) in paragraph at lines 728--729
+[20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 723--724
 
  []
 
 [22]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 762.
+(Font)              <9> on input line 757.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 762.
+(Font)              <5> on input line 757.
  [23] [24]
-Underfull \hbox (badness 10000) in paragraph at lines 785--786
+Underfull \hbox (badness 10000) in paragraph at lines 780--781
 
  []
 
@@ -978,12 +761,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 785--786
 
 ]
 Chapter 6.
-
-Package natbib Warning: Citation `baklarkaJV' on page 27 undefined on input lin
-e 795.
-
 [27]
-Underfull \hbox (badness 10000) in paragraph at lines 804--805
+Underfull \hbox (badness 10000) in paragraph at lines 799--800
 
  []
 
@@ -992,7 +771,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 804--805
 ]
 Chapter 7.
 
-Underfull \hbox (badness 10000) in paragraph at lines 828--833
+Underfull \hbox (badness 10000) in paragraph at lines 823--828
 
  []
 
@@ -1004,11 +783,11 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.838 
+l.833 
       
 ? 
 
-Underfull \hbox (badness 10000) in paragraph at lines 839--841
+Underfull \hbox (badness 10000) in paragraph at lines 834--836
 
  []
 
@@ -1017,7 +796,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 839--841
 ]
 Chapter 8.
 
-Underfull \hbox (badness 10000) in paragraph at lines 861--862
+Underfull \hbox (badness 10000) in paragraph at lines 856--857
 
  []
 
@@ -1097,7 +876,7 @@ Appendix A.
 
 ]
 Appendix B.
-<figures/VotingCZECH.png, id=947, 901.3675pt x 618.31pt>
+<figures/VotingCZECH.png, id=945, 901.3675pt x 618.31pt>
 File: figures/VotingCZECH.png Graphic file (type png)
 
 <use figures/VotingCZECH.png> [43 <C:/Users/Murko/Documents/Bakalarka/txt/figur
@@ -1105,27 +884,14 @@ es/VotingCZECH.png (PNG copy)>] [44
 
 ]
 Appendix C.
-[45] [46
-
-]
-Appendix D.
-
-Package natbib Warning: Citation `infodp' on page 47 undefined on input line 93
-0.
-
-<figures/seznamcd.pdf, id=965, 793.96625pt x 539.01375pt>
-File: figures/seznamcd.pdf Graphic file (type pdf)
-
-<use figures/seznamcd.pdf> [47 <C:/Users/Murko/Documents/Bakalarka/txt/figures/
-seznamcd.pdf>]
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 950.
-[48]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 950.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 923.
+[45]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 923.
  (C:\Users\Murko\Documents\Bakalarka\txt\murinradThesis.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 950.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 923.
 
 
 Package rerunfilecheck Warning: File `murinradThesis.out' has changed.
@@ -1133,46 +899,45 @@ Package rerunfilecheck Warning: File `murinradThesis.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `murinradThesis.out':
-(rerunfilecheck)             Before: 5A6066DF7AFA00E3F9F21B8A6BA7D22C;12760
-(rerunfilecheck)             After:  6AC1E3E0C01B5011CC20BC555D5472B1;12775.
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+(rerunfilecheck)             Before: 5C772292847A59E47B146764B4409948;12734
+(rerunfilecheck)             After:  780C9C809DB5D6F868F4AF2CD1108328;12541.
  ) 
 Here is how much of TeX's memory you used:
- 9419 strings out of 494019
- 129352 string characters out of 3143882
- 338579 words of memory out of 3000000
- 12227 multiletter control sequences out of 15000+200000
+ 9408 strings out of 494019
+ 129156 string characters out of 3143883
+ 326579 words of memory out of 3000000
+ 12220 multiletter control sequences out of 15000+200000
  20833 words of font info for 46 fonts, out of 3000000 for 9000
  718 hyphenation exceptions out of 8191
- 31i,8n,40p,3347b,1150s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\
-ectt1095.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\
-ec\dpi600\ecrm0800.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour
-\jknappen\ec\dpi600\ecbx0900.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts
-\pk\ljfour\jknappen\ec\dpi600\ecrm0900.pk> <C:\Users\Murko\AppData\Local\MiKTeX
-\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\Murko\AppData\Lo
-cal\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsl1095.pk> <C:\Users\Murko\
-AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk> <C:\Us
-ers\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2488.
-pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600
-\ecrm0600.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen
-\ec\dpi600\ecbx2074.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfou
-r\jknappen\ec\dpi600\ecrm1095.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\font
-s\pk\ljfour\jknappen\ec\dpi600\ecti1440.pk> <C:\Users\Murko\AppData\Local\MiKTe
-X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\Murko\AppData\L
-ocal\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk><C:/Program File
-s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files 
+ 31i,8n,40p,3376b,1826s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{figure.D.1} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{appendix.D} has been referenced but does not exist,
+ replaced by a fixed one
+
+ <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ec
+tt1095.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
+\dpi600\ecrm0800.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\j
+knappen\ec\dpi600\ecbx0900.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\p
+k\ljfour\jknappen\ec\dpi600\ecrm0900.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2
+.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\Murko\AppData\Loca
+l\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsl1095.pk> <C:\Users\Murko\Ap
+pData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1095.pk> <C:\User
+s\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx2488.pk
+> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
+crm0600.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\e
+c\dpi600\ecbx2074.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\
+jknappen\ec\dpi600\ecrm1095.pk> <C:\Users\Murko\AppData\Local\MiKTeX\2.9\fonts\
+pk\ljfour\jknappen\ec\dpi600\ecti1440.pk> <C:\Users\Murko\AppData\Local\MiKTeX\
+2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\Murko\AppData\Loc
+al\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk><C:/Program Files 
 (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files (x8
-6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x86)/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files (x86)/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on murinradThesis.pdf (64 pages, 680592 bytes).
+6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
+Output written on murinradThesis.pdf (61 pages, 538381 bytes).
 PDF statistics:
- 1698 PDF objects out of 1728 (max. 8388607)
- 320 named destinations out of 1000 (max. 500000)
- 738 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1647 PDF objects out of 1728 (max. 8388607)
+ 317 named destinations out of 1000 (max. 500000)
+ 733 words of extra memory for PDF output out of 10000 (max. 10000000)
 

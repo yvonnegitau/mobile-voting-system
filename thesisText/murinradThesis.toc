@@ -44,7 +44,7 @@
 \contentsline {section}{\numberline {4.2}Server side}{16}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Minor Changes}{16}{subsection.4.2.1}
 \contentsline {section}{\numberline {4.3}Android side}{16}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Graphical User Interface (GUI) - View}{17}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.1}Graphical User Interface (GUI)}{17}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Persistence}{17}{subsection.4.3.2}
 \contentsline {subsection}{\numberline {4.3.3}Communication}{18}{subsection.4.3.3}
 \contentsline {chapter}{\numberline {5}Implementation}{19}{chapter.5}
@@ -71,7 +71,7 @@
 \contentsline {paragraph}{Registration and approval}{22}{section*.23}
 \contentsline {subsection}{\numberline {5.2.2}Settings}{22}{subsection.5.2.2}
 \contentsline {subsection}{\numberline {5.2.3}Internationalization}{22}{subsection.5.2.3}
-\contentsline {subsection}{\numberline {5.2.4}Beaconing}{22}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.4}Beaconing}{23}{subsection.5.2.4}
 \contentsline {subsection}{\numberline {5.2.5}Security}{23}{subsection.5.2.5}
 \contentsline {paragraph}{SSL/TLS}{23}{section*.24}
 \contentsline {paragraph}{IP filtration}{23}{section*.25}
@@ -109,5 +109,4 @@
 \contentsline {chapter}{\numberline {8}Conclusion}{35}{chapter.8}
 \contentsline {chapter}{\numberline {A}Abbreviations}{41}{appendix.A}
 \contentsline {chapter}{\numberline {B}UML diagrams}{43}{appendix.B}
-\contentsline {chapter}{\numberline {C}Installation and how to use}{45}{appendix.C}
-\contentsline {chapter}{\numberline {D}Enclosed CD Table of Contents}{47}{appendix.D}
+\contentsline {chapter}{\numberline {C}Enclosed CD Table of Contents}{45}{appendix.C}
