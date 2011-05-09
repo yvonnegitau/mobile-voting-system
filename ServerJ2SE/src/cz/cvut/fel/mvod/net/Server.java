@@ -187,6 +187,7 @@ public class Server {
         private static final int FORBIDDEN = 403;
         private static final int NOT_FOUND = 404;
         private static final int OK = 200;
+        private static final int BAD_ORIGIN = 419;
 
         /**
          * Zpracuje přijatý požadavek.
@@ -197,11 +198,12 @@ public class Server {
         public void handle(HttpExchange request) throws IOException {
             try {
                 System.out.println("PROTOCOL = " + request.getProtocol());
-                /*  if (!checkOrigin(request.getRemoteAddress(), true)) {
+                System.out.println(request.getRemoteAddress().toString());
+                if (!checkOrigin(request.getRemoteAddress(), true)) {
                 System.out.println("BAD REQ");
-                sendResponse(request, FORBIDDEN);
+                sendResponse(request, BAD_ORIGIN);
 
-                }*/
+                }
                 String method = request.getRequestMethod();
                 System.out.println(method);
                 if (method.equalsIgnoreCase(OPTIONS)) {
@@ -285,22 +287,22 @@ public class Server {
 //FIXME házet výjimky místo vracení null, přejemenovat/rozdělit (dělá i něco jiného než je název metody)
             Headers headers = request.getRequestHeaders();
             String userName = null;
-            System.out.println("Checking");
+            
             if (!headers.containsKey(USER_NAME)) {
                 sendResponse(request, FORBIDDEN);
-                System.out.println("problem with no u name");
+         
                 return null;
             }
-            System.out.println("here");
+          
             userName = headers.getFirst(USER_NAME);
-            System.out.println("bleh");
+       
             String password = headers.getFirst(PASSWORD);
-            System.out.println("ooh");
+          
             try {
                 if (password == null || !provider.checkPassword(userName, password)) {
-                    System.out.println("Bad names");
+                  
                     sendResponse(request, UNAUTHORIZED);
-                    System.out.println("dasdasd");
+                
                     return null;
                 }
             } catch (Exception ex) {
@@ -308,11 +310,11 @@ public class Server {
                 ex.printStackTrace();
                 return null;
             }
-            System.out.println("sadsa");
+            
             if (userName == null) {
                 sendResponse(request, FORBIDDEN);
             }
-            System.out.println("returned");
+           
             return userName;
         }
 
@@ -325,25 +327,40 @@ public class Server {
                 if (mode.equals("NO_RESTRICTIONS")) {
                     return true;
                 }
-                String add = remoteAddress.getAddress().toString().replace("/", "");
+                String a = remoteAddress.getAddress().toString().split("/")[1];
+                String add = a.split(":")[0];
+                if(add==null) add=a;
+                System.out.println(add);
                 String[] parts = null;
-                //add = "147.2.5.4";
                 if (add.contains("-")) {
+                    System.out.println("dash split");
                     parts = add.split("-");
                 }
-                if (add.contains("\\.")) {
+                if (add.contains('.'+"")) {
+                    System.out.println("Dot split");
                     parts = add.split("\\.");
                 }
-                System.out.println(parts);
-                System.out.println(parts.length);
-                int[] remote = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])};
+                
+                if (parts==null){
+                    System.out.println("Error in parsing remote IP");
+                    return false;
+                }
+                if(parts.length!=4) {
+                    System.out.println("Error in parsing remote IP");
+                    return false;
+                } 
+               final int[]  remote = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])};
                 if (mode.equals("RESTRICT_LAN")) {
                     return networkAddressRange.isOnLAN(remote);
                 }
                 Iterator<networkAddressRange> inar = GlobalSettingsAndNotifier.singleton.permited.iterator();
+                System.out.println("NrOf rules "+GlobalSettingsAndNotifier.singleton.permited.size());
                 while (inar.hasNext()) {
+
                     networkAddressRange n = inar.next();
-                    switch (n.isAllowed(remote, isSecured)) {
+                    System.out.println("Check" + n.getNetworkForHumans());
+                    n.getAction();
+                    switch (n.isAllowed(new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])}, true)) {
                         case 1:
                             return true;
                         case -1:
@@ -353,13 +370,14 @@ public class Server {
                 }
             } catch (Exception ex) {
                 System.out.println(ex.toString());
+                ex.printStackTrace();
             }
 
             if (GlobalSettingsAndNotifier.singleton.getSetting("IMPLICIT_ALLOW").equalsIgnoreCase("true")) {
 
                 return true;
             }
-
+            System.out.println("Implicit deny");
             return false;
         }
     }

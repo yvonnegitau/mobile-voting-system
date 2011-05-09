@@ -99,6 +99,8 @@ public class networkAddressRange implements Serializable {
  */
     private boolean isOnNetwork(int[] address) {
         BitSet remote = getBits(address);
+        System.out.println("REMOTE: "+remote.toString());
+        System.out.println("LOCAL: "+ network.toString());
         for (int i = 0; i < shortMask; i++) {
             if (remote.get(i) != network.get(i)) {
                 return false;
@@ -123,7 +125,7 @@ public class networkAddressRange implements Serializable {
                 return 1;
             }
             if (action.equals(ALLOW_SSL) && !isSecured) {
-                return 1;
+                return -1;
             }
             if (action.equals(DENY_ACCESS)) {
                 return -1;
