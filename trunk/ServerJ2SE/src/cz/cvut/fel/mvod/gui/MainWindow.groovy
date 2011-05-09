@@ -226,6 +226,11 @@ class MainWindow implements ListSelectionListener, DAOObserver {
             REG.setVisible(true)
         }
 
+    def showLegal = {
+        def LegalData LD = new LegalData();
+        LD.setVisible(true);
+    }
+
 
 
 	def exportVotingToFile = {
@@ -376,7 +381,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 
                 }
 
-		//def helpMenu = menu(text: 'Nápověda')
+                menuItem(text: GlobalSettingsAndNotifier.singleton.messages.getString("legalMenuLabel"), actionPerformed: showLegal)
 	}
 
 	/**
