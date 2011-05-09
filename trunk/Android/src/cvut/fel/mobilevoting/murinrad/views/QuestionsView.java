@@ -60,6 +60,7 @@ public class QuestionsView extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		try{
 		statuses = new ArrayList<String>();
 		instance = this;
 		statuses.add(getString(R.string.conStatDial));
@@ -71,6 +72,10 @@ public class QuestionsView extends Activity {
 		mHandler = new Handler();
 		this.setTitle(getString(R.string.connectedTo) + " : "
 				+ server.getFriendlyName());
+		} catch (Exception ex) {
+			Log.w("Android Mobile Voting", "View inited out of order");
+			Toast.makeText(this, getString(R.string.viewOutOfOrder), Toast.LENGTH_LONG).show();
+		}
 	}
 
 	@Override

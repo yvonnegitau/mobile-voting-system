@@ -335,8 +335,25 @@ public class Connection extends Thread implements Runnable, ConnectionInterface 
 				}
 
 			});
-			parent.showToast(parent.getString(R.string.ErrorMsg404));
+			//parent.showToast(parent.getString(R.string.ErrorMsg404));
 			Log.w("Android Mobile Voting", "404 Error");
+			parent.finish();
+			return false;
+		}
+		
+		if (data.contains("419")) {
+			// Bad origin
+			parent.mHandler.post(new Runnable() {
+
+				@Override
+				public void run() {
+					parent.showToast(parent.getString(R.string.ErrorMsg419));
+
+				}
+
+			});
+			//parent.showToast(parent.getString(R.string.ErrorMsg404));
+			Log.w("Android Mobile Voting", "419 Error");
 			parent.finish();
 			return false;
 		}

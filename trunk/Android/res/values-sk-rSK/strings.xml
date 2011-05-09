@@ -67,5 +67,7 @@
 	<string name="connectAgain">Skúsiť znova.</string>
 	<string name="passwordReq">Heslo musí mať presne 8 znakov.</string>
 	<string name="pickAnswers">Vybrať odpovede k odoslaniu</string>
+	<string name="ErrorMsg419">Sever odmietol vaše spojenie.</string>
+	<string name="viewOutOfOrder">Aplikáciu sa nepodarilo obnoviť. Spustite ju znova prosím.</string>
 	
 </resources>

@@ -66,5 +66,7 @@
 <string name="connectAgain"> Zkusit znovu. </string>
 <string name="passwordReq"> Heslo musí mít přesně 8 znaků. </string>
 <string name="pickAnswers">Vyberte odpovědi k poslání</string>
+<string name="ErrorMsg419">Server odmítl vaše spojení.</string>
+<string name="viewOutOfOrder">Aplikace se nedá obnovit. Restartujte ji prosím.</string>
 
 </resources>
