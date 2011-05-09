@@ -12,7 +12,7 @@ Copyright 2011 Radovan Murin
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-*/
+ */
 package cvut.fel.mobilevoting.murinrad.views;
 
 import java.util.ArrayList;
@@ -28,16 +28,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import cvut.fel.mobilevoting.murinrad.R;
 import cvut.fel.mobilevoting.murinrad.communications.BeaconListener;
 import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 import cvut.fel.mobilevoting.murinrad.gui.PasswordSetterDialogue;
 import cvut.fel.mobilevoting.murinrad.gui.ServerButton;
 import cvut.fel.mobilevoting.murinrad.storage.DatabaseStorage;
+
 /**
- * A server list that shows the servers in persistence and provides a means to manage servers/voting points
+ * A server list that shows the servers in persistence and provides a means to
+ * manage servers/voting points
+ * 
  * @author Radovan Murin
- *
+ * 
  */
 public class ServerListView extends Activity {
 	private LinearLayout layout = null;
@@ -51,66 +55,75 @@ public class ServerListView extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// beaconingServers = new ArrayList<ServerData>();
-		bl = new BeaconListener(this);
-		@SuppressWarnings("unused")
-		Thread t = new Thread() {
-			@Override
-			public void run(){
-				mUpdateTimeTask.run();
-				
-			}
-		};
-		//t.start();
-		
-		onResume();
+		try {
+			// beaconingServers = new ArrayList<ServerData>();
+			bl = new BeaconListener(this);
+			@SuppressWarnings("unused")
+			Thread t = new Thread() {
+				@Override
+				public void run() {
+					mUpdateTimeTask.run();
 
+				}
+			};
+			// t.start();
+
+			onResume();
+		} catch (Exception ex) {
+			Log.w("Android Mobile Voting", "View inited out of order");
+			Toast.makeText(this, getString(R.string.viewOutOfOrder),
+					Toast.LENGTH_LONG).show();
+		}
 	}
-	
-	private Runnable mUpdateTimeTask = new Runnable() {
-		   public void run() {
-		       final long start = 5000;
-		       long millis = SystemClock.uptimeMillis() - start;
-		       int seconds = (int) (millis / 1000);
-		       int minutes = seconds / 60;
-		       seconds     = seconds % 15;
 
-		       if (seconds == 0) {
-		    	   printServers(); 
-		          Log.d("Android mobile voting","seconds < 10");
-		       } 	     
-		       handler.postAtTime(this,
-		               start + (((minutes * 60) + seconds + 1) * 1000));
-		   }
-		};
+	private Runnable mUpdateTimeTask = new Runnable() {
+		public void run() {
+			final long start = 5000;
+			long millis = SystemClock.uptimeMillis() - start;
+			int seconds = (int) (millis / 1000);
+			int minutes = seconds / 60;
+			seconds = seconds % 15;
+
+			if (seconds == 0) {
+				printServers();
+				Log.d("Android mobile voting", "seconds < 10");
+			}
+			handler.postAtTime(this, start
+					+ (((minutes * 60) + seconds + 1) * 1000));
+		}
+	};
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		//bl.resetFilter();
+		// bl.resetFilter();
 
 	}
 
-	
-	
 	@Override
 	public void onRestart() {
 		super.onRestart();
 		bl.resetFilter();
-		
+
 	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
+		try{
 		printServers();
+		} catch (Exception ex) {
+			Log.w("Android Mobile Voting", "View inited out of order");
+			Toast.makeText(this, getString(R.string.viewOutOfOrder),
+					Toast.LENGTH_LONG).show();
+		}
 
 		// bl.start();
 	}
-	
-	
+
 	public void printServers() {
 		bl.resetFilter();
-		
+
 		storage = new DatabaseStorage(this);
 		servers = storage.getServers();
 		// servers.addAll(beaconingServers);
@@ -126,15 +139,15 @@ public class ServerListView extends Activity {
 		TextView delimiter = new TextView(this);
 		delimiter.setText(getString(R.string.LANServersDelimiter));
 		delimiter.setTextSize(15);
-		layout.addView(delimiter,layout.getChildCount());
+		layout.addView(delimiter, layout.getChildCount());
 		setContentView(layout);
-		
+
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		
+
 	}
 
 	public void deleteServer(int id) {
@@ -179,8 +192,6 @@ public class ServerListView extends Activity {
 		startActivity(i);
 
 	}
-
-	
 
 	public void addServer(ServerData sd) {
 		final ServerButton serverBTN = new ServerButton(this, sd, this);

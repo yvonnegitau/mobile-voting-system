@@ -21,36 +21,31 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import cvut.fel.mobilevoting.murinrad.datacontainers.QuestionData;
 import cvut.fel.mobilevoting.murinrad.datacontainers.ServerData;
 
 import junit.framework.TestCase;
+
 /**
  * Tester Class
+ * 
  * @author Murko
- *
+ * 
  */
 public class XMLParserTest extends TestCase {
 
-	public void testParseServerXML() {
-		
-		 
-	}
-
-	public void testParseQuestionXML() {
-		fail("Not yet implemented");
-	}
-
+	
 	public void testParseBeacon() {
 		String sampleBeacon = "<serverinfo id='1'><friendlyname>TestName</friendlyname><port>1555</port></serverinfo>";
 		ServerData sd = null;
-		 try {
-			sd = XMLParser.XMLParser.parseBeacon(sampleBeacon,"127.0.0.1");
+		try {
+			sd = XMLParser.XMLParser.parseBeacon(sampleBeacon, "127.0.0.1");
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
 			assertTrue(false);
-			
+
 			e.printStackTrace();
 		} catch (IOException e) {
 			assertTrue(false);

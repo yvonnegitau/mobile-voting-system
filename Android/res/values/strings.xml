@@ -70,5 +70,7 @@
 	<string name="connectAgain">Try again</string>
 	<string name="passwordReq">Password must be exactly 8 characters long.</string>
 	<string name="pickAnswers">Pick answers to send</string>
+	<string name="ErrorMsg419">The server rejected your connection</string>
+	<string name="viewOutOfOrder">Application shutdown! Please restart the application.</string>
 	
 </resources>
