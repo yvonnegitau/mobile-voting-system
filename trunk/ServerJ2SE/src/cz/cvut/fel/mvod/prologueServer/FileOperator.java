@@ -54,6 +54,7 @@ public class FileOperator {
             dis.close();
         } catch (FileNotFoundException e) {
             ret = "File not found";
+            e.printStackTrace();
         } catch (IOException e) {
             ret = "Other file reading exception";
             e.printStackTrace();

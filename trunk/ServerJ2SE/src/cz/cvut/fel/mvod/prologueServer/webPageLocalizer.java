@@ -31,28 +31,30 @@ import java.util.List;
  */
 public class webPageLocalizer {
 
-    HashMap<String, String> webPages;
+    HashMap<String, String> webPage;
 
     /**
      * Localizes a web page, the web page name has to follow some simple guidelines
      * @param URI the name of the page, the general name should be ended by a "_" follower by the language code. ex.: index_en-EN.html
      */
-    public webPageLocalizer(final String URI) {
-        webPages = new HashMap<String, String>();
+    public webPageLocalizer(final String URI,final String directory) {
+        webPage = new HashMap<String, String>();
         FileOperator fo = new FileOperator();
-        File incomingDir = new File("..");
-        File[] contents = incomingDir.listFiles();
-        for (int i = 0; i < contents.length; i++) {
-            //    System.out.println(contents[i]);
-        }
+        File incomingDir = new File(directory);
+      //  System.out.println("Looking for files in directory: "+ incomingDir.getAbsolutePath());
+        File contents = incomingDir;
+        /*for (int i = 0; i < contents.length; i++) {
+          //  System.out.println("fileList " +contents[i]);
+
+        }*/
         List files = new ArrayList();
         FilenameFilter ff = new FilenameFilter() {
 
             @Override
             public boolean accept(File dir, String name) {
-                //System.out.println("Accept " + name);
+       
                 if (name.contains(URI + "_")) {
-                    //  System.out.println("FOUND ONE");
+                  //  System.out.println("FOUND ONE");
                     return true;
 
 
@@ -63,9 +65,9 @@ public class webPageLocalizer {
         };
 
 
-        for (int i = 0; i < contents.length; i++) {
+     //   for (int i = 0; i < contents.length; i++) {
 
-            File[] pages = contents[i].listFiles(ff);
+            File[] pages = contents.listFiles(ff);
 
 
             if (pages != null) {
@@ -75,7 +77,7 @@ public class webPageLocalizer {
                     files.addAll(Arrays.asList(pages));
                 }
             }
-        }
+      //  }
 
 
 
@@ -92,8 +94,8 @@ public class webPageLocalizer {
             rawPage = rawPage.replaceAll("<--PUBLIC_IP-->", GlobalSettingsAndNotifier.singleton.getSetting("PUBLIC_IP"));
             rawPage = rawPage.replaceAll("<--PORT-->", GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT"));
             rawPage = rawPage.replace("<--PRIVATE_IP-->", GlobalSettingsAndNotifier.singleton.getSetting("PRIVATE_IP"));
-            System.out.println(path + " " + lang);
-            webPages.put(lang, rawPage);
+          //  System.out.println(path + " " + lang);
+            webPage.put(lang, rawPage);
 
         }
 
@@ -111,7 +113,7 @@ public class webPageLocalizer {
 
         String page = null;
 
-        if (webPages.isEmpty()) {
+        if (webPage.isEmpty()) {
             return "Error";
         }
         try {
@@ -119,7 +121,7 @@ public class webPageLocalizer {
 
                 String simple = langs[i].split("-")[0];
 
-                page = webPages.get(simple.replace(" ", ""));
+                page = webPage.get(simple.replace(" ", ""));
                 if (page != null) {
                     if (!page.equals("")) {
 
@@ -130,7 +132,7 @@ public class webPageLocalizer {
             if (page == null) {
 
 
-                page = webPages.get("default");
+                page = webPage.get("default");
                 if (page != null) {
 
                     return page;
@@ -138,7 +140,7 @@ public class webPageLocalizer {
             }
             if (page == null) {
                 // System.out.println("LAST RESORT");
-                page = webPages.values().iterator().next();
+                page = webPage.values().iterator().next();
                 if (!page.equals("")) {
 
                     return page;
