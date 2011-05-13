@@ -69,9 +69,9 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         jSeparator1 = new javax.swing.JSeparator();
         usePrologue = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        CNField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        FPField = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         prologueControlBTN = new javax.swing.JToggleButton();
@@ -103,13 +103,13 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
 
         jLabel2.setText(GlobalSettingsAndNotifier.singleton.messages.getString("CNLabel")); // NOI18N
 
-        jTextField1.setEditable(false);
-        jTextField1.setText("N/A");
+        CNField.setEditable(false);
+        CNField.setText(CertManager.getCN(CertManager.PROLOGUE));
 
         jLabel3.setText(GlobalSettingsAndNotifier.singleton.messages.getString("certFingerPLabel")); // NOI18N
 
-        jTextField2.setEditable(false);
-        jTextField2.setText("N/A");
+        FPField.setEditable(false);
+        FPField.setText(CertManager.getFingerPrint(CertManager.PROLOGUE));
 
         prologueControlBTN.setText(GlobalSettingsAndNotifier.singleton.messages.getString("turnOnPrologue")); // NOI18N
 
@@ -214,30 +214,29 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGap(6, 6, 6)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(enableRegistration)
-                                        .addComponent(prologueControlBTN)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel5)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel6))))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel2))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))))
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(enableRegistration)
+                                    .addComponent(prologueControlBTN)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel6))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(FPField, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                                    .addComponent(CNField, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)))
                             .addComponent(useEmbeded))
-                        .addGap(31, 31, 31))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addContainerGap(110, Short.MAX_VALUE))))
+                        .addContainerGap(244, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,11 +260,11 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CNField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(FPField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -276,7 +275,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11))
         );
@@ -363,6 +362,8 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
     }//GEN-LAST:event_useEmbededKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField CNField;
+    private javax.swing.JTextField FPField;
     private javax.swing.JCheckBox enableRegistration;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -375,8 +376,6 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JToggleButton prologueControlBTN;
     private javax.swing.JTextField prologuePort;
     private javax.swing.JCheckBox useEmbeded;
@@ -386,6 +385,8 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
 
     @Override
     public void notifyOfChange() {
+        CNField.setText(CertManager.getCN(CertManager.PROLOGUE));
+        FPField.setText(CertManager.getFingerPrint(CertManager.PROLOGUE));
         jLabel6.setText(GlobalSettingsAndNotifier.singleton.getSetting("prologuestate").equals(PrologueServer.STATE_INACTIVE + "") ? "OFFLINE" : "ONLINE");
         String pStat = GlobalSettingsAndNotifier.singleton.getSetting("prologuestate");
         if (pStat.equals(PrologueServer.STATE_INACTIVE + "")) {

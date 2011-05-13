@@ -148,7 +148,7 @@ class VotingHTMLGenerator {
                                     def rowspan = Math.max(q.winner.size(), 1)
                                     tr {
                                         td(rowspan: "${rowspan}") {
-                                            a(href: "${q.question.id}"+currentSuff+".html", q.question.text)
+                                            a(href: "${q.question.id}.html", q.question.text)
                                         }
                                         td(rowspan: "${rowspan}", "${result.getVotersCount()}")
                                         td(rowspan: "${rowspan}", "${q.votesCount}")
@@ -199,7 +199,7 @@ class VotingHTMLGenerator {
                                             td(colspan: '2', "${voter.firstName} ${voter.lastName}")
                                         } else {
                                             td(colspan: '2') {
-                                                a(href: "${voter.userName}"+currentSuff+".html", "${voter.firstName} ${voter.lastName}")
+                                                a(href: "${voter.userName}.html", "${voter.firstName} ${voter.lastName}")
                                             }
                                         }
                                     }
@@ -312,7 +312,7 @@ class VotingHTMLGenerator {
                                     }
                                     tr {
                                         td(rowspan: rowspan) {
-                                            a(href: "${voter.userName}"+currentSuff+".html",
+                                            a(href: "${voter.userName}.html",
 												"${voter.firstName} ${voter.lastName}")
                                         }
                                         td("${vote ? vote.checked[0].text : messages.getString("didNotVoteLabel")}")
@@ -398,7 +398,7 @@ class VotingHTMLGenerator {
                                 }
                                 tr {
                                     td(rowspan: rowspan) {
-                                        a(href: "${question.id}."+currentSuff+".html", question.text)
+                                        a(href: "${question.id}.html", question.text)
                                     }
                                     td("${vote ? vote.checked[0].text : messages.getString("didNotVoteLabel")}")
                                 }

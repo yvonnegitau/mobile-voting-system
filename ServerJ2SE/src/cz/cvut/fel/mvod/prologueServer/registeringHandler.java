@@ -34,13 +34,12 @@ public class registeringHandler implements HttpHandler, Notifiable {
     XMLFactory wpb = new XMLFactory();
     webPageLocalizer introPage = new webPageLocalizer("index", "webpages");
     webPageLocalizer regPage = new webPageLocalizer("regpage", "webpages");
-    WebPageFetcher pages = null;
+    HashMap<String,WebPageFetcher> webPages = new HashMap<String, WebPageFetcher>();
     String CSS = "";
 
     public registeringHandler() {
         FileOperator fo = new FileOperator();
         CSS = fo.getWholeTextFile("style.css");
-        System.out.println(CSS);
     }
 
     @Override
@@ -53,49 +52,56 @@ public class registeringHandler implements HttpHandler, Notifiable {
             String[] langs = aLang.split(",");
             String responce = "";
             Headers heads = he.getResponseHeaders();
-            heads.add("Content-Type", "text/html");
+
+          
             if (URI.equals("/")) {
 
-
+                heads.add("Content-Type", "text/html");
                 responce = introPage.getWP(langs);
-            } else if (URI.equals("/registration")) {
-
-                responce = regPage.getWP(langs);
-            } else if (URI.contains("/results")) {
-              
-                responce = "Error123";
-                if (pages == null) {
-                 
-                    pages = new WebPageFetcher("summary.sum","./results/");
-                   
-                }
-                String target = URI.replace("/results", "");
-       
-                if (!target.contains(".html")) {
-                    target = "index.html";
-                }
-                if(target.contains("/")) target = target.replace("/", "");
-             //   target = target.replace(".html", "");
-             
-                responce = pages.fetch(target, langs);
-         
-                pages = null; 
-
-
-            } else if(URI.contains("css")){
+            } else if(URI.contains("favicon")){
+                responce = "null";
+            } else if (URI.contains("css")) {
+                heads.add("Content-Type", "text/css");
                 responce = CSS;
 
+            } else if (URI.equals("/registration")) {
+                heads.add("Content-Type", "text/html");
+                responce = regPage.getWP(langs);
             } else {
+                String file = URI.replaceAll(".*/", "");
+                String dir = URI.replaceAll(file, "");
+                heads.add("Content-Type", "text/html");
                 responce = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
-            }
+                WebPageFetcher pages = webPages.get(dir);
+                String[] tst = {"en"};
+                /**
+                 * Tests if the pages are loaded, or loaded with errors and attempts a load
+                 */
+                if(pages==null || pages.sitesLoc.values().iterator().next().getWP(tst).contains("error")){
+                    pages = new WebPageFetcher("summary.sum","results/");
+                 
+                    webPages.put(dir, pages);
+                }
+                if (file.equals("")) {
+                    file = "index.html";
+                }
+
+
+                responce = pages.fetch(file, langs);
+
+
+
+            } 
             if (responce.equals("")) {
-                responce = "Error";
+                heads.add("Content-Type", "text/html");
+                responce = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
             }
 
             OutputStream s = he.getResponseBody();
             is.close();
+           
             he.sendResponseHeaders(200, responce.getBytes().length);
-         
+
             s.write(responce.getBytes());
             s.close();
         } else if (he.getRequestMethod().equalsIgnoreCase("POST")) {
@@ -113,13 +119,6 @@ public class registeringHandler implements HttpHandler, Notifiable {
             he.sendResponseHeaders(200, responce.getBytes().length);
             out.write(responce.getBytes());
             out.close();
-
-
-
-
-
-
-            //System.out.println("Message stands " + new String(mesidz));
         } else {
             String responce = "<h2> hohoho</h2>";
             OutputStream s = he.getResponseBody();
@@ -141,6 +140,7 @@ public class registeringHandler implements HttpHandler, Notifiable {
     }
 
     /**
+     * @deprecated
      * Returns the fallback introduction web page
      * @param sa
      * @return
@@ -153,6 +153,7 @@ public class registeringHandler implements HttpHandler, Notifiable {
     }
 
     /**
+     * @deprecated
      * Returns the registration web page
      * @return the string representation of the web page.
      */
@@ -167,6 +168,7 @@ public class registeringHandler implements HttpHandler, Notifiable {
      * @return the message that is to applear to the end user, informing the succes/failure of the request.
      */
     protected String parsePost(String body) {
+        System.out.println(body);
         String[] tokens = body.split("&");
 
 

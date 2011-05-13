@@ -15,6 +15,7 @@ Copyright 2011 Radovan Murin
 */
 package cz.cvut.fel.mvod.prologueServer;
 
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import java.util.HashMap;
 
 /**
@@ -30,6 +31,7 @@ class WebPageFetcher {
 /**
  * The class constructor
  * @param summaryFile the summary file - a list of root names of web pages, without localization suffixes
+ * "index.html" will load all files like "index_..-..\.[html|htm]$"
  */
     public WebPageFetcher(String summaryFile,String dir) {
        
@@ -50,9 +52,14 @@ class WebPageFetcher {
 
 
     }
-
+/**
+ * Returns the given page from this collection
+ * @param name the name of the webpage, with file extention
+ * @param loc an array of preffered languages in descending order
+ * @return the returned web page, or 404 Error
+ */
     public String fetch(String name,String[] loc) {
-        String output = "Error";
+        String output = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
         try{
         output=sitesLoc.get(name).getWP(loc);
         } catch(Exception ex) {
