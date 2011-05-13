@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<resources>
+	<string name="hello"> Bienvenue a AndroVote - Mobile Voter pour Android
+	</string>
+	<string name="app_name"> Mobile Voter pour Android </string>
+	<string name="passwordChallenge"> S\&apos;il vous plaît, entrez le mot de passe
+		principal et appuyez sur OK </string>
+	<string name="Confirm"> OK </string>
+	<string name="loginConfirmBTN"> loginConfirmBTN</string>
+	<string name="passwordField"> passwordField</string>
+	<string name="wrongPass"> Mot de passe incorrect est entré, s\&apos;il vous
+		plaît essayer a nouveau </string>
+	<string name="HeaderServerList"> S\&apos;il vous plaît Choisissez un serveur de se
+		connecter a </string>
+	<string name="ErrorMsg400"> client a envoyé une demande de la na pas
+		comprendre Server </string>
+	<string name="ErrorMsg401"> Nom d\&apos;utilisateur ou mot de passe sont
+		incorrectes </string>
+	<string name="ErrorMsg403"> Ce serveur requiert une authentification </string>
+	<string name="ErrorMsg404"> Le serveur n\&apos;a pas de questions </string>
+	<string name="connectedTo"> Connecté a </string>
+	<string name="answerPick"> Pick une réponse </string>
+	<string name="confirmSendDialog"> Instance enverra le answer.Continue? </string>
+	<string name="YES"> Oui </string>
+	<string name="NO"> Non </string>
+	<string name="FriendlyNameTag"> Nom convivial </string>
+	<string name="IPAddressTag"> adresse IP </string>
+	<string name="portNumberTag"> numéro de port </string>
+	<string name="usernameTag"> Nom d\&apos;utilisateur </string>
+	<string name="passwordTag"> Mot de passe: </string>
+	<string name="serverMenuChangeSave"> Enregistrer </string>
+	<string name="serverMenuBack"> Retour </string>
+	<string name="serverMenuJustConnect"> Connectez uniquement </string>
+	<string name="temporaryserverTag"> un serveur temporaire </string>
+	<string name="badPortFormatError"> numéro de port Bad, s\&apos;il vous plaît utiliser
+		un numéro. &lt; 1, 65535&gt; </string>
+	<string name="databaseSuccess"> Item a été ajouté / modifié / supprimé </string>
+	<string name="pickChallenge"> Choisir une action </string>
+	<string name="EditServerTag"> Modifier serveur de détails </string>
+	<string name="deleteServerTag"> Supprimer ce serveur </string>
+	<string name="newServerTag"> New Server </string>
+	<string name="exitTag"> sortie</string>
+	<string name="defaultPort"> 10666 </string>
+	<string name="passwordDialogTitle"> modification </string>
+	<string name="enterOldPass"> S\&apos;il vous plaît entrez votre ancien mot de
+		passe: </string>
+	<string name="enterNewPass"> S\&apos;il vous plaît entrez votre nouveau mot de
+		passe: </string>
+	<string name="enterNewPass2"> S\&apos;il vous plaît entrez votre nouveau mot de
+		passe: </string>
+	<string name="cancel"> Annuler </string>
+	<string name="passwordChangeSuccess"> Le mot de passe a été changé </string>
+	<string name="more"> Plus </string>
+	<string name="sendAnswers"> Envoyer réponses </string>
+	<string name="notEnoughAnswers"> Pick plus de réponses </string>
+	<string name="TooMuchAnswers"> réponses maximum atteint </string>
+	<string name="dismissLabel"> rejeter </string>
+	<string name="QDDTitle"> Question Détails </string>
+	<string name="LANServersDelimiter"> serveurs locaux ont constaté: </string>
+	<string name="CertWindowTitle"> information certificat </string>
+	<string name="CertificateWindNotTrusted"> Ce certificat est délivré par une autorité non
+		fiables, l\&apos;authenticité du serveur ne peut pas etre vérifiée.
+		Consulter le vote administrateur. </string>
+	<string name="CertificateWindDisclaimer"> Je comprends les risques de certificats non
+		approuvés et qui souhaitent continuer </string>
+	<string name="CertificateWindFingerprint"> L\&apos;empreinte du certificat est le suivant:
+	</string>
+	<string name="conStatDial"> une tentative de connexion </string>
+	<string name="conStatDialHTTPS"> Tenter une connexion sécurisée </string>
+	<string name="networkErrorMessage"> Une erreur réseau s\&apos;est produite </string>
+	<string name="tryAgainstring"> Essayez a nouveau </string>
+	<string name="conStatDialSucc"> réussite </string>
+	<string name="noSSLWindTitle"> Connexion sécurisée pas disponible </string>
+	<string name="noSSLDialDiscl"> Il n\&apos;y a pas de connexion possible sécurisés
+		qu\&apos;on trouve sur ce serveur. Si vous n\&apos;etes pas absolument
+		sur de la connexion a ce serveur, vous ne devrait pas se poursuivre et
+		contactez votre administrateur </string>
+	<string name="noSSLWindChckBoxt"> Je comprends les risques et qui souhaitent
+		continuer </string>
+	<string name="noSSLWindToProc"> Pour procéder a la connexion, la case doit etre
+		cochée. </string>
+	<string name="networkErrorDialogTitle"> Erreur réseau </string>
+	<string name="networkErrorDialogueText"> Une erreur réseau s\&apos;est produite, vérifiez
+		que vous etes connecté a un réseau et essayez a nouveau. Si tout
+		échoue, contactez l\&apos;administrateur. </string>
+	<string name="connectAgain"> Essayez a nouveau </string>
+	<string name="passwordReq"> mot de passe doit etre exactement 8 caracteres.
+	</string>
+	<string name="pickAnswers"> Pick réponses a envoyer </string>
+	<string name="ErrorMsg419"> Le serveur a rejeté votre connexion </string>
+	<string name="viewOutOfOrder"> demande d\&apos;arret! S\&apos;il vous plaît
+		redémarrer l\&apos;application. </string>
+</resources>
