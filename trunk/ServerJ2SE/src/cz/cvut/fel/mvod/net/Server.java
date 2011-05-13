@@ -1,18 +1,18 @@
 /*
 Copyright 2011 Radovan Murin
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
 /*
  * © 2010, Jakub Valenta
  *
@@ -197,11 +197,13 @@ public class Server {
         @Override
         public void handle(HttpExchange request) throws IOException {
             try {
+
                 System.out.println("PROTOCOL = " + request.getProtocol());
                 System.out.println(request.getRemoteAddress().toString());
                 if (!checkOrigin(request.getRemoteAddress(), true)) {
-                System.out.println("BAD REQ");
-                sendResponse(request, BAD_ORIGIN);
+                    System.out.println("BAD REQ");
+                    sendResponse(request, BAD_ORIGIN);
+                    return;
 
                 }
                 String method = request.getRequestMethod();
@@ -213,6 +215,12 @@ public class Server {
                     sendMessage(request, buffer);
                     request.close();
                     return;
+                }
+                if (!checkOrigin(request.getRemoteAddress(), request.getRemoteAddress().toString().split("/")[0].equals("") ? false : true)) {
+                    System.out.println("BAD REQ");
+                    sendResponse(request, BAD_ORIGIN);
+                    return;
+
                 }
                 System.out.println("Going to check username");
                 String userName = checkHeaders(request);
@@ -287,22 +295,22 @@ public class Server {
 //FIXME házet výjimky místo vracení null, přejemenovat/rozdělit (dělá i něco jiného než je název metody)
             Headers headers = request.getRequestHeaders();
             String userName = null;
-            
+
             if (!headers.containsKey(USER_NAME)) {
                 sendResponse(request, FORBIDDEN);
-         
+
                 return null;
             }
-          
+
             userName = headers.getFirst(USER_NAME);
-       
+
             String password = headers.getFirst(PASSWORD);
-          
+
             try {
                 if (password == null || !provider.checkPassword(userName, password)) {
-                  
+
                     sendResponse(request, UNAUTHORIZED);
-                
+
                     return null;
                 }
             } catch (Exception ex) {
@@ -310,14 +318,20 @@ public class Server {
                 ex.printStackTrace();
                 return null;
             }
-            
+
             if (userName == null) {
                 sendResponse(request, FORBIDDEN);
             }
-           
+
             return userName;
         }
 
+        /**
+         * Checks the origin of the connection and validates it
+         * @param remoteAddress the remote address to be checked
+         * @param isSecured if true the connecriton is SSL/TLS
+         * @return true if origin is OK
+         */
         private boolean checkOrigin(InetSocketAddress remoteAddress, boolean isSecured) {
             try {
                 if (GlobalSettingsAndNotifier.singleton.getSetting("RESTRICT_SECURE").equals("true") && !isSecured) {
@@ -329,38 +343,40 @@ public class Server {
                 }
                 String a = remoteAddress.getAddress().toString().split("/")[1];
                 String add = a.split(":")[0];
-                if(add==null) add=a;
+                if (add == null) {
+                    add = a;
+                }
                 System.out.println(add);
                 String[] parts = null;
                 if (add.contains("-")) {
                     System.out.println("dash split");
                     parts = add.split("-");
                 }
-                if (add.contains('.'+"")) {
+                if (add.contains('.' + "")) {
                     System.out.println("Dot split");
                     parts = add.split("\\.");
                 }
-                
-                if (parts==null){
+
+                if (parts == null) {
                     System.out.println("Error in parsing remote IP");
                     return false;
                 }
-                if(parts.length!=4) {
+                if (parts.length != 4) {
                     System.out.println("Error in parsing remote IP");
                     return false;
-                } 
-               final int[]  remote = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])};
+                }
+                final int[] remote = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])};
                 if (mode.equals("RESTRICT_LAN")) {
                     return networkAddressRange.isOnLAN(remote);
                 }
                 Iterator<networkAddressRange> inar = GlobalSettingsAndNotifier.singleton.permited.iterator();
-                System.out.println("NrOf rules "+GlobalSettingsAndNotifier.singleton.permited.size());
+                System.out.println("NrOf rules " + GlobalSettingsAndNotifier.singleton.permited.size());
                 while (inar.hasNext()) {
 
                     networkAddressRange n = inar.next();
                     System.out.println("Check" + n.getNetworkForHumans());
                     n.getAction();
-                    switch (n.isAllowed(new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])}, true)) {
+                    switch (n.isAllowed(new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])}, isSecured)) {
                         case 1:
                             return true;
                         case -1:

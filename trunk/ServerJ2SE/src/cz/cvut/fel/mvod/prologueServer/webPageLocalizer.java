@@ -35,18 +35,15 @@ public class webPageLocalizer {
 
     /**
      * Localizes a web page, the web page name has to follow some simple guidelines
-     * @param URI the name of the page, the general name should be ended by a "_" follower by the language code. ex.: index_en-EN.html
+     * @param URI the name of the page, without suffixes
      */
     public webPageLocalizer(final String URI,final String directory) {
         webPage = new HashMap<String, String>();
         FileOperator fo = new FileOperator();
         File incomingDir = new File(directory);
-      //  System.out.println("Looking for files in directory: "+ incomingDir.getAbsolutePath());
+       
         File contents = incomingDir;
-        /*for (int i = 0; i < contents.length; i++) {
-          //  System.out.println("fileList " +contents[i]);
-
-        }*/
+      
         List files = new ArrayList();
         FilenameFilter ff = new FilenameFilter() {
 
@@ -54,7 +51,7 @@ public class webPageLocalizer {
             public boolean accept(File dir, String name) {
        
                 if (name.contains(URI + "_")) {
-                  //  System.out.println("FOUND ONE");
+               
                     return true;
 
 
@@ -72,8 +69,8 @@ public class webPageLocalizer {
 
             if (pages != null) {
                 if (pages.length != 0) {
-                    //   System.out.println("FOUND SOMETHING");
-                    //System.out.println(Arrays.asList(pages).);
+                     
+                   System.out.println(Arrays.asList(pages));
                     files.addAll(Arrays.asList(pages));
                 }
             }
@@ -94,7 +91,7 @@ public class webPageLocalizer {
             rawPage = rawPage.replaceAll("<--PUBLIC_IP-->", GlobalSettingsAndNotifier.singleton.getSetting("PUBLIC_IP"));
             rawPage = rawPage.replaceAll("<--PORT-->", GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT"));
             rawPage = rawPage.replace("<--PRIVATE_IP-->", GlobalSettingsAndNotifier.singleton.getSetting("PRIVATE_IP"));
-          //  System.out.println(path + " " + lang);
+         
             webPage.put(lang, rawPage);
 
         }
@@ -114,7 +111,7 @@ public class webPageLocalizer {
         String page = null;
 
         if (webPage.isEmpty()) {
-            return "Error";
+            return GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
         }
         try {
             for (int i = 0; i < langs.length; i++) {
@@ -139,7 +136,7 @@ public class webPageLocalizer {
                 }
             }
             if (page == null) {
-                // System.out.println("LAST RESORT");
+               
                 page = webPage.values().iterator().next();
                 if (!page.equals("")) {
 
@@ -149,7 +146,7 @@ public class webPageLocalizer {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return "Error";
+        return GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
 
     }
 }

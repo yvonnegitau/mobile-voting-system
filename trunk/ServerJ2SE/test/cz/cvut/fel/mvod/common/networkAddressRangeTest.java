@@ -80,11 +80,14 @@ public class networkAddressRangeTest {
     public void testGetNetworkForHumans() {
         System.out.println("getNetworkForHumans");
         networkAddressRange instance = null;
-        String expResult = "";
+        try {
+            instance = new networkAddressRange(new int[]{192, 168, 1, 1}, new int[]{255, 255, 255, 0}, networkAddressRange.ALLOW_ANY);
+        } catch (Exception ex) {
+            Logger.getLogger(networkAddressRangeTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String expResult = "192.168.1.1";
         String result = instance.getNetworkForHumans();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -94,25 +97,14 @@ public class networkAddressRangeTest {
     public void testGetShortMask() {
         System.out.println("getShortMask");
         networkAddressRange instance = null;
-        int expResult = 0;
+         try {
+            instance = new networkAddressRange(new int[]{192, 168, 1, 1}, new int[]{255, 255, 255, 0}, networkAddressRange.ALLOW_ANY);
+        } catch (Exception ex) {
+            Logger.getLogger(networkAddressRangeTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int expResult = 24;
         int result = instance.getShortMask();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getAction method, of class networkAddressRange.
-     */
-    @Test
-    public void testGetAction() {
-        System.out.println("getAction");
-        networkAddressRange instance = null;
-        String expResult = "";
-        String result = instance.getAction();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

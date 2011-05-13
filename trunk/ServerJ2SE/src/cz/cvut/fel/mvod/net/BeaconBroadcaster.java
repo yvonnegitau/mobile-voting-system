@@ -87,7 +87,7 @@ public class BeaconBroadcaster extends Thread implements Notifiable {
                     try {
                        if(GlobalSettingsAndNotifier.singleton.getSetting("allowBeacon").equals("true")) s.send(beaconPacket.get(i));
                         
-                          //System.out.println("BEACONING");
+                          
 
                     } catch (IOException ex) {
                         System.out.println(ex.toString());
