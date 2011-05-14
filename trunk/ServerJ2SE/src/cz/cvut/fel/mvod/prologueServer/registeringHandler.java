@@ -20,9 +20,12 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import org.xmlpull.v1.XmlPullParserException;
 import java.util.HashMap;
+import javax.swing.Timer;
 
 /**
  * An HTTP handler that handles incoming traffic to the prologue server. It handles new user creating and information web page output.
@@ -32,14 +35,30 @@ import java.util.HashMap;
 public class registeringHandler implements HttpHandler, Notifiable {
 
     XMLFactory wpb = new XMLFactory();
-    webPageLocalizer introPage = new webPageLocalizer("index", "webpages");
-    webPageLocalizer regPage = new webPageLocalizer("regpage", "webpages");
-    HashMap<String,WebPageFetcher> webPages = new HashMap<String, WebPageFetcher>();
+    webPageLocalizer introPage;
+    webPageLocalizer regPage;
+    HashMap<String, WebPageFetcher> webPages;
     String CSS = "";
 
+    /**
+     *
+     * The constructor for this class, initializes the base stuff
+     */
     public registeringHandler() {
-        FileOperator fo = new FileOperator();
-        CSS = fo.getWholeTextFile("style.css");
+        loadPages();
+        int delay = 30000;
+        ActionListener taskPerformer = new ActionListener() {
+
+            @Override
+            /**
+             * Page refresher so that the server doesnt need to be restarted after a change.
+             * Every 30 secs.
+             * */
+            public void actionPerformed(ActionEvent evt) {
+                loadPages();
+            }
+        };
+        new Timer(delay, taskPerformer).start();
     }
 
     @Override
@@ -53,12 +72,12 @@ public class registeringHandler implements HttpHandler, Notifiable {
             String responce = "";
             Headers heads = he.getResponseHeaders();
 
-          
+
             if (URI.equals("/")) {
 
                 heads.add("Content-Type", "text/html");
                 responce = introPage.getWP(langs);
-            } else if(URI.contains("favicon")){
+            } else if (URI.contains("favicon")) {
                 responce = "null";
             } else if (URI.contains("css")) {
                 heads.add("Content-Type", "text/css");
@@ -69,17 +88,23 @@ public class registeringHandler implements HttpHandler, Notifiable {
                 responce = regPage.getWP(langs);
             } else {
                 String file = URI.replaceAll(".*/", "");
+
                 String dir = URI.replaceAll(file, "");
-                heads.add("Content-Type", "text/html");
+                System.out.println("DIR " + dir);
+
                 responce = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
+                if (dir.charAt(0) == '/') {
+                    dir = dir.replaceFirst("/", "");
+                }
+                System.out.println("DIR2 " + dir);
                 WebPageFetcher pages = webPages.get(dir);
                 String[] tst = {"en"};
                 /**
                  * Tests if the pages are loaded, or loaded with errors and attempts a load
                  */
-                if(pages==null || pages.sitesLoc.values().iterator().next().getWP(tst).contains("error")){
-                    pages = new WebPageFetcher("summary.sum","results/");
-                 
+                if (pages == null || pages.sitesLoc.values().iterator().next().getWP(tst).contains("error")) {
+                    pages = new WebPageFetcher("summary.sum", dir);
+
                     webPages.put(dir, pages);
                 }
                 if (file.equals("")) {
@@ -91,7 +116,7 @@ public class registeringHandler implements HttpHandler, Notifiable {
 
 
 
-            } 
+            }
             if (responce.equals("")) {
                 heads.add("Content-Type", "text/html");
                 responce = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
@@ -99,7 +124,7 @@ public class registeringHandler implements HttpHandler, Notifiable {
 
             OutputStream s = he.getResponseBody();
             is.close();
-           
+
             he.sendResponseHeaders(200, responce.getBytes().length);
 
             s.write(responce.getBytes());
@@ -192,6 +217,18 @@ public class registeringHandler implements HttpHandler, Notifiable {
             return "<p>" + GlobalSettingsAndNotifier.singleton.messages.getString("usernameExistsErr") + "</p>";
         }
         return "OK";
+
+    }
+
+    /**
+     * Loads the base pages and resets the cached other pages
+     */
+    private void loadPages() {
+        introPage = new webPageLocalizer("index", "webpages");
+        regPage = new webPageLocalizer("regpage", "webpages");
+        webPages = new HashMap<String, WebPageFetcher>();
+        FileOperator fo = new FileOperator();
+        CSS = fo.getWholeTextFile("style.css");
 
     }
 

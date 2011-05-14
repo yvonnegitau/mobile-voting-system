@@ -219,7 +219,10 @@ public class PrologueServer implements Notifiable {
 
         }
     }
-
+/**
+ * Returns an Arraylist of addresses. The array does not contain the IP that is used on the internet nor localhost.
+ * @return
+ */
     public static ArrayList<InetAddress> getMyLocalIP() {
 
         Enumeration<NetworkInterface> interfaces = null;
