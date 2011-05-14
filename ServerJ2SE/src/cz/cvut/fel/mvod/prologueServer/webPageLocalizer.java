@@ -19,6 +19,7 @@ import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,6 +49,9 @@ public class webPageLocalizer {
         FilenameFilter ff = new FilenameFilter() {
 
             @Override
+            /**
+             * filter for the looked for file with localisation, it  will ignore non localized files
+             */
             public boolean accept(File dir, String name) {
        
                 if (name.contains(URI + "_")) {
@@ -62,7 +66,7 @@ public class webPageLocalizer {
         };
 
 
-     //   for (int i = 0; i < contents.length; i++) {
+    
 
             File[] pages = contents.listFiles(ff);
 
@@ -74,7 +78,7 @@ public class webPageLocalizer {
                     files.addAll(Arrays.asList(pages));
                 }
             }
-      //  }
+     
 
 
 
@@ -88,9 +92,10 @@ public class webPageLocalizer {
                 lang = "default";
             }
             String rawPage = fo.getWholeTextFile(path);
+            rawPage = rawPage.replace("<--PRIVATE_IP-->", getIPTable());
             rawPage = rawPage.replaceAll("<--PUBLIC_IP-->", GlobalSettingsAndNotifier.singleton.getSetting("PUBLIC_IP"));
             rawPage = rawPage.replaceAll("<--PORT-->", GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT"));
-            rawPage = rawPage.replace("<--PRIVATE_IP-->", GlobalSettingsAndNotifier.singleton.getSetting("PRIVATE_IP"));
+            
          
             webPage.put(lang, rawPage);
 
@@ -100,6 +105,19 @@ public class webPageLocalizer {
 
 
 
+    }
+
+    private String getIPTable() {
+        String table = new String();
+        table = table.concat("<table border=\"1\"><thead><tr><th>IP</th><th>Port</th></tr></thead><tbody><tr>");
+        Iterator<InetAddress> addresses = PrologueServer.getMyLocalIP().iterator();
+        while(addresses.hasNext()){
+            table = table.concat("<tr><td>"+addresses.next().toString().replace("/", "")+"</td>");
+            table = table.concat("<td><--PORT--></td></tr>");
+
+        }
+        table = table.concat("</tr></tbody></table>");
+        return table;
     }
 /**
  * Returns the best matching web page for the given language

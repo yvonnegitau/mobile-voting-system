@@ -7,12 +7,12 @@
             <line>128</line>
         </file>
         <file>
-            <url>src/cz/cvut/fel/mvod/gui/MobileVotingDevice.java</url>
-            <line>61</line>
+            <url>src/cz/cvut/fel/mvod/gui/settings/panels/PrologueSettingsPanel.java</url>
+            <line>396</line>
         </file>
         <file>
-            <url>src/cz/cvut/fel/mvod/gui/settings/panels/PrologueSettingsPanel.java</url>
-            <line>395</line>
+            <url>src/cz/cvut/fel/mvod/gui/MobileVotingDevice.java</url>
+            <line>61</line>
         </file>
     </editor-bookmarks>
 </project-private>

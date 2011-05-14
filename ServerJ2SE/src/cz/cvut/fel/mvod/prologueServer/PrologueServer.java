@@ -2,18 +2,19 @@ package cz.cvut.fel.mvod.prologueServer;
 /*
 Copyright 2011 Radovan Murin
 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+
 import com.sun.net.httpserver.*;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
@@ -22,10 +23,20 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
+import java.net.Socket;
+import java.net.SocketException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.security.*;
 import java.security.cert.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.net.ssl.*;
 import javax.swing.JOptionPane;
 
@@ -34,9 +45,10 @@ import javax.swing.JOptionPane;
  * @author Radovan Murin
  */
 public class PrologueServer implements Notifiable {
-/**
- * The server is providing information and accepting new regiestrations
- */
+
+    /**
+     * The server is providing information and accepting new regiestrations
+     */
     public static final int STATE_REGISTERING = 1;
     /**
      * The server is only providing information to connect.
@@ -50,15 +62,16 @@ public class PrologueServer implements Notifiable {
     HttpsServer s;
     SSLContext sslContext;
     HttpsServer server;
-/**
- * The constructor of the server, any exception except IOException are likely caused by a bad certificate.
- * @throws IOException the server is likely to have the port blocked.
- * @throws NoSuchAlgorithmException
- * @throws KeyStoreException
- * @throws CertificateException
- * @throws UnrecoverableKeyException
- * @throws KeyManagementException
- */
+
+    /**
+     * The constructor of the server, any exception except IOException are likely caused by a bad certificate.
+     * @throws IOException the server is likely to have the port blocked.
+     * @throws NoSuchAlgorithmException
+     * @throws KeyStoreException
+     * @throws CertificateException
+     * @throws UnrecoverableKeyException
+     * @throws KeyManagementException
+     */
     public PrologueServer() throws IOException, NoSuchAlgorithmException, KeyStoreException, CertificateException, UnrecoverableKeyException, KeyManagementException {
 
         getMyPublicIP();
@@ -71,13 +84,13 @@ public class PrologueServer implements Notifiable {
         KeyStore ks = KeyStore.getInstance("PKCS12");
         if (GlobalSettingsAndNotifier.singleton.getSetting("Prologue_USEDEFAULTCERT").equalsIgnoreCase("FALSE")) {
 
-           
+
 
 
             while (true) {
 
                 try {
-                    if (passphrase==null){
+                    if (passphrase == null) {
                         CertManager.changeCert(CertManager.VOTING);
                     }
                     //passphrase = "qwerty".toCharArray();
@@ -85,17 +98,17 @@ public class PrologueServer implements Notifiable {
                     ks.load(new FileInputStream(GlobalSettingsAndNotifier.singleton.getSetting("Prologue_certpath")), passphrase);
                     break;
                 } catch (Exception ex) {
-                   passphrase = JOptionPane.showInputDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certPassChallLabel"), GlobalSettingsAndNotifier.singleton.messages.getString("certPassChallTitle"), JOptionPane.WARNING_MESSAGE).toCharArray();
+                    passphrase = JOptionPane.showInputDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certPassChallLabel"), GlobalSettingsAndNotifier.singleton.messages.getString("certPassChallTitle"), JOptionPane.WARNING_MESSAGE).toCharArray();
                 }
             }
 
 
 
         } else {
-            
+
             passphrase = "12345".toCharArray();
-            try{
-            ks.load(new FileInputStream("server.p12"), passphrase);
+            try {
+                ks.load(new FileInputStream("server.p12"), passphrase);
             } catch (Exception ex) {
                 JOptionPane.showConfirmDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certFail"), GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"), JOptionPane.ERROR_MESSAGE);
                 return;
@@ -128,18 +141,20 @@ public class PrologueServer implements Notifiable {
 
 
     }
-/**
- * Prevents new user registration.
- */
+
+    /**
+     * Prevents new user registration.
+     */
     private void stopRegistration() {
 
         server.removeContext("/");
         server.createContext("/", new ProvidingHandler());
 
     }
-/**
- * Stops the server.
- */
+
+    /**
+     * Stops the server.
+     */
     private void stopServer() {
         GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_INACTIVE + "", false);
         server.stop(1);
@@ -148,10 +163,11 @@ public class PrologueServer implements Notifiable {
 
 
     }
-/**
- * Changes the server state
- * @param state the state to change the server state into
- */
+
+    /**
+     * Changes the server state
+     * @param state the state to change the server state into
+     */
     private void changeState(int state) {
         //if(state == )
         switch (state) {
@@ -169,10 +185,11 @@ public class PrologueServer implements Notifiable {
         GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", state + "", false);
 
     }
-/**
- * returns the state the serer is currently in
- * @return
- */
+
+    /**
+     * returns the state the serer is currently in
+     * @return
+     */
     public int getState() {
         return Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("prologueState"));
     }
@@ -202,11 +219,40 @@ public class PrologueServer implements Notifiable {
 
         }
     }
-/**
- * Sets the password to the certificate file.
- * @param pass
- */
-    public  static void setCertPass(String pass){
+
+    public static ArrayList<InetAddress> getMyLocalIP() {
+
+        Enumeration<NetworkInterface> interfaces = null;
+        ArrayList<InetAddress> result = new ArrayList<InetAddress>();
+        try {
+            interfaces = NetworkInterface.getNetworkInterfaces();
+        } catch (SocketException ex) {
+            Logger.getLogger(PrologueServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface ni = interfaces.nextElement();
+            Enumeration<InetAddress> iAddr = ni.getInetAddresses();
+            while (iAddr.hasMoreElements()) {
+                InetAddress add = iAddr.nextElement();
+                try {
+                    if (add.getHostAddress().contains(".") && !add.getHostAddress().equals(InetAddress.getByName("localhost").toString().split("/")[1]) && !add.getHostAddress().contains(GlobalSettingsAndNotifier.singleton.getSetting("PUBLIC_IP"))) {
+                        result.add(add);
+                    }
+                } catch (UnknownHostException ex) {
+                    Logger.getLogger(PrologueServer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+        return result;
+
+    }
+
+    /**
+     * Sets the password to the certificate file.
+     * @param pass
+     */
+    public static void setCertPass(String pass) {
         passphrase = pass.toCharArray();
     }
 }
