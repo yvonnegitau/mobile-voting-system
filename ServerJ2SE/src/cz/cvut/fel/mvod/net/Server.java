@@ -50,7 +50,7 @@ import com.sun.net.httpserver.HttpsServer;
 import cz.cvut.fel.mvod.common.Vote;
 import cz.cvut.fel.mvod.common.networkAddressRange;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
-import cz.cvut.fel.mvod.gui.settings.CertManager;
+import cz.cvut.fel.mvod.crypto.CertManager;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -131,8 +131,9 @@ public class Server {
 
             } else {
                 passphrase = "12345".toCharArray();
+                CertManager.generateDefault();
                 try {
-                    ks.load(new FileInputStream("server.p12"), passphrase);
+                    ks.load(new FileInputStream(CertManager.DefaultCertPath+"server.p12"), passphrase);
                 } catch (Exception ex) {
                     JOptionPane.showConfirmDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certFail"), GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"), JOptionPane.ERROR_MESSAGE);
                     throw new Exception("CertFail");

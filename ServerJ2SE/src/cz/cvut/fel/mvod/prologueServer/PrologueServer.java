@@ -18,7 +18,7 @@ limitations under the License.
 import com.sun.net.httpserver.*;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
-import cz.cvut.fel.mvod.gui.settings.CertManager;
+import cz.cvut.fel.mvod.crypto.CertManager;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -108,8 +108,13 @@ public class PrologueServer implements Notifiable {
 
             passphrase = "12345".toCharArray();
             try {
-                ks.load(new FileInputStream("server.p12"), passphrase);
+                System.out.println("USING DEFAULT CERT");
+                CertManager.generateDefault();
+                ks.load(new FileInputStream(CertManager.DefaultCertPath+"server.p12"), passphrase);
+
+
             } catch (Exception ex) {
+                ex.printStackTrace();
                 JOptionPane.showConfirmDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certFail"), GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -157,7 +162,10 @@ public class PrologueServer implements Notifiable {
      */
     private void stopServer() {
         GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_INACTIVE + "", false);
-        server.stop(1);
+        try{
+        server.stop(1);} catch(Exception ex){
+            ex.printStackTrace();
+        }
 
 
 
@@ -230,6 +238,8 @@ public class PrologueServer implements Notifiable {
         try {
             interfaces = NetworkInterface.getNetworkInterfaces();
         } catch (SocketException ex) {
+
+            ex.printStackTrace();
             Logger.getLogger(PrologueServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         while (interfaces.hasMoreElements()) {
@@ -242,6 +252,7 @@ public class PrologueServer implements Notifiable {
                         result.add(add);
                     }
                 } catch (UnknownHostException ex) {
+                    ex.printStackTrace();
                     Logger.getLogger(PrologueServer.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

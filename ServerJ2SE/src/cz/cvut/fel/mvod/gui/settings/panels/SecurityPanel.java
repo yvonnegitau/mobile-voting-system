@@ -23,7 +23,7 @@ Copyright 2011 Radovan Murin
 package cz.cvut.fel.mvod.gui.settings.panels;
 
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
-import cz.cvut.fel.mvod.gui.settings.CertManager;
+import cz.cvut.fel.mvod.crypto.CertManager;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
