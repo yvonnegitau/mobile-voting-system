@@ -23,6 +23,8 @@ import cz.cvut.fel.mvod.global.Notifiable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.xmlpull.v1.XmlPullParserException;
 import java.util.HashMap;
 import javax.swing.Timer;
@@ -77,6 +79,14 @@ public class registeringHandler implements HttpHandler, Notifiable {
 
                 heads.add("Content-Type", "text/html");
                 responce = introPage.getWP(langs);
+                if (!introPage.isLoaded()) {
+                    try {
+                        responce = generateMainWebPage();
+                    } catch (XmlPullParserException ex) {
+                        Logger.getLogger(registeringHandler.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+               
             } else if (URI.contains("favicon")) {
                 responce = "null";
             } else if (URI.contains("css")) {
@@ -86,6 +96,10 @@ public class registeringHandler implements HttpHandler, Notifiable {
             } else if (URI.equals("/registration")) {
                 heads.add("Content-Type", "text/html");
                 responce = regPage.getWP(langs);
+                if (!regPage.isLoaded()) {
+                    responce = generateRegWebPage();
+                }
+              
             } else {
                 String file = URI.replaceAll(".*/", "");
 
@@ -167,12 +181,11 @@ public class registeringHandler implements HttpHandler, Notifiable {
     /**
      * @deprecated
      * Returns the fallback introduction web page
-     * @param sa
      * @return
      * @throws XmlPullParserException
      * @throws IOException
      */
-    protected String generateMainWebPage(String[] sa) throws XmlPullParserException, IOException {
+    protected String generateMainWebPage() throws XmlPullParserException, IOException {
         wpb = new XMLFactory();
         return wpb.makeIntroPage(GlobalSettingsAndNotifier.singleton.getSetting("PUBLIC_IP"), Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT")));
     }
@@ -225,7 +238,21 @@ public class registeringHandler implements HttpHandler, Notifiable {
      */
     private void loadPages() {
         introPage = new webPageLocalizer("index", "webpages");
+        if (!introPage.loadSuccess) {
+            try {
+                introPage.webPage.clear();
+                introPage.webPage.put("en", generateMainWebPage());
+            } catch (XmlPullParserException ex) {
+                Logger.getLogger(registeringHandler.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(registeringHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         regPage = new webPageLocalizer("regpage", "webpages");
+        if (!regPage.loadSuccess) {
+            regPage.webPage.clear();
+            regPage.webPage.put("en", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \" http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />		<title>Mobile Voting Server - Radovan Murin</title>	</head>	<h1>Voter Registration</h1>	<body>		<form name=\"input\" action=\"index.html\" method=\"post\">			Name:			<input type=\"text\" name=\"name\" />			<br />			Surname:			<input type=\"text\" name=\"surname\" />			<br />			Username :			<input type=\"text\" name=\"username\" />			<br />			Identification :			<input type=\"text\" name=\"ID\" />			<br />			Password :			<input type=\"text\" name=\"pass1\" />			<br />			Password again :			<input type=\"text\" name=\"pass2\" />			<br />			<input type=\"submit\" value=\"Submit\" />			<br />		</form>	</body>/html>");
+        }
         webPages = new HashMap<String, WebPageFetcher>();
         FileOperator fo = new FileOperator();
         CSS = fo.getWholeTextFile("style.css");

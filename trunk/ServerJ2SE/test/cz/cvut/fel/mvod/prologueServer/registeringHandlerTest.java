@@ -6,6 +6,7 @@
 package cz.cvut.fel.mvod.prologueServer;
 
 import com.sun.net.httpserver.HttpExchange;
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -50,9 +51,9 @@ public class registeringHandlerTest {
         System.out.println("parsePost");
         String body = "name=Radovan&surname=Murin&username=murin&ID=asdf&pass1=1&pass2=1";
         registeringHandler instance = new registeringHandler();
-        String expResult = "Please choose another username.";
+        String expResult = GlobalSettingsAndNotifier.singleton.messages.getString("usernameExistsErr");
         String result = instance.parsePost(body);
-        assertEquals(expResult, result);
+        assertTrue(result.contains(expResult));
         
     }
 

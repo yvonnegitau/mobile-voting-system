@@ -33,6 +33,7 @@ import java.util.List;
 public class webPageLocalizer {
 
     HashMap<String, String> webPage;
+    boolean loadSuccess = true;
 
     /**
      * Localizes a web page, the web page name has to follow some simple guidelines
@@ -100,6 +101,7 @@ public class webPageLocalizer {
             webPage.put(lang, rawPage);
 
         }
+        
 
 
 
@@ -129,6 +131,7 @@ public class webPageLocalizer {
         String page = null;
 
         if (webPage.isEmpty()) {
+            loadSuccess = false;
             return GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
         }
         try {
@@ -164,7 +167,15 @@ public class webPageLocalizer {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        loadSuccess = false;
         return GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
 
+    }
+/**
+ * Check is this web page was loaded succesfully
+ * @return if true then this instnce contains more than an error page
+ */
+    public boolean isLoaded() {
+        return loadSuccess;
     }
 }

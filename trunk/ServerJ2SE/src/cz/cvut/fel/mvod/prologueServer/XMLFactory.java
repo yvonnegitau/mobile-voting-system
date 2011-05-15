@@ -160,35 +160,35 @@ public class XMLFactory {
 
         serializer.startTag(NAMESPACE, "body");
         serializer.startTag(NAMESPACE, "h1");
-        serializer.text("Vitajte v systéme pre mobilné hlasovanie");
+        serializer.text("Welcome to the mobile voting access point");
         serializer.endTag(NAMESPACE, "h1");
 
         serializer.startTag(NAMESPACE, "p");
-        serializer.text("Na tejto stránke získate všetky potrebné informácie pre registráciu a pripojenie sa k hlasoveciemu zariadeniu.");
+        serializer.text("On this page, you will find all the necessary information to connect to the voting point and vote.");
         serializer.endTag(NAMESPACE, "p");
 
         serializer.startTag(NAMESPACE, "h2");
-        serializer.text("Registrácia voliča ");
+        serializer.text("Voter registration");
         serializer.endTag(NAMESPACE, "h2");
 
 
         serializer.startTag(NAMESPACE, "p");
-        serializer.text("Pre registráciu, prosim nasledujte");
+        serializer.text("In order to register please follow this");
         serializer.startTag(NAMESPACE, "a");
         serializer.attribute(null, "href", "registration");
-        serializer.text(" tento odkaz.");
+        serializer.text(" link.");
 
         serializer.endTag(NAMESPACE, "a");
         serializer.endTag(NAMESPACE, "p");
 
 
         serializer.startTag(NAMESPACE, "h2");
-        serializer.text("Pripojenie prostredíctvom internetu");
+        serializer.text("Connecting via the internet");
         serializer.endTag(NAMESPACE, "h2");
 
 
         serializer.startTag(NAMESPACE, "p");
-        serializer.text("Ak sa pripájate prostredníctvom internetu, to znamená, že sa nenachádzate v sieti hlasovacej centrály, použite nasledujúce adresy pre pripojenie");
+        serializer.text("If you are connecting via the Internet, meaning you are not near the voting point, and are not connected via a VPN, please use this IP and port.");
         serializer.endTag(NAMESPACE, "p");
 
         serializer.startTag(NAMESPACE, "table");
@@ -228,17 +228,15 @@ public class XMLFactory {
         serializer.endTag(NAMESPACE, "table");
 
         serializer.startTag(NAMESPACE, "h2");
-        serializer.text("Pripojenie prostredíctvom miestnej siete");
+        serializer.text("Local LAN connection");
         serializer.endTag(NAMESPACE, "h2");
 
         serializer.startTag(NAMESPACE, "p");
-        serializer.text("Týmto pripojením sa rozumie, ak sa hlasovacie zariadenie nachádza v rovnakej miestnej sieti."
-                + "Tieto nastavenia nastavujte ručne len v prípade, že Vaše zariadenie nepodporuje automaticku konfiguráciu a hlasovacia základňa"
-                + " sa nezobrazuje v ponuke zariadenia.");
+        serializer.text("By this is meant connecting to the voting point when on the same network. This means you are close(buildingwise) to the voting point. The point should be automaticaly configured in your                device, if that did not happen please use the following data to connect.");
         serializer.endTag(NAMESPACE, "p");
 
         serializer.startTag(NAMESPACE, "h4");
-        serializer.text("Nastavenie pre lokálnu komunikáciu");
+        serializer.text("Local connection settings");
         serializer.endTag(NAMESPACE, "h4");
 
 
