@@ -17,6 +17,8 @@ package cz.cvut.fel.mvod.crypto;
 
 import cz.cvut.fel.mvod.crypto.Base64;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
+import cz.cvut.fel.mvod.gui.PleaseWaitDialog;
 import cz.cvut.fel.mvod.gui.settings.panels.PrologueSettingsPanel;
 import cz.cvut.fel.mvod.prologueServer.PrologueServer;
 import java.io.File;
@@ -56,10 +58,10 @@ public class CertManager {
     static {
         try {
             md = MessageDigest.getInstance("SHA1");
-            //generateDefault();
+          
 
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(CertManager.class.getName()).log(Level.SEVERE, null, ex);
+            new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("FATAL")+"\nCertManager\n"+ex.toString(),false).setVisible(true);
         }
     }
 
@@ -97,15 +99,15 @@ public class CertManager {
                     loadInfo(ks, system, passphrase, file);
                     loadOK = true;
                 } catch (KeyStoreException ex) {
-                    Logger.getLogger(PrologueSettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("certFormErr")+"\nCertManager\n"+ex.toString()).setVisible(true);
                 } catch (IOException ex) {
                     passphrase = JOptionPane.showInputDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certPassChallLabel"), GlobalSettingsAndNotifier.singleton.messages.getString("certPassChallTitle"), JOptionPane.WARNING_MESSAGE);
 
                     tries++;
                 } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(PrologueSettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                   new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("FATAL")+"\nCertManager\n"+ex.toString(),false).setVisible(true);
                 } catch (CertificateException ex) {
-                    Logger.getLogger(PrologueSettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("certFail")+"\nCertManager\n"+ex.toString(),false).setVisible(true);
                 }
             }
             if (returnVal == JFileChooser.CANCEL_OPTION) {
@@ -126,9 +128,9 @@ public class CertManager {
                     PrologueServer.setCertPass(passphrase);
                     break;
                 } catch (CertificateEncodingException ex) {
-                    Logger.getLogger(CertManager.class.getName()).log(Level.SEVERE, null, ex);
+                    new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("certFail")+"\nCertManager\n"+ex.toString(),false).setVisible(true);
                 } catch (KeyStoreException ex) {
-                    Logger.getLogger(CertManager.class.getName()).log(Level.SEVERE, null, ex);
+                    new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("FATAL")+"\nCertManager\n"+ex.toString(),true).setVisible(true);
                 }
             }
             case VOTING: {
@@ -139,10 +141,10 @@ public class CertManager {
                     GlobalSettingsAndNotifier.singleton.modifySettings("Voting_certpath", file.getAbsolutePath(), true);
                     Server.setCertPass(passphrase);
                     break;
+                }  catch (CertificateEncodingException ex) {
+                    new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("certFail")+"\nCertManager\n"+ex.toString(),false).setVisible(true);
                 } catch (KeyStoreException ex) {
-                    Logger.getLogger(CertManager.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (CertificateEncodingException ex) {
-                    Logger.getLogger(CertManager.class.getName()).log(Level.SEVERE, null, ex);
+                    new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("FATAL")+"\nCertManager\n"+ex.toString(),true).setVisible(true);
                 }
 
             }
@@ -192,7 +194,14 @@ public class CertManager {
         }
         m = mp.matcher(cert);
         m.find();
-        String res = m.group().replaceAll("Sign.*", "").replace("CN=", "").replace(",", "");
+        String match = null;
+        try{
+        match = m.group();}
+        catch(Exception ex) {
+            new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("certFail"));
+        }
+        if(match==null) return "N/A";
+        String res = match.replaceAll("Sign.*", "").replace("CN=", "").replace(",", "");
 
         return res;
     }
@@ -250,28 +259,43 @@ public class CertManager {
     }
 
     public static void generateDefault() {
+
         File crtDir = new File(DefaultCertPath);
         Process process = null;
         crtDir.mkdir();
         File cert = new File(DefaultCertPath + "server.p12");
         if (!cert.exists()) {
+            PleaseWaitDialog plw = new PleaseWaitDialog();
+            plw.setVisible(true);
+
             try {
-                //JFrame dial = new CertCreating();
-
-
-                //dial.setVisible(true);
-                process = Runtime.getRuntime().exec("genCert.bat");
+                if (System.getProperty("os.name").contains("Windows")) {
+                    process = Runtime.getRuntime().exec("genCert.bat");
+                } else if (System.getProperty("os.name").contains("Linux")) {
+                    process = Runtime.getRuntime().exec("genCert.sh");
+                } else {
+                    System.out.println("Cannot generate a deafault certificate on this system, and cannot generat it. Certifocates are generated only on Linux and Winodws syustem"
+                            + "This is an unsupporte system. If you wish to continue, please create a PKCS12 certificate named server.p12, password:12345 and put it into certs directory in the application root."
+                            + "Where .jar file is.");
+                    System.out.println("UNSUPPORTED OS");
+                    System.exit(-1);
+                }
 
                 try {
+                    
                     process.waitFor();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(CertManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             } catch (IOException ex) {
-                ex.printStackTrace();
+                new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("certGenFail")+"\n CertManager \n"+ex.toString(),false).setVisible(true);
             }
+            plw.setVisible(false);
         }
+         if (!cert.exists()) {
+             new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("certGenFail")+"\n CertManager \n",false).setVisible(true);
+         }
         /*byte[] toHex = getCertBytes(cert.getAbsolutePath(), "12345");
         md.update(toHex);
 
@@ -309,12 +333,17 @@ public class CertManager {
     }
 
     private static String getCertString(String path, String pass) {
-        return getCertificate(path, pass).toString();
+        if(path==null || pass==null) return "CN=N/A,";
+        Certificate c = getCertificate(path, pass);
+        if(c==null) return "CN=N/A,";
+         return c.toString();
     }
 
     private static byte[] getCertBytes(String path, String pass) {
+        Certificate c = getCertificate(path, pass);
+        if(c==null) return new byte[]{1};
         try {
-            return getCertificate(path, pass).getEncoded();
+            return c.getEncoded();
         } catch (CertificateEncodingException ex) {
             Logger.getLogger(CertManager.class.getName()).log(Level.SEVERE, null, ex);
         }

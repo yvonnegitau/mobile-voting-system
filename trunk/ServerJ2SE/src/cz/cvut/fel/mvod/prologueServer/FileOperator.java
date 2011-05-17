@@ -18,6 +18,8 @@ Copyright 2011 Radovan Murin
 
 
 import cz.cvut.fel.mvod.common.Voter;
+import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -53,11 +55,11 @@ public class FileOperator {
             bis.close();
             dis.close();
         } catch (FileNotFoundException e) {
-            ret = "File not found";
-            e.printStackTrace();
+            ret = path+ " File not found";
+           
         } catch (IOException e) {
-            ret = "Other file reading exception";
-            e.printStackTrace();
+            ret = path + "Other file reading exception";
+           
         }
         return ret;
     }
@@ -72,7 +74,7 @@ public class FileOperator {
         try {
             file.createNewFile();
         } catch (IOException ex) {
-            System.out.println("CANT CREATE FILE");
+            ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("fileWriteError")+'\n'+path});
         }
         FileOutputStream fos = null;
         BufferedOutputStream bos = null;
@@ -98,7 +100,7 @@ public class FileOperator {
                     voterArrayList = (ArrayList<Voter>) objectInput.readObject();
                     objectInput.close();
                 } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(FileOperator.class.getName()).log(Level.SEVERE, null, ex);
+                   ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("fileWriteError")+'\n'+path});
                 } catch (Exception ex){
                     
                 }
@@ -118,7 +120,7 @@ public class FileOperator {
             bos.close();
             fos.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("fileWriteError")+'\n'+path});
         }
 
         return true;

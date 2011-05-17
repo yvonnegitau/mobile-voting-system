@@ -23,6 +23,7 @@ Copyright 2011 Radovan Murin
 package cz.cvut.fel.mvod.gui.settings.panels;
 
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import cz.cvut.fel.mvod.gui.settings.LanguageChoicesCBM;
 import java.util.Locale;
 
@@ -115,6 +116,8 @@ public class LanguagePanel extends javax.swing.JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         GlobalSettingsAndNotifier.singleton.ChangeLocale(LCCBM.getSelected());
+        new ErrorDialog(null, true, "RESTART!").setVisible(true);
+       
     }//GEN-LAST:event_jButton1MouseClicked
 
 

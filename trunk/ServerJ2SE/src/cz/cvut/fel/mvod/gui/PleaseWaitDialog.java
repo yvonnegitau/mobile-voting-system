@@ -4,11 +4,10 @@
  */
 
 /*
- * CertCreating.java
+ * PleaseWaitDialog.java
  *
  * Created on 14.5.2011, 20:58:26
  */
-
 package cz.cvut.fel.mvod.gui;
 
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
@@ -17,11 +16,12 @@ import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
  *
  * @author Murko
  */
-public class CertCreating extends javax.swing.JFrame {
+public class PleaseWaitDialog extends javax.swing.JFrame {
 
-    /** Creates new form CertCreating */
-    public CertCreating() {
+    /** Creates new form PleaseWaitDialog */
+    public PleaseWaitDialog() {
         initComponents();
+        setLocation(250, 250);
     }
 
     /** This method is called from within the constructor to
@@ -35,9 +35,12 @@ public class CertCreating extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Please wait...");
+        setAlwaysOnTop(true);
+        setMinimumSize(new java.awt.Dimension(331, 82));
+        setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         setResizable(false);
-        setUndecorated(true);
 
         jLabel1.setText(GlobalSettingsAndNotifier.singleton.messages.getString("creatingCertificate")); // NOI18N
 
@@ -45,35 +48,36 @@ public class CertCreating extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(122, 122, 122)
                 .addComponent(jLabel1)
-                .addContainerGap())
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(34, 34, 34)
                 .addComponent(jLabel1)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
-                new CertCreating().setVisible(true);
+
+                new PleaseWaitDialog().setVisible(true);
+
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
-
 }

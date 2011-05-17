@@ -60,12 +60,10 @@ class WebPageFetcher {
  */
     public String fetch(String name,String[] loc) {
         String output = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
-        try{
+        
         output=sitesLoc.get(name).getWP(loc);
-        } catch(Exception ex) {
-            System.out.println("Tried to fetch "+name);
-            ex.printStackTrace();
-        }
+         
+        
         return output;
     }
 }

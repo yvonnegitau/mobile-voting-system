@@ -124,7 +124,7 @@ public class XMLFactory {
 
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+           
             return false;
         }
         return true;
@@ -281,7 +281,7 @@ public class XMLFactory {
         serializer.endTag(NAMESPACE, "html");
         serializer.endDocument();
 
-        System.out.println("********************************");
+       
 
         return os.toString();
     }

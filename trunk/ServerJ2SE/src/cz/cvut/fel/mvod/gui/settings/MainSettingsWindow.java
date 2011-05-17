@@ -24,6 +24,7 @@ package cz.cvut.fel.mvod.gui.settings;
 import cz.cvut.fel.mvod.common.ObjectReadWriter;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import cz.cvut.fel.mvod.prologueServer.PrologueServer;
 import cz.cvut.fel.mvod.prologueServer.RegistrantAuthorisationWindow;
 import java.awt.event.WindowAdapter;
@@ -56,7 +57,7 @@ public class MainSettingsWindow extends javax.swing.JFrame implements Notifiable
                 try {
                     ObjectReadWriter.saveSettings();
                 } catch (IOException ex) {
-                    Logger.getLogger(MainSettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
+                        ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("saveSettErr")});
                 }
                 dispose();
       }
@@ -108,8 +109,8 @@ public class MainSettingsWindow extends javax.swing.JFrame implements Notifiable
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("MessagesBundle"); // NOI18N
@@ -119,22 +120,7 @@ public class MainSettingsWindow extends javax.swing.JFrame implements Notifiable
     }// </editor-fold>//GEN-END:initComponents
 
     private void prologueSettingsPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prologueSettingsPanel1MouseClicked
-        PrologueServer prologueServer = null;
-        try {
-            prologueServer = new PrologueServer();
-        } catch (IOException ex) {
-            Logger.getLogger(MainSettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(MainSettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (KeyStoreException ex) {
-            Logger.getLogger(MainSettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CertificateException ex) {
-            Logger.getLogger(MainSettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnrecoverableKeyException ex) {
-            Logger.getLogger(MainSettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (KeyManagementException ex) {
-            Logger.getLogger(MainSettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
        // RegistrantAuthorisationWindow r = new RegistrantAuthorisationWindow(prologueServer);
     }//GEN-LAST:event_prologueSettingsPanel1MouseClicked
 
