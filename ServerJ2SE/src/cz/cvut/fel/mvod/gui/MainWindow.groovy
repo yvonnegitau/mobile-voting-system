@@ -69,6 +69,7 @@ import javax.swing.filechooser.FileFilter
 import cz.cvut.fel.mvod.evaluation.VotingResult
 import cz.cvut.fel.mvod.evaluation.VotingQuestionResult
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier
+import cz.cvut.fel.mvod.gui.ErrorDialog
 
 /**
  * Hlavní okno programu.
@@ -175,7 +176,7 @@ class MainWindow implements ListSelectionListener, DAOObserver {
 		try {
 			network.startServer()
 		} catch(IOException ex) {
-			showError(GlobalSettingsAndNotifier.singleton.messages.getString("netErr"))
+			new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("databaseInitFail")+"\n Voting system m\n"+ex.toString()).setVisible(true)
 			return
 		}
 		questions.each({it.state = Question.State.RUNNING})

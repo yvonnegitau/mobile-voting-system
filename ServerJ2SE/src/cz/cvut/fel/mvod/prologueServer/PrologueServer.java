@@ -19,6 +19,7 @@ import com.sun.net.httpserver.*;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
 import cz.cvut.fel.mvod.crypto.CertManager;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -80,7 +81,7 @@ public class PrologueServer implements Notifiable {
         server = HttpsServer.create(new InetSocketAddress(Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("PROLOGUE_PORT"))), -1);
         server.createContext("/", new registeringHandler());
         server.setExecutor(null);
-
+        System.out.println("Constructor");
         KeyStore ks = KeyStore.getInstance("PKCS12");
         if (GlobalSettingsAndNotifier.singleton.getSetting("Prologue_USEDEFAULTCERT").equalsIgnoreCase("FALSE")) {
 
@@ -114,8 +115,7 @@ public class PrologueServer implements Notifiable {
 
 
             } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showConfirmDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certFail"), GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"), JOptionPane.ERROR_MESSAGE);
+                ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("certFail")});
                 return;
             }
 
@@ -164,7 +164,7 @@ public class PrologueServer implements Notifiable {
         GlobalSettingsAndNotifier.singleton.modifySettings("prologueState", STATE_INACTIVE + "", false);
         try{
         server.stop(1);} catch(Exception ex){
-            ex.printStackTrace();
+            ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("serverFailure")+'\n'+"Prologue server\n"+ex.toString()});
         }
 
 
@@ -223,7 +223,7 @@ public class PrologueServer implements Notifiable {
 
         } catch (Exception e) {
             GlobalSettingsAndNotifier.singleton.modifySettings("PUBLIC_IP", "ERROR");
-            e.printStackTrace();
+            
 
         }
     }
@@ -252,8 +252,6 @@ public class PrologueServer implements Notifiable {
                         result.add(add);
                     }
                 } catch (UnknownHostException ex) {
-                    ex.printStackTrace();
-                    Logger.getLogger(PrologueServer.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 

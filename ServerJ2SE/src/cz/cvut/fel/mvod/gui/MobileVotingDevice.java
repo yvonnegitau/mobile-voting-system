@@ -39,6 +39,7 @@ Copyright 2011 Radovan Murin
  */
 package cz.cvut.fel.mvod.gui;
 
+import cz.cvut.fel.mvod.crypto.CertManager;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.persistence.DAOException;
 import cz.cvut.fel.mvod.persistence.DAOFacadeImpl;
@@ -59,15 +60,18 @@ public class MobileVotingDevice {
             DAOFactoryImpl.initInstance();
             DAOFacadeImpl.initInstance();
         } catch (DAOException ex) {
+            new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("databaseInitFail")+"\nCore system\n"+ex.toString(),false).setVisible(true);
             System.out.println(GlobalSettingsAndNotifier.singleton.messages.getString("databaseInitFail"));
             System.exit(1);
         }
+        CertManager.generateDefault();
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             @Override
             public void run() {
-               
+              
                 mainWindow = new MainWindow();
+                
                 mainWindow.start();
                 
             }

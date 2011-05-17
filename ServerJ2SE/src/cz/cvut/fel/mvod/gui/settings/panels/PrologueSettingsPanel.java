@@ -25,6 +25,8 @@ import com.sun.net.httpserver.*;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
 import cz.cvut.fel.mvod.crypto.CertManager;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
+import cz.cvut.fel.mvod.gui.PleaseWaitDialog;
 import cz.cvut.fel.mvod.prologueServer.PrologueServer;
 import java.io.BufferedReader;
 import java.io.File;
@@ -326,10 +328,7 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
             GlobalSettingsAndNotifier.singleton.modifySettings("PROLOGUE_PORT", port + "", true);
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this,
-                    GlobalSettingsAndNotifier.singleton.messages.getString("portErrorTXT"),
-                    GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"),
-                    JOptionPane.ERROR_MESSAGE);
+            ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("portErrorTXT")});
 
         }
 
@@ -337,16 +336,19 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
     }//GEN-LAST:event_prologuePortFocusLost
 
     private void prologueControlBTNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prologueControlBTNMouseClicked
+        PleaseWaitDialog pld = new PleaseWaitDialog();
+        //pld.main(null);
+        pld.show();
+        System.out.println("PLD");
         if (GlobalSettingsAndNotifier.singleton.getSetting("prologuestate").equalsIgnoreCase(PrologueServer.STATE_INACTIVE + "")) {
             try {
                 PrologueServer prologue = new PrologueServer();
             } catch (IOException ex) {
-                ex.printStackTrace();
-                Logger.getLogger(PrologueSettingsPanel.class.getName()).log(Level.SEVERE, null, ex);
+                ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("serverFailure")+'\n'+"Prologue: \n"+ex.toString()});
             } catch (SecurityException ex) {
-                ex.printStackTrace();
+                ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("serverFailure")+'\n'+"Prologue: \n"+ex.toString()});
             } catch (Exception ex) {
-                ex.printStackTrace();
+                ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("serverFailure")+'\n'+"Prologue: \n"+ex.toString()});
             }
             if (!enableRegistration.isSelected()) {
                 GlobalSettingsAndNotifier.singleton.modifySettings("prologuestate", PrologueServer.STATE_PROVIDING + "", true);
@@ -354,6 +356,9 @@ public class PrologueSettingsPanel extends javax.swing.JPanel implements Notifia
         } else {
             GlobalSettingsAndNotifier.singleton.modifySettings("prologuestate", PrologueServer.STATE_INACTIVE + "", true);
         }
+        pld.setVisible(false);
+        pld.dispose();
+
     }//GEN-LAST:event_prologueControlBTNMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked

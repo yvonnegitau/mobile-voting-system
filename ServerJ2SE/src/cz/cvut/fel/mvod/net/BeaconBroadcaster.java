@@ -17,6 +17,7 @@ package cz.cvut.fel.mvod.net;
 
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class BeaconBroadcaster extends Thread implements Notifiable {
                 }
             }
         } catch (SocketException ex) {
-            System.out.println(ex.toString());
+             ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("portBoundErr")+'\n'+"BeaconBroadcaster: "+BROADCAST_PORT+" \n"+ex.toString()});
         }
         final String buf = payload.getBeaconMSG();
         for (int i = 0; i < broadcasts.size(); i++) {
@@ -90,7 +91,7 @@ public class BeaconBroadcaster extends Thread implements Notifiable {
                           
 
                     } catch (IOException ex) {
-                        System.out.println(ex.toString());
+                        System.out.println("Beacon failed to send.");
                     }
                 }
 

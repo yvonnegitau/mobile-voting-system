@@ -23,6 +23,7 @@ package cz.cvut.fel.mvod.gui.settings.panels;
 import cz.cvut.fel.mvod.common.ObjectReadWriter;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import cz.cvut.fel.mvod.gui.settings.IPAdderDialogue;
 import cz.cvut.fel.mvod.gui.settings.NetworkSettingsTable;
 import java.io.File;
@@ -241,10 +242,7 @@ public class IPFilterPanel extends javax.swing.JPanel implements Notifiable {
                 ObjectReadWriter.loadIPTables(file);
                 //This is where a real application would open the file.
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this,
-                        GlobalSettingsAndNotifier.singleton.messages.getString("fileReadErr"),
-                        GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"),
-                        JOptionPane.ERROR_MESSAGE);
+                ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("fileReadErr")+'\n'+"IPFilter: \n"+ex.toString()});
             }
         }
         //This is where a real application would open the file.

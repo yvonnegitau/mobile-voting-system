@@ -81,7 +81,7 @@ public final class GlobalSettingsAndNotifier implements Serializable {
             try {
                 permited.add(new networkAddressRange(add, mask, networkAddressRange.ALLOW_ANY));
             } catch (Exception e) {
-                Logger.getLogger(GlobalSettingsAndNotifier.class.getName()).log(Level.SEVERE, null, e);
+                
             }
         }
 
@@ -106,9 +106,15 @@ public final class GlobalSettingsAndNotifier implements Serializable {
  * @param loc the locale the system should change to, if the locale is not supported the default is used.(English)
  */
     public void ChangeLocale(Locale loc) {
-        System.out.println("Changing locale to " + loc.getLanguage());
-        messages = ResourceBundle.getBundle("MessagesBundle", loc);
-        locale = loc;
+        try {
+            System.out.println("Changing locale to " + loc.getLanguage());
+            messages = ResourceBundle.getBundle("MessagesBundle", loc);
+            locale = loc;
+            ObjectReadWriter.saveSettings();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
     }
 /**
  * Returns the locale at the present time

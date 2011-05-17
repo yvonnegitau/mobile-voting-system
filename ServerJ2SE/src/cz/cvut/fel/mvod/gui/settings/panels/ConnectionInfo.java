@@ -23,6 +23,7 @@ package cz.cvut.fel.mvod.gui.settings.panels;
 
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import javax.swing.JOptionPane;
 
 /**
@@ -211,14 +212,10 @@ public final class ConnectionInfo extends javax.swing.JPanel implements Notifiab
             GlobalSettingsAndNotifier.singleton.modifySettings(type, port + "",true);
 
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Prosim zadajte cislo od 0 do 65555",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-
+            ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("portErrorTXT")});
+}
         }
 
-    }
 
     @Override
     public void notifyOfChange() {

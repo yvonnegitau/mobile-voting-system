@@ -24,6 +24,7 @@ package cz.cvut.fel.mvod.gui.settings.panels;
 
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.crypto.CertManager;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -227,7 +228,7 @@ GlobalSettingsAndNotifier.singleton.modifySettings("NET_ORIGIN","RESTRICT_LAN", 
         try {
             CertManager.changeCert(CertManager.VOTING);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(SecurityPanel.class.getName()).log(Level.SEVERE, null, ex);
+            ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("fileNotExistsErr")});
         }
     }//GEN-LAST:event_jButton1MouseClicked
 

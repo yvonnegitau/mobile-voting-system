@@ -94,7 +94,7 @@ public class RegistrantAuthorisationWindow extends JFrame {
                             RegistrantTable rt = (RegistrantTable) table.getModel();
                             Voter v = rt.getVoterAt(table.getSelectedRow());
                             FileOperator fo = new FileOperator();
-                            fo.appendObjectToFile(v, "approved.voter");
+                            fo.appendObjectToFile(v, "approved.voters");
 
                         }
 

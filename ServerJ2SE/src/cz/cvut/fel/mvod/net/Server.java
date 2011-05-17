@@ -51,6 +51,7 @@ import cz.cvut.fel.mvod.common.Vote;
 import cz.cvut.fel.mvod.common.networkAddressRange;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.crypto.CertManager;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -133,9 +134,9 @@ public class Server {
                 passphrase = "12345".toCharArray();
                 CertManager.generateDefault();
                 try {
-                    ks.load(new FileInputStream(CertManager.DefaultCertPath+"server.p12"), passphrase);
+                    ks.load(new FileInputStream(CertManager.DefaultCertPath + "server.p12"), passphrase);
                 } catch (Exception ex) {
-                    JOptionPane.showConfirmDialog(null, GlobalSettingsAndNotifier.singleton.messages.getString("certFail"), GlobalSettingsAndNotifier.singleton.messages.getString("errorLabel"), JOptionPane.ERROR_MESSAGE);
+                    ErrorDialog.main(new String[]{GlobalSettingsAndNotifier.singleton.messages.getString("certError") + '\n' + "VotingServer: \n" + ex.toString()});
                     throw new Exception("CertFail");
                 }
             }
@@ -350,20 +351,20 @@ public class Server {
                 System.out.println(add);
                 String[] parts = null;
                 if (add.contains("-")) {
-                    System.out.println("dash split");
+
                     parts = add.split("-");
                 }
                 if (add.contains('.' + "")) {
-                    System.out.println("Dot split");
+
                     parts = add.split("\\.");
                 }
 
                 if (parts == null) {
-                    System.out.println("Error in parsing remote IP");
+
                     return false;
                 }
                 if (parts.length != 4) {
-                    System.out.println("Error in parsing remote IP");
+
                     return false;
                 }
                 final int[] remote = new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3])};
@@ -387,14 +388,14 @@ public class Server {
                 }
             } catch (Exception ex) {
                 System.out.println(ex.toString());
-                ex.printStackTrace();
+
             }
 
             if (GlobalSettingsAndNotifier.singleton.getSetting("IMPLICIT_ALLOW").equalsIgnoreCase("true")) {
 
                 return true;
             }
-            System.out.println("Implicit deny");
+
             return false;
         }
     }

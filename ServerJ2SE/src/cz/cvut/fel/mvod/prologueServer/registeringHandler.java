@@ -20,6 +20,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
 import cz.cvut.fel.mvod.global.Notifiable;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -36,6 +37,8 @@ import javax.swing.Timer;
  */
 public class registeringHandler implements HttpHandler, Notifiable {
 
+    boolean showedWI = false;
+    boolean showedWR = false;
     XMLFactory wpb = new XMLFactory();
     webPageLocalizer introPage;
     webPageLocalizer regPage;
@@ -86,7 +89,7 @@ public class registeringHandler implements HttpHandler, Notifiable {
                         Logger.getLogger(registeringHandler.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-               
+
             } else if (URI.contains("favicon")) {
                 responce = "null";
             } else if (URI.contains("css")) {
@@ -99,18 +102,18 @@ public class registeringHandler implements HttpHandler, Notifiable {
                 if (!regPage.isLoaded()) {
                     responce = generateRegWebPage();
                 }
-              
+
             } else {
                 String file = URI.replaceAll(".*/", "");
 
                 String dir = URI.replaceAll(file, "");
-                System.out.println("DIR " + dir);
+         
 
                 responce = GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
                 if (dir.charAt(0) == '/') {
                     dir = dir.replaceFirst("/", "");
                 }
-                System.out.println("DIR2 " + dir);
+               
                 WebPageFetcher pages = webPages.get(dir);
                 String[] tst = {"en"};
                 /**
@@ -186,6 +189,7 @@ public class registeringHandler implements HttpHandler, Notifiable {
      * @throws IOException
      */
     protected String generateMainWebPage() throws XmlPullParserException, IOException {
+       
         wpb = new XMLFactory();
         return wpb.makeIntroPage(GlobalSettingsAndNotifier.singleton.getSetting("PUBLIC_IP"), Integer.parseInt(GlobalSettingsAndNotifier.singleton.getSetting("HTTP_PORT")));
     }
@@ -196,8 +200,8 @@ public class registeringHandler implements HttpHandler, Notifiable {
      * @return the string representation of the web page.
      */
     protected String generateRegWebPage() {
-        FileOperator fr = new FileOperator();
-        return fr.getWholeTextFile("regpage.html");
+       
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \" http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />		<title>Mobile Voting Server - Radovan Murin</title>	</head>	<h1>Voter Registration</h1>	<body>		<form name=\"input\" action=\"index.html\" method=\"post\">			Name:			<input type=\"text\" name=\"name\" />			<br />			Surname:			<input type=\"text\" name=\"surname\" />			<br />			Username :			<input type=\"text\" name=\"username\" />			<br />			Identification :			<input type=\"text\" name=\"ID\" />			<br />			Password :			<input type=\"text\" name=\"pass1\" />			<br />			Password again :			<input type=\"text\" name=\"pass2\" />			<br />			<input type=\"submit\" value=\"Submit\" />			<br />		</form>	</body>/html>";
     }
 
     /**
@@ -238,7 +242,12 @@ public class registeringHandler implements HttpHandler, Notifiable {
      */
     private void loadPages() {
         introPage = new webPageLocalizer("index", "webpages");
+        introPage.getWP(new String[]{"en"});
         if (!introPage.loadSuccess) {
+             if (!showedWI) {
+            new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("mainPageErr")).setVisible(true);
+            showedWI = true;
+        }
             try {
                 introPage.webPage.clear();
                 introPage.webPage.put("en", generateMainWebPage());
@@ -249,8 +258,14 @@ public class registeringHandler implements HttpHandler, Notifiable {
             }
         }
         regPage = new webPageLocalizer("regpage", "webpages");
+        regPage.getWP(new String[]{"en"});
         if (!regPage.loadSuccess) {
+            if (!showedWR) {
+                new ErrorDialog(null, true, GlobalSettingsAndNotifier.singleton.messages.getString("regPageErr")).setVisible(true);
+                showedWR=true;
+            }
             regPage.webPage.clear();
+            
             regPage.webPage.put("en", "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \" http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\">	<head>		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />		<title>Mobile Voting Server - Radovan Murin</title>	</head>	<h1>Voter Registration</h1>	<body>		<form name=\"input\" action=\"index.html\" method=\"post\">			Name:			<input type=\"text\" name=\"name\" />			<br />			Surname:			<input type=\"text\" name=\"surname\" />			<br />			Username :			<input type=\"text\" name=\"username\" />			<br />			Identification :			<input type=\"text\" name=\"ID\" />			<br />			Password :			<input type=\"text\" name=\"pass1\" />			<br />			Password again :			<input type=\"text\" name=\"pass2\" />			<br />			<input type=\"submit\" value=\"Submit\" />			<br />		</form>	</body>/html>");
         }
         webPages = new HashMap<String, WebPageFetcher>();

@@ -17,6 +17,7 @@ package cz.cvut.fel.mvod.gui.settings;
 
 import cz.cvut.fel.mvod.common.networkAddressRange;
 import cz.cvut.fel.mvod.global.GlobalSettingsAndNotifier;
+import cz.cvut.fel.mvod.gui.ErrorDialog;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JTable;
@@ -34,6 +35,7 @@ public class NetworkSettingsTable extends AbstractTableModel {
         GlobalSettingsAndNotifier.singleton.messages.getString("maskLabel"),
         GlobalSettingsAndNotifier.singleton.messages.getString("ruleLabel")};
     networkAddressRange[] data = null;
+  
   //  JTableHeader head;
 
     public NetworkSettingsTable() {

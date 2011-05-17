@@ -75,7 +75,7 @@ public class webPageLocalizer {
             if (pages != null) {
                 if (pages.length != 0) {
                      
-                   System.out.println(Arrays.asList(pages));
+                  
                     files.addAll(Arrays.asList(pages));
                 }
             }
@@ -165,7 +165,7 @@ public class webPageLocalizer {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            
         }
         loadSuccess = false;
         return GlobalSettingsAndNotifier.singleton.messages.getString("404Error");
