@@ -2,15 +2,16 @@
 \select@language {english}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Version Distribution of Android \cite {goodevver} from http://developer.android.com/resources/dashboard/platform-versions.html retrieved on 22.1.2011 }}{10}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Use cases for the Android Application}}{14}{figure.3.2}
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Version Distribution of Android \cite {goodevver} from http://developer.android.com/resources/dashboard/platform-versions.html retrieved on 22.1.2011 }}{10}{figure.2.1}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Use cases of the Android Application}}{15}{figure.2.2}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {B.1}{\ignorespaces Business process model of voting, model by Jakub Valenta}}{43}{figure.B.1}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {B.1}{\ignorespaces Business process model of voting, model by Jakub Valenta}}{46}{figure.B.1}
+\contentsline {figure}{\numberline {B.2}{\ignorespaces The deployment diagram}}{47}{figure.B.2}
+\addvspace {10\p@ }
 \addvspace {10\p@ }

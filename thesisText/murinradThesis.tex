@@ -287,11 +287,13 @@ The aim of this work is to design and implement an electronic voting application
 % atd...
 
 %*****************************************************************************
-\chapter{Introduction}
+\chapter*{Introduction}
 
 \paragraph*{}
 Voting is a delicate matter. Whoever the voter is, he or she usually wants to vote as transparently and freely as possible. In most cases, this is achieved by strict rules which often make it necessary for the voter to be physically present at the place where the voting takes place. But what about the one member of the board who is always traveling? What about a member of a council that is stuck in a traffic jam on the way to the council hall? \\
-In today's world we are witnesses of a process that is merging two devices into one. The PDA - Personal Digital Assistant and the cell phone. This means that more and more people carry in fact powerful computers in their pockets that enable them to perform a lot of tasks without the need of being at their desks. It also enables a person to vote safely and easily while he is unable to attend a meeting in person. 
+In today's world we are witnesses of a process that is merging two devices into one. The PDA - Personal Digital Assistant and the cell phone. This means that more and more people carry in fact powerful computers in their pockets that enable them to perform a lot of tasks without the need of being at their desks. It also enables a person to vote safely and easily while he is unable to attend a meeting in person. \\
+\\
+This text, along with the source code, guides and installation files are located on the website \\ http://code.google.com/p/mobile-voting-system/ .
 
 %*****************************************************************************
 \chapter{Description of the problem and goals}
@@ -390,7 +392,7 @@ This electronic voting system will be based on the existing work of Jakub Valent
 \section{State of the software at the beginning}
 \subsection{Overview}
 \paragraph{}
-The system in the received state was fully functioning and able to run a ballot with a J2ME device.(This was tested only in an emulator, my own J2ME enabled device could not run the application.).The system enabled the user to vote in a very simple way. The user chose to create an election, inputed the questions and possible answers, chose the threshold percentages for a successful voting event, created voters with a simple form and started the voting process. The voters then could vote via their cell phones. After some time the voting is stopped and the server displays the results in the results tab. \paragraph{}
+The system in the received state was fully functioning and able to run a ballot with a J2ME device.(This was tested only in an emulator, my own J2ME enabled device could not run the application.).The system enabled the user to vote in a very simple way. The voting commisioner chose to create an election, inputed the questions and possible answers, chose the threshold percentages for a successful voting event, created voters with a simple form and started the voting process. The voters then could vote via their cell phones. After some time the voting is stopped and the server displays the results in the results tab. \paragraph{}
 The communication was handled by HTTP. Jakub Valenta\cite{bakalarkaJV} states that he chose this protocol because of the guaranteed delivery it provides. But while HTTP is a reliable protocol, it is the TCP protocol that provides this functionality. The benefits as I see them are mainly that it is a standard and HTTP parsers are easy to use and already implemented in Java. Another benefit of HTTP protocol is that the devices provide feedback to each other about the success of an operation. On the other hand, the question whether it is not too much of a load for a Java ME enabled device to parse such requests arises. But that is out of the scope of this work.
 
 
@@ -409,8 +411,8 @@ The communication protocol is very efficient and therefore enables the use in ar
 \section{Server}
 A server is the part of the system that counts the votes, listens to connections and authenticates people. As this role is a practically a single point of failure, it needs to be well designed, and also well implemented. When creating an application such as this, there is the issue of the number of concurrent connections and operations. This system is designed to be used in a small to medium sized environment with a maximum of 200 concurrent connections. A larger number would require expensive hardware equipment and/or load balancing. Load balancing will not be used or implemented. The server is also responsible for advertising its presence on the local area network, offer a means of voter registration and providing simple information about how to connect. The first part is solvable by using a UDP\cite{whatIsUPD} broadcast\cite{whatIsBroadcasting}. In short, this will send a datagram to all the computers within a network with the information needed to achieve a connection as well as a friendly name of the server. I chose UDP broadcasts because UDP is unreliable, meaning the sender does not wait for a response. Also this is the standard way of sending adverts through the network. The second part is solvable by multiple ways. First, and this is how Jakub Valenta's system works, the user creation is strictly local, and the administrator,the person in charge of creating the elections, creates the users manually. This requires the voters presence and  it is painfully slow (imagine 200 people before some event standing in line to enter their passwords). What would be better is, to create a web page with a simple form where users would input their names and login credentials. A script would then aggregate this data in a file, possibly an XML file for simplicity, and then another program would be used when verifying the voters identity. Although this would not mean the disappearance of the 200 people lines, it would fasten the process significantly, as only a personal number would have to be verified. The third problem, the information and registration web page, is solvable by implementing a simple web server into the present server software, by using a HTTP server(Apache for example)  in concurrency with the server software or using a small web server library. Using an external web server - such as Apache, IIS, nginx, would be very easy from an implementation point of view, however for the end user the installation and configuration of any of these servers would be a hardly overcomable obstacle. When looking for an already java library with a simple HTTPs server, none offered a reasonable SSL option and therefore I decided to implement it myself. I have previously mentioned a personal number. This number or alphanumerical combination will be used to verify the identity of the registered user. It could be his ID Card number, Drivers license number anything person bound. Because it will be possible to vote from the Internet, a new system of verifying the connecting user origin will be needed. The system is necessary when the jurisdiction or some other agreement stipulates that the voter is to be present at a specific place. The Wi-Fi's limited range ensures this. Because the two possible mobile devices will be connected, the server will have to support multiple types of connections.
 
-\section{Client}
-The client is the part of the system that provides an interface for the voter to log in, vote and check the results. This part should be easy to use, lightweight and most importantly compatible with a lot of devices and safe. The safety of the mobile device is for a larger analysis and has a dedicated section that follows this one. The problem of user friendliness is really a matter of designing the application to behave consistently with the operating system. Explanation: an Android user is knows how Android applications usually work and expects this one to behave in this manner. It would be very confusing to use the same design principles for an iPhone, which has one useful hardware button, and an Android phone which has at least four. The next problem is being lightweight. The application is running on a very limited device. Limited in computing power, bandwidth, memory and electrical power. In the context of our application, computing power is not really an issue as no computationally intensive calculations are done on this end and computations are not very demanding. The bandwidth is also not a big concern as the data that is send is plain text and as such is not very large. The main problem that we need to combat here is power drainage and memory consumption. Every open connection on a cell phone lowers it's power levels considerably. The phone will therefore have to use the connection as little as possible and close the connection after every request. For this the HTTP protocol comes very helpful. As conference events and voting can involve people that speak multiple languages, the mobile application should be designed to be easily translatable. This is done by using external strings when making any writings in the applications.\\
+\section{Client - Personal Digatal Assistant or Smartphone}
+The client is the part of the system that provides an interface for the voter to log in, vote and check the results. This part should be easy to use, lightweight and most importantly compatible with a lot of devices and safe. The safety of the mobile device is for a larger analysis and has a dedicated section that follows this one. The problem of user friendliness is really a matter of designing the application to behave consistently with the operating system. Explanation: an Android user is knows how Android applications usually work and expects this one to behave in this manner. It would be very confusing to use the same design principles for an iPhone, which has one useful hardware button, and an Android phone which has at least four. The next problem is being lightweight. The application is running on a very limited device. Limited in computing power, bandwidth, memory and electrical power. In the context of our application, computing power is not really an issue as no computationally intensive calculations are done on this end and computations are not very demanding. The bandwidth is also not a big concern as the data that is send is plain text and as such is not very large. The main problem that we need to combat here is power drainage and memory consumption. Every open connection on a cell phone lowers it's power levels considerably. The phone will therefore have to use the connection as little as possible and close the connection after every request. For this the HTTP protocol comes very helpful. As conference events and voting can involve people that speak multiple languages, the mobile application should be designed to be easily translatable. This is done by using external strings when making any writings in the application.\\
 Platform specific analysis:
 \subsection{Feature phone}
 The feature phone is the most limited of all mobile devices capable of running third party software. It runs a very basic implementation of Java ME, has very little computing power and no multitasking capabilities. This added up means, that the client has to be very basic.
@@ -447,7 +449,7 @@ As it was stated earlier, mobile devices are susceptible to a number of threads.
 \item Rooted device
 \end{enumerate}
 \subsection{Physical theft}
-Physical theft poses a risk that the stored login information in the device. The most obvious solution would be not to store login credentials on the device. This would be inconvenient for the end user. Therefore a better solution would be, to request a master code upon every application launch. Another possibility for the software would be making an IMSI number check and in an event of a different SIM, or no SIM being inserted into the device, the app would wipe all user data on launch. 
+Physical theft poses a risk that the stored login information in the device. The most obvious solution would be not to store login credentials on the device. This would be inconvenient for the end user. Therefore a better solution would be, to request a master code upon every application launch. Another possibility for the software would be making an IMSI\cite{imsi} number check and in an event of a different SIM, or no SIM being inserted into the device, the app would wipe all user data on launch. 
 \subsection{Man in the middle attack}
 A man in the middle attack is a common attack where the attacker has access to the transfer medium (in our case air). The attacker can then see the data being exchanged or, what is worse, alter it. In order to protect against such an attack the whole communication has to be encrypted, preferably by SSL. This, along with a Certificate signed by a trusted authority should ensure that the application will always know if the communication is being tampered with. Proper training manuals will have to warn the users about the dangers of unsecured connections.
 \subsection{Malicious software}
@@ -470,7 +472,7 @@ The requirements analysis is comprised of the requirements the system must achie
 \begin{enumerate}
 
 %\item  The system must support two-factor authentication.
-\item  The system will provide the user with a wifi-only mode and a fully mobile mode.
+\item  The system will provide the user with source IP address filtration capabilities.
 \item  The system must provide detailed information about the questions.
 \item  The system will present connection information on a simple web site.
 \item  The system will enable the users to vote publicly. \cite{bakalarkaJV}
@@ -518,7 +520,7 @@ The use cases describe the probable interactions with the system and how the sys
 \begin{figure}[h]
 \begin{center}
 \includegraphics[scale=1]{figures/AndroidUCs.PNG} 
-\caption{Use cases for the Android Application}
+\caption{Use cases of the Android Application}
 \label{fig:Use Cases}
 \end{center}
 \end{figure}
@@ -611,10 +613,9 @@ The server GUI will have some minor changes from it's original version. The ques
 \section{Android side}
 The android application will be designed with best practices for the platform in mind.
 
-\subsection{Graphical User Interface (GUI)}
+\subsection{Graphical User Interface}
 This section sums up the design of the GUI system of the Android device. For a more complete description and guidelines on how to add new features, please see the attached document.\\
-The application will have a minimalist user interface that will enable to use touch screens with ease.The main screen will consist of a list of servers that were added in advance. After choosing the desired server and a successful connection the application will view possible questions. Again in the of a list. The user will then choose a question he wants to view. Here, the application will behave in three different ways. First, it will normally display question details, and possible answers, second behaviour is to display the question results - as an ordered table when the question is closed and results published, third is to inform the user that he has already answered, and the results are not yet available.  \\
-Possible answers to a question will be displayed as  buttons. After the desired answer is selected, the user will be able to send his response by long pressing the question button. The send button is hidden in order to reduce the risk of accidental sending. \\
+The application will have a minimalist user interface that will enable to use touch screens with ease.The main screen will consist of a list of servers that were added in advance. After choosing the desired server and a successful connection the application will view possible questions. Again in the of a list. The user will then choose a question he wants to view the answers for. Possible answers to a question will be displayed as  buttons. After the desired answer is selected, the user will be able to send his response by long pressing the question button. The send button is hidden in order to reduce the risk of accidental sending. \\
 When designing the GUI, the possibility of a third person being able to look at the devices display has to be taken into account. The passwords are never shown as text, therefore no risk exists in that somebody will see the password. However, there is a risk that someone will, on purpose or by accident see what answers are highlighted. One secure way of displaying the chosen answer is, of course, not to display them at all. This, however, poses more dangers than benefits. It introduces uncertainty for the voter about which answer they have chosen as touch screens are not very precise. A compromise is, that the choice will be highlighted for only a few second after the user has made his choice. With this in mind the user inteface will print out a small discrete message with the chosen answer for a shot amount of time after choosing the answer. \\
 Every action will be confirmed by a notification.\cite{bakalarkaJV}	
 
@@ -634,7 +635,7 @@ Because of this, the communication part of the application will be in the "servi
 	
 %*****************************************************************************
 \chapter{Implementation}
-Implementation is the part of a software development process where the design becomes a real program. This step involves choosing the programming language, writing code and compiling.
+
 
 \section{Tools}
 \subsection{Programming language}
@@ -647,7 +648,7 @@ As my predecessor I have chosen to use the Java SE\cite{whatIsJavaSE} platform. 
 \paragraph{Android platform}
 Android applications can be written in either Java or C/C++. Programming applications for this platform in C/C++ however, has a number of drawbacks. One of which is bad portability. I is unlikely that an application written in this way will be very portable. For this reason I decided to use the recommended Android platform, which uses the Java programing language. This also made implementing the whole system easier as I was using only one language, albeit different platforms.
 
-\subsection{3$^{rd}$ party libraries}
+\subsection{Third party libraries}
 By a  3$^{rd}$ party library I mean a piece of compiled code that is used as a pre made solution for common problems that  is not included in the original collection of Java SE libraries or Android libraries.
 \paragraph{XML Pull\cite{xmlpull}}
 This is the only third party library which is used in the implementation. While a part of the standard Android library suite this is not a part of Java SE. This library XML serialization and does this in a much simpler way than the traditional Java SE serializers. An example of use in my implementation is the method providing a fall-back generation of the registration web page.\\
@@ -669,12 +670,12 @@ This is the only third party library which is used in the implementation. While 
 \paragraph{Robotium\cite{robotium}}
 Robotium is a testing suite that enables GUI action scripting for the Android Platform. 
 
-\paragraph{Version Control}
+\subsection{Version Control}
 When used properly, version control prevents changes that turn out wrong to have a long lasting effect. The developer simply rolls back the changes made. In this project version control was also used as a kind of backup in case of hardware failure. The system used was SVN and the tool used was TortoiseSVN. The hosting server was code.google.com. I chose these technologies because I had previous experience with them and they proved to be reliable.	 
 
 \subsection{User Interface}
 \paragraph{Server}
-The GUI of the server application is implemented using Swing and Groovy. As stated beforehand Groovy was not used in this project but rather inherited. Therefore, it will not be discussed. Swing is a great toolkit for creating a simple GUI such as used in this project. To design the user interface I used the standard design tool that comes in Netbeans.
+The GUI of the server application is implemented using Swing\cite{swing} and Groovy\cite{whatIsGroovy}. As stated beforehand Groovy was not used in this project but rather inherited. Therefore, it will not be discussed. Swing is a great toolkit for creating a simple GUI such as used in this project. To design the user interface I used the standard design tool that comes in Netbeans.
 \paragraph{Android}
 The Android framework does not enable the developer to use any other GUI framework other than it's own toolkit. The icons for the project are from an open source icon library\cite{iconsource}, edited in MS paint when needed.
 
@@ -686,8 +687,9 @@ Creating a TLS\cite{tls} connection requires the server, the listening part, to 
 \paragraph{Android}
 For persistence of the Android application data a SQLite\cite{sqlite} database was used along with "Shared Preferences"\cite{storage} mechanism. The SQLite database is used for structured data - the server information, and the latter,"Shared Storage" is for storing primitive unstructured data.
 
-\subsection{Used integrated development environments (IDEs)}
-There are a number of powerful IDEs to use with Java. For this project I have selected to use Netbeans for the Java SE part and Eclipse for Android. Netbeans was chosen because I had good knowledge of this tool and was confident with it's use. Eclipse was the recommended IDE by Google to develop Android applications. Both these tools were are very intuitive and pleasant to work with. 
+\subsection{Used integrated development environments and software development kits}
+There are a number of powerful IDEs to use with Java. For this project I have selected to use Netbeans for the Java SE part and Eclipse for Android. Netbeans was chosen because I had good knowledge of this tool and was confident with it's use. Eclipse was the recommended IDE by Google to develop Android applications. Both these tools were are very intuitive and pleasant to work with. \\
+As for the SDKs used. For the server part I used the Oracle Java SE SDK. For Android I used the Android SDK downloadable from http://developer.android.com/sdk/index.html. This SDK also provides the developer with an emulator of a real Android device. However, taking in accounts it's performance issues I would strongly recommend using a real smart phone for developing future versions of this software.
 
 \section{Server}
 The server is a desktop application implemented in Java SE.
@@ -789,7 +791,9 @@ Virtually all usable data is communicated in XML form. To convert XML data into 
 \chapter{Testing}
 Testing plays an important role in this project. Testing early and often provided this project with a lot of precious feedback on how adding features and code altered the behavior of the system and enabled problematic parts to be quickly identified and repaired. The previous project \cite{bakalarkaJV} already had tests that were run on it. As the core classes of its business logic remained unchanged, the tests were left as they were and their results are still valid.
 \section{Unit testing}
-Unit testing is testing aimed at individual classes and their methods. It is a white-box testing method meaning that it is created with respect to the inner workings of the object tested and is aimed at finding common error such as when a null string is inputed and errors in implemented algorithms. In this project the Unit testing method of testing was used mainly on conversion classes, where data had to be converted from one form to another. These classes include the XMLParser, XMLMaker, the Cryptography class in the android project and the networkAddressRange class in the desktop project. The unit testing is performed by the JUnitTest framework\cite{junit}. I found this framework very comfortable to work with as it comes embedded with the two IDEs I worked in and I had some experiences with it from past school projects.
+Unit testing is testing aimed at individual classes and their methods. It is a white-box testing method meaning that it is created with respect to the inner workings of the object tested and is aimed at finding common error such as when a null string is inputed and errors in implemented algorithms. In this project the Unit testing method of testing was used mainly on conversion classes, where data had to be converted from one form to another. These classes include the XMLParser, XMLMaker, the Cryptography class in the android project and the networkAddressRange class in the desktop project. Other classes were not tested. The unit testing is performed by the JUnitTest framework\cite{junit}. I found this framework very comfortable to work with as it comes embedded with the two IDEs I worked in and I had some experiences with it from past school projects. The test results are enclosed in the attachments.\\
+\\
+
 \section{Integration testing}
 Integration testing is targeted at finding out how the individual components work with each other. As because this is a client - server application, this part of testing was very important and it's results were often the main guidelines of how the project should continue. The testing itself was done by creating a mock voting server and trying to connect to it with the client software. Different combinations of inputs were used and errors were logged in the project logbook.
 \section{GUI Testing}
@@ -797,6 +801,7 @@ Integration testing is targeted at finding out how the individual components wor
 The server's GUI was tested by hand. This approach was used because of the minimalist interface and the the fast responsiveness of the application. After each major modification of the GUI the new feature was tester for function and how well it integrates to the environment.
 \paragraph{Android}
 The android's GUI was tested differently than the server's. Because the platform's emulator is very slow, and constant installation on a real device is also very time consuming a need for an automated GUI test was created. Of all the GUI testing platforms, Robotium was found to have the most suitable properties. It is simple, requires minimal setup and integrates very well with the emulator software. \\
+The test are presently covering ten out of eleven use cases and all of them are reporting passed. The only use case I did not cover was viewing the results. The reason is that this use case uses an external application that is tested by it's developers. 
 \begin{lstlisting}
 public void testGoodLogin() {
 		solo.clearEditText((EditText)solo.getView(R.string.passwordField));
@@ -813,12 +818,12 @@ Every application and system, has issues.This one is no exception an. As old one
  %**********************************************************************************
  \chapter{Deployment}
 \section{Overview}
-For a graphic view of the deployment model, please see the figure. 
+For a graphic view of the deployment model, please see the figure in the UML attachments \ref{fig:deployment}.
 \section{Server deployment}
-The server is the system part that "listens" to incoming connections.
-\section{Hardware}
-The server application does not have any specific haddware requirements and will run on any computer that is able to run the Java Virtual Machine.However, for a smooth voting proces the voting application should run on a laptop with a healthy battery to withstand short power outages or a PC with a UPS(Uninterruptible power supply). The slowest system the application was tested on was an Intel Core Duo, 1.66 GHz, 1500MB RAM laptop and it seemed to run without any issues. 
-\subsection{Connectivity}
+The server is the system part that "listens" to incoming connections. It is free to download at http://code.google.com/p/mobile-voting-system/downloads/detail?name=VotingPoint.zip and it is also enclosed on the enclosed DVD. However, I strongly suggest downloading the latest version. The installation manuals are enclosed with this thesis.
+\subsection{Hardware}
+The server application does not have any specific hardware requirements and will run on any computer that is able to run the Java Virtual Machine.However, for a smooth voting process the voting application should run on a laptop with a healthy battery to withstand short power outages or a PC with a UPS(Uninterruptible power supply). The slowest system the application was tested on was an Intel Core Duo, 1.66 GHz, 1500MB RAM laptop and it seemed to run without any issues. The test was performed by using OpenSSL\cite{openssl} testing commands for SSL. The results showed that the maximum connections per second were around 200. This value, however, does not represent the real capacity as the sever was very sluggish and was consuming a rather large amount of memory. The real capacity is around 100.
+\subsubsection{Connectivity}
 \subsubsection{General}
 The server needs at least connectivity to a LAN(Local Area Network) for basic local voting(e.g. when the voting is to be held from a specific place) . For truly mobile voting, the server needs a connection to the Internet. Although the for Internet connectivity the connection has to use the TCP/IP protocol  suite, it should be noted that the LAN has to use this suite too. It is advisable to use cables instead of a wireless connection. \\
 When Internet connectivity is required it is recommended that the server has his own external IP address to facilitate the configuration, however if that is not possible than at least access to the gateway device is needed in order to properly set-up port forwarding rules.
@@ -842,7 +847,7 @@ The client is the part of this system that a voter uses to vote.
 Every client must be Wireless LAN enabled. The device can have a 2G or higher connection if the user wants to vote when a Wi-Fi connection is not available. The client devices must have their versions of the client application instaled
 \subsubsection{Android}
 The android device has to adhere to the Android OS Compatibility Definition Document \cite{androCompatDef}.
-\subsubsection{Feature phone}
+\subsubsection{Feature phone - J2ME enabled phone}
 Display and keyboard are necessary.
 \subsection{Connectivity}
 As it is with the server, for local voting it is sufficient for the client to be connected only to a LAN, but for remote voting Internet connectivity is required. In any case the connection has to use the TCP/IP protocol suite. 
@@ -858,6 +863,8 @@ The aim of this work was to enhance the mobile voting system originally  created
 
 
 As for the continuation of this project, it needs more compatible clients. The analysis and design of the mobile client in this thesis is in my opinion a good foundation for the creation of other mobile clients - the iOS platform from Apple and BlackBerry OS from RIM are two platforms that come to mind as the targeted audience of this project is very likely to own one of these devices.  
+
+All issues and ideas concerning this project are logged on the project web site http://code.google.com/p/mobile-voting-system/.
 
 
 \bibliographystyle{csplainnat}
@@ -896,6 +903,7 @@ As for the continuation of this project, it needs more compatible clients. The a
 \item HTTP - Hyper Text Transfer Protocol
 \item HTTPs - Hyper Text Transfer Secure Protocol
 \item VM - Virtual Machine
+\item IMSI - International Mobile Subscriber Identity
 \end{description}
 
 
@@ -909,13 +917,23 @@ As for the continuation of this project, it needs more compatible clients. The a
 
 %*****************************************************************************
 \chapter{UML diagrams}
-\begin{figure}[h]
+\begin{figure}[v]
 \begin{center}
 \includegraphics[width=14cm]{figures/VotingCZECH}
 \caption{Business process model of voting, model by Jakub Valenta}
 \label{fig:businessMOD}
 \end{center}
 \end{figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=14cm]{figures/deploy}
+\caption{The deployment diagram}
+\label{fig:deployment}
+\end{center}
+\end{figure}
+
+\chapter{Manuals}
 
 %*****************************************************************************
 \chapter{Enclosed CD Table of Contents}

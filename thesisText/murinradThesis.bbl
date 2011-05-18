@@ -1,4 +1,4 @@
-\begin{thebibliography}{29}
+\begin{thebibliography}{32}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -7,7 +7,7 @@
 
 \bibitem[Valenta(2010)]{bakalarkaJV}
 VALENTA, J.
-\newblock Mobilní hlasovací zarízení [in Czech], 2010.
+\newblock Mobilní hlasovací zařízení [in Czech], 2010.
 
 \bibitem[web:code.google.com()]{robotium}
 web:code.google.com.
@@ -44,16 +44,9 @@ web:developer.android.com.
   \verb|http://developer.android.com/guide/topics/data/data-storage.html#pref|,
   Retrieved on 26.\,4.\,2011.
 
-\bibitem[web:developer.android.com({\natexlab{d}})]{storageAnd}
+\bibitem[web:developer.android.com({\natexlab{d}})]{whatisAnd}
 web:developer.android.com.
 \newblock What is Android?, {\natexlab{d}}.
-\newblock \\
-  \verb|http://developer.android.com/guide/topics/data/data-storage.html#pref|,
-  Retrieved on 26.\,2.\,2011.
-
-\bibitem[web:developer.android.com({\natexlab{e}})]{whatisAnd}
-web:developer.android.com.
-\newblock What is Android?, {\natexlab{e}}.
 \newblock \\
   \verb|http://developer.android.com/guide/basics/what-is-android.html|,
   Retrieved on 26.\,2.\,2011.
@@ -68,6 +61,12 @@ web:en.wikipedia.org.
 web:groovy.codehaus.org.
 \newblock Groovy - Home.
 \newblock \\ \verb|http://groovy.codehaus.org/|, Retrieved on 25.\,4.\,2011.
+
+\bibitem[web:java.sun.com()]{cldc}
+web:java.sun.com.
+\newblock Connected Limited Device Configuration (CLDC).
+\newblock \\ \verb|http://java.sun.com/products/cldc/|, Retrieved on
+  08.\,5.\,2011.
 
 \bibitem[web:junit.org()]{junit}
 web:junit.org.
@@ -106,11 +105,33 @@ web:market.android.com.
 \newblock The android market, {\natexlab{e}}.
 \newblock \\ \verb|https://market.android.com/|, Retrieved on 17.\,3.\,2011.
 
-\bibitem[web:msdn.microsoft.com()]{whatIsMVC}
-web:msdn.microsoft.com.
-\newblock Model-View-Controller.
-\newblock \\ \verb|http://msdn.microsoft.com/en-us/library/ff649643.aspx|,
-  Retrieved on 17.\,3.\,2011.
+\bibitem[web:mib.net.ua()]{imsi}
+web:mib.net.ua.
+\newblock GSM numbering plans.
+\newblock \\ \verb|http://www.mib.net.ua/2008/03/gsm-numbering-plans-en.html |,
+  Retrieved on 30.\,4.\,2011.
+
+\bibitem[web:oracle.com({\natexlab{a}})]{midp}
+web:oracle.com.
+\newblock Mobile Information Device Profile (MIDP), {\natexlab{a}}.
+\newblock \\
+  \verb|http://www.oracle.com/technetwork/java/index-jsp-138820.html|,
+  Retrieved on 08.\,5.\,2011.
+
+\bibitem[web:oracle.com({\natexlab{b}})]{swing}
+web:oracle.com.
+\newblock About the JFC and Swing (The Java™ Tutorials > Creating a GUI With
+  JFC/Swing > Getting Started with Swing), {\natexlab{b}}.
+\newblock \\
+  \verb|http://download.oracle.com/javase/tutorial/uiswing/start/about.html|,
+  Retrieved on 25.\,4.\,2011.
+
+\bibitem[web:oracle.com({\natexlab{c}})]{whatIsJavaSE}
+web:oracle.com.
+\newblock http://download.oracle.com/javase/™ - Google Project Hosting,
+  {\natexlab{c}}.
+\newblock \\ \verb|http://download.oracle.com/javase/|, Retrieved on
+  30.\,4.\,2011.
 
 \bibitem[web:static.googleusercontent.com()]{androCompatDef}
 web:static.googleusercontent.com.
@@ -162,7 +183,8 @@ web:www.openssl.org.
 
 \bibitem[web:www.rsa.com()]{pkcs12}
 web:www.rsa.com.
-\newblock SQLite Home Page.
+\newblock RSA Laboratories - PKCS #12: Personal Information Exchange Syntax
+  Standard.
 \newblock \\ \verb|http://www.rsa.com/rsalabs/node.asp?id=2138|, Retrieved on
   26.\,4.\,2011.
 
