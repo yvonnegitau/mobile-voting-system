@@ -244,7 +244,7 @@ The aim of this work is to design and implement an electronic voting application
 
 \noindent
 %Ľudia začínajú čím ďalej tým viac integrovat mobilné zariadenia do ich každodenného života. Uľahčuje to život, odbremeňuje nás to od stáleho cestovania a zvyšuje produktivitu.
- Cieľom tejto práce je navrhnúť a naimplementovat aplikáciu pre elektronické hlasovanie pre platformu Android, ktorá umožní ľudom hlasovať bezpečne z akéhokoľvek miesta. Celá aplikácia je zameraná na čo najvačšiu kompatibilitu medzi rôznymi výrobcami a verziami Androidu a jazykovú prenositeľnost.
+ Cieľom tejto práce je navrhnúť a naimplementovať aplikáciu pre elektronické hlasovanie pre platformu Android, ktorá umožní ľudom hlasovať bezpečne z akéhokoľvek miesta. Celá aplikácia je zameraná na čo najvačšiu kompatibilitu medzi rôznymi výrobcami a verziami Androidu a jazykovú prenositeľnost.
  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Obsah / Table of Contents 
@@ -254,12 +254,12 @@ The aim of this work is to design and implement an electronic voting application
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Seznam obrazku / List of Figures 
 
-\listoffigures
+%\listoffigures
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Seznam tabulek / List of Tables
 
-\listoftables
+%\listoftables
 
 
 %**************************************************************
@@ -513,7 +513,7 @@ The requirements analysis is comprised of the requirements the system must achie
 \item The application must store the user's login information in such a way that other applications will not be able to access it.
 \end{enumerate}
 \section{Use Cases}
-The use cases describe the probable interactions with the system and how the system will react to them. They are fully described in the UseCases file enclosed with the thesis. The user can choose the server he wishes to log into, then can display the details of the questions and vote on them. Time and the Android system itself play a minor role in the use cases because of how Android manages memory. For the sake of simplicity application components are represented as one activity. Further information concerning the use cases are in the 
+The use cases describe the probable interactions with the system and how the system will react to them. They are fully described in the Enterprise Architect project file enclosed with the thesis on the CD. The user can choose the server he wishes to log into, then can display the details of the questions and vote on them. The use case scenarios are written to be platform specific for Android, but the Use case diagram can be applied to any system. Time and memory management are present at any mobile system.
 
 
 
@@ -791,11 +791,11 @@ Virtually all usable data is communicated in XML form. To convert XML data into 
 \chapter{Testing}
 Testing plays an important role in this project. Testing early and often provided this project with a lot of precious feedback on how adding features and code altered the behavior of the system and enabled problematic parts to be quickly identified and repaired. The previous project \cite{bakalarkaJV} already had tests that were run on it. As the core classes of its business logic remained unchanged, the tests were left as they were and their results are still valid.
 \section{Unit testing}
-Unit testing is testing aimed at individual classes and their methods. It is a white-box testing method meaning that it is created with respect to the inner workings of the object tested and is aimed at finding common error such as when a null string is inputed and errors in implemented algorithms. In this project the Unit testing method of testing was used mainly on conversion classes, where data had to be converted from one form to another. These classes include the XMLParser, XMLMaker, the Cryptography class in the android project and the networkAddressRange class in the desktop project. Other classes were not tested. The unit testing is performed by the JUnitTest framework\cite{junit}. I found this framework very comfortable to work with as it comes embedded with the two IDEs I worked in and I had some experiences with it from past school projects. The test results are enclosed in the attachments.\\
+Unit testing is testing aimed at individual classes and their methods. It is a white-box testing method meaning that it is created with respect to the inner workings of the object tested and is aimed at finding common error such as when a null string is inputed and errors in implemented algorithms. In this project, the Unit testing method of testing was used mainly on conversion classes, where data had to be converted from one form to another. These classes include the XMLParser and XMLMaker class in the android project and the networkAddressRange along with XML convertor classes in the desktop project. Other classes were not tested. The code coverage is not high. The unit testing is performed by the JUnitTest framework\cite{junit}. I found this framework very comfortable to work with as it comes embedded with the two IDEs I worked in and I had some experiences with it from past school projects. The test results are enclosed in the on the enclosed DVD.\\
 \\
 
 \section{Integration testing}
-Integration testing is targeted at finding out how the individual components work with each other. As because this is a client - server application, this part of testing was very important and it's results were often the main guidelines of how the project should continue. The testing itself was done by creating a mock voting server and trying to connect to it with the client software. Different combinations of inputs were used and errors were logged in the project logbook.
+Integration testing is targeted at finding out how the individual components work with each other. As because this is a client - server application, this part of testing was very important and it's results were often the main guidelines of how the project should continue. The testing itself was done by creating a mock voting server and trying to connect to it with the client software. Different combinations of inputs were used and errors were logged in the project logbook\cite{projectPage}.
 \section{GUI Testing}
 \paragraph{Server}
 The server's GUI was tested by hand. This approach was used because of the minimalist interface and the the fast responsiveness of the application. After each major modification of the GUI the new feature was tester for function and how well it integrates to the environment.
@@ -820,7 +820,7 @@ Every application and system, has issues.This one is no exception an. As old one
 \section{Overview}
 For a graphic view of the deployment model, please see the figure in the UML attachments \ref{fig:deployment}.
 \section{Server deployment}
-The server is the system part that "listens" to incoming connections. It is free to download at http://code.google.com/p/mobile-voting-system/downloads/detail?name=VotingPoint.zip and it is also enclosed on the enclosed DVD. However, I strongly suggest downloading the latest version. The installation manuals are enclosed with this thesis.
+The server is the system part that "listens" to incoming connections. It is free to download at http://code.google.com/p/mobile-voting-system/downloads/detail?name=VotingPoint.zip and it is also enclosed on the enclosed DVD. However, I strongly suggest downloading the latest version. The installation manual in English is enclosed with this thesis in the appendix and the Czech, French and Slovak versions are on the enclosed DVD. All of this is also available at the project website\cite{projectPage}.
 \subsection{Hardware}
 The server application does not have any specific hardware requirements and will run on any computer that is able to run the Java Virtual Machine.However, for a smooth voting process the voting application should run on a laptop with a healthy battery to withstand short power outages or a PC with a UPS(Uninterruptible power supply). The slowest system the application was tested on was an Intel Core Duo, 1.66 GHz, 1500MB RAM laptop and it seemed to run without any issues. The test was performed by using OpenSSL\cite{openssl} testing commands for SSL. The results showed that the maximum connections per second were around 200. This value, however, does not represent the real capacity as the sever was very sluggish and was consuming a rather large amount of memory. The real capacity is around 100.
 \subsubsection{Connectivity}
@@ -831,12 +831,12 @@ When Internet connectivity is required it is recommended that the server has his
 If voting is to be through the Internet, then the server should have a domain name and the name registered at a DNS. This would alleviate the shock the users often experience when working with IP addresses. If for some reason a static IP address is unavailable, the use of a dynamic DNS service is advisable. The dynamic DNS service serves just like a normal DNS, but the server/ADSL router has a small piece of software installed, that reports whenever it acquires a new external IP to the service and the service then updates the DNS entries. The whole process should take no more than 5 minutes and this time is acceptable.
 \\
 \subsection{Wireless Ethernet (Wi-Fi)}
-For rapid deployment, the computer should be able to behave as a wireless access point. One method that I tested and worked perfectly, was using piece of software called Connectify. This works only under Microsoft \textregistered Windows\textregistered and does not provide many security features. However, for a quick and small deployment it is suitable. \\
+For rapid deployment, the computer should be able to behave as a wireless access point. One method that I tested and worked perfectly, was using piece of software called Connectify\cite{connectify}. This works only under Microsoft \textregistered Windows\textregistered and does not provide many security features. However, for a quick and small deployment it is suitable. \\
 For larger scale applications, a specialized Access Point is highly recommended. One that is able to block  the forwarding of UDP broadcasts from the wireless interface. This reason for this requirement is, that the open nature of the server advertisements makes them prone to spoofing, and this would guarantee that only the adverts from the wired LAN are forwarded.  
 
 \\
 
-During testing, it was found out that firewalls block the ports used by the application. This means that the firewall has to be properly set up to allow traffic on the right port.
+During testing, it was found out that firewalls block the ports used by the application. This means that the firewall has to be properly set up to allow traffic on the right ports. The defaults are 10443, 10666 and 11109. These can be changed when needed.
 \\
 \subsection{Operating system and software}
 The application is not bound to any specific operating system. It will run on any system that has a Graphical User Interface and has and iplementation of the Java Virtual Machine. The operating system should be running it's latest update.
@@ -858,13 +858,13 @@ As it is with the server, for local voting it is sufficient for the client to be
 
 %*****************************************************************************
 \chapter{Conclusion}
-The aim of this work was to enhance the mobile voting system originally  created by Jakub Valenta in his bachelor's thesis. The goals were to implement SSL, add internationalization and create an Android client that follows the good practices for Android applications. These goals were supplemented with goals outlined in the analysis part of the project and developed as time progressed and I gained a better understanding of the area. The whole system performs well, however as I had no real knowledge of creating Android applications I was not able to resolve some performance issues on this side.The communication system is not handled by as an Android service but it is a part of a normal application. This does not affect the usability of the application but may affect performance. On the plus side the whole system is ready to be used in a real situation.For this, however, testing on a larger scale is recommended.\\
+The aim of this work was to enhance the mobile voting system originally  created by Jakub Valenta in his bachelor's thesis. The goals were to implement SSL, add internationalization and create an Android client that follows the good practices for Android applications. These goals were supplemented with goals outlined in the analysis part of the project and developed as time progressed and I gained a better understanding of the area. The whole system performs well, however as I had no real knowledge of creating Android applications I was not able to resolve some performance issues on this side.The communication system is not handled by as an Android service but it is a part of a normal application. This does not affect the usability of the application but may affect performance. On the plus side the whole system is ready to be used in a real situation.For this, however, testing on a larger scale is recommended. Almost all use cases were implemented apart from the timed logout. This was ignored because the memory management on this device performs this function just as well.\\
 
 
 
 As for the continuation of this project, it needs more compatible clients. The analysis and design of the mobile client in this thesis is in my opinion a good foundation for the creation of other mobile clients - the iOS platform from Apple and BlackBerry OS from RIM are two platforms that come to mind as the targeted audience of this project is very likely to own one of these devices.  
 
-All issues and ideas concerning this project are logged on the project web site http://code.google.com/p/mobile-voting-system/.
+Another possibility is to create a UDP retransmitter to overcome broadcasting limitations and provide the automatic server discovery to a wider range of voters. Currently the most pressing issue is the, however, the performance of the Android client. This should have priority. All issues and ideas are at \\ http://code.google.com/p/mobile-voting-system/.
 
 
 \bibliographystyle{csplainnat}
@@ -933,9 +933,20 @@ All issues and ideas concerning this project are logged on the project web site 
 \end{center}
 \end{figure}
 
-\chapter{Manuals}
+\chapter{Manual}
+
+\chapter{GUI Design guidelines}
 
 %*****************************************************************************
 \chapter{Enclosed CD Table of Contents}
-CD NOT YET CREATED
-\end{document}
+\begin{itemize}
+\item index.html - The HTML file containing links for the most important parts of the CD.
+\item folder /bins - Contains the installation files for the system. It has two sub-folders for the respective parts of the system.
+\item folder /documentation - Contains the whole project documentation along with the this text, appendixes and javadoc. It also contains all documents created in the process of making this project.
+\item folder /manuals - The installation and operation manuals. In four languages - English, Czech, French and Slovak.
+\item folder /src - the source files/projects.
+\end{itemize}
+
+
+
+\end{document}		
