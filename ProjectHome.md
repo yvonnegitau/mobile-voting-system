@@ -1,0 +1,1 @@
+The aim of this work is to design and implement an electronic voting application for the Android platform that will enable people to vote securely from anywhere. The application as a whole is aimed at being compatible with devices from many manufacturers and running different versions of the operating system. The application is also aimed at being localised.
